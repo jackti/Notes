@@ -1,0 +1,1991 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="采用Mkdocs-material生成的文档管理网站支持的markdown语法，包括传统语法和扩展语法">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.9">
+    
+    
+      
+        <title>神经网络优化概述 - 我的知识笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.120efc48.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.9647289d.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#2094f3">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue" data-md-color-accent="pink">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="我的知识笔记" class="md-header__button md-logo" aria-label="我的知识笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            我的知识笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              神经网络优化概述
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../.." class="md-tabs__link">
+      首页
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/00_%E5%85%B6%E4%BB%96%E8%AE%B0%E5%BD%95/" class="md-tabs__link">
+        机器学习
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../00_%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" class="md-tabs__link md-tabs__link--active">
+        深度学习
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="我的知识笔记" class="md-nav__button md-logo" aria-label="我的知识笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    我的知识笔记
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          机器学习
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="机器学习" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          机器学习
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          01 监督学习
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="01 监督学习" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          01 监督学习
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/00_%E5%85%B6%E4%BB%96%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        数学符号
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/00_%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        线性模型
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/01_%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/" class="md-nav__link">
+        最小二乘法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/02_%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%AE%97%E6%B3%95/" class="md-nav__link">
+        梯度下降算法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/03_%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        交叉验证原理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/04_%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        模型评估
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/05_%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        线性回归算法原理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/06_%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        逻辑回归算法原理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/07_%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%B8%80%29/" class="md-nav__link">
+        决策树算法原理(一)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/08_%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%BA%8C%29/" class="md-nav__link">
+        决策树算法原理(二)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/09_%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%B8%89%29/" class="md-nav__link">
+        决策树算法原理(三)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/10_%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        近邻算法原理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/11_%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        朴素贝叶斯算法原理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/12_%E6%9C%80%E5%A4%A7%E7%86%B5%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%B8%80%29/" class="md-nav__link">
+        最大熵算法原理(一)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/13_%E6%9C%80%E5%A4%A7%E7%86%B5%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%BA%8C%29/" class="md-nav__link">
+        最大熵算法原理(二)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/14_%E6%9C%80%E5%A4%A7%E7%86%B5%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%B8%89%29/" class="md-nav__link">
+        最大熵算法原理(三)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/15_%E6%84%9F%E7%9F%A5%E6%9C%BA%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        感知机算法原理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/16_%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%B8%80%29/" class="md-nav__link">
+        支持向量机算法原理(一)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/17_%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%BA%8C%29/" class="md-nav__link">
+        支持向量机算法原理(二)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/18_%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%B8%89%29/" class="md-nav__link">
+        支持向量机算法原理(三)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/19_%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E5%9B%9B%29/" class="md-nav__link">
+        支持向量机算法原理(四)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/20_%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%BA%94%29/" class="md-nav__link">
+        支持向量机算法原理(五)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/21_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        集成学习算法之综述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/22_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BAdaboost/" class="md-nav__link">
+        集成学习算法之Adaboost
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
+        集成学习算法之GBDT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_2">
+          02 无监督学习
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="02 无监督学习" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          02 无监督学习
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/25_%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E4%B9%8BK-Means/" class="md-nav__link">
+        聚类算法之K-Means​
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/26_%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E4%B9%8BBIRCH/" class="md-nav__link">
+        聚类算法之BIRCH
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/27_%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E4%B9%8BDBSCAN/" class="md-nav__link">
+        聚类算法之DBSCAN
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/28_%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E4%B9%8BMean%20Shift/" class="md-nav__link">
+        聚类算法之Mean Shift
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/29_%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E4%B9%8B%E8%B0%B1%E8%81%9A%E7%B1%BB/" class="md-nav__link">
+        聚类算法之谱聚类
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/30_%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E4%B9%8BPCA/" class="md-nav__link">
+        降维算法之PCA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/31_%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E4%B9%8BLDA/" class="md-nav__link">
+        降维算法之LDA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/32_%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E4%B9%8BIsomap/" class="md-nav__link">
+        降维算法之Isomap
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/33_%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E4%B9%8BLLE/" class="md-nav__link">
+        降维算法之LLE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/34_%E5%85%B3%E8%81%94%E7%AE%97%E6%B3%95%E4%B9%8BApriori/" class="md-nav__link">
+        关联算法之Apriori
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/35_%E5%85%B3%E8%81%94%E7%AE%97%E6%B3%95%E4%B9%8BFP-Tree/" class="md-nav__link">
+        关联算法之FP-Tree
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/36_%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        推荐算法之综述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/37_%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95%E4%B9%8B%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3/" class="md-nav__link">
+        推荐算法之矩阵分解
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/38_%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95%E4%B9%8BSimRank/" class="md-nav__link">
+        推荐算法之SimRank
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/39_%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95%E4%B9%8BPersonalRank/" class="md-nav__link">
+        推荐算法之PersonalRank
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/40_EM%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        EM算法原理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/41_%E5%88%86%E8%A7%A3%E6%9C%BA%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        分解机算法原理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          深度学习
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="深度学习" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          深度学习
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00_%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        神经网络基础
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_DNN%E5%89%8D%E9%A6%88%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        DNN前馈神经网络
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_CNN%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        CNN卷积神经网络
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_RNN%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        RNN循环神经网络
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_%E5%9F%BA%E4%BA%8E%E9%97%A8%E6%8E%A7%E7%9A%84%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        基于门控的循环神经网络
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          神经网络优化概述
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        神经网络优化概述
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    网络优化的难点
+  </a>
+  
+    <nav class="md-nav" aria-label="网络优化的难点">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    网络结构的多样性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    高维变量的非凸优化
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    神经网络优化的改善方法
+  </a>
+  
+    <nav class="md-nav" aria-label="神经网络优化的改善方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    优化算法
+  </a>
+  
+    <nav class="md-nav" aria-label="优化算法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    (1)批量大小选择
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    (2)学习率调整
+  </a>
+  
+    <nav class="md-nav" aria-label="(2)学习率调整">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    学习率衰减
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    周期性学习率调整
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adagrad" class="md-nav__link">
+    AdaGrad算法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rmsprop" class="md-nav__link">
+    RMSprop算法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adadelta" class="md-nav__link">
+    AdaDelta算法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    (3)梯度估计修正
+  </a>
+  
+    <nav class="md-nav" aria-label="(3)梯度估计修正">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    动量法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nesterov" class="md-nav__link">
+    Nesterov加速梯度
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adam" class="md-nav__link">
+    Adam算法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    梯度截断
+  </a>
+  
+    <nav class="md-nav" aria-label="梯度截断">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    (1)按值截断
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    (2)按模截断
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    参数初始化
+  </a>
+  
+    <nav class="md-nav" aria-label="参数初始化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    基于固定方差的参数初始化
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    基于方差缩放的参数初始化
+  </a>
+  
+    <nav class="md-nav" aria-label="基于方差缩放的参数初始化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    正交初始化
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%282%29/" class="md-nav__link">
+        数据预处理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_%E7%BD%91%E7%BB%9C%E6%AD%A3%E5%88%99%E5%8C%96/" class="md-nav__link">
+        网络正则化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" class="md-nav__link">
+        07 注意力机制
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    网络优化的难点
+  </a>
+  
+    <nav class="md-nav" aria-label="网络优化的难点">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    网络结构的多样性
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    高维变量的非凸优化
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    神经网络优化的改善方法
+  </a>
+  
+    <nav class="md-nav" aria-label="神经网络优化的改善方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    优化算法
+  </a>
+  
+    <nav class="md-nav" aria-label="优化算法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    (1)批量大小选择
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    (2)学习率调整
+  </a>
+  
+    <nav class="md-nav" aria-label="(2)学习率调整">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    学习率衰减
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    周期性学习率调整
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adagrad" class="md-nav__link">
+    AdaGrad算法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rmsprop" class="md-nav__link">
+    RMSprop算法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adadelta" class="md-nav__link">
+    AdaDelta算法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    (3)梯度估计修正
+  </a>
+  
+    <nav class="md-nav" aria-label="(3)梯度估计修正">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    动量法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nesterov" class="md-nav__link">
+    Nesterov加速梯度
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adam" class="md-nav__link">
+    Adam算法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    梯度截断
+  </a>
+  
+    <nav class="md-nav" aria-label="梯度截断">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    (1)按值截断
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    (2)按模截断
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    参数初始化
+  </a>
+  
+    <nav class="md-nav" aria-label="参数初始化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    基于固定方差的参数初始化
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    基于方差缩放的参数初始化
+  </a>
+  
+    <nav class="md-nav" aria-label="基于方差缩放的参数初始化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    正交初始化
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="_1">神经网络优化概述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>神经网络虽然具有很强大的表达能力，但是在实际应用中依然存在一些难点，主要分为两大类：
+（1）<mark>优化问题</mark>
+深度神经网络的优化十分困难.首先，神经网络的损失函数是一个非凸函数，找到全局最优解通常比较困难.其次，深度神经网络的参数通常非常多，训练数据也比较大，因此也无法使用计算代价很高的二阶优化方法，而一阶优化方法的训练效率通常比较低.此外，深度神经网络存在梯度消失或爆炸问题，导致基于梯度的优化方法经常失效.</p>
+<p>（2）<mark>泛化问题</mark>
+由于深度神经网络的复杂度比较高，并且拟合能力很强，很容易在训练集上产生过拟合.因此在训练深度神经网络时，同时也需要通过一定的正则化方法来改进网络的泛化能力.</p>
+<p>目前，研究者从大量的实践中总结了一些经验方法，在神经网络的表示能力、复杂度、学习效率和泛化能力之间找到比较好的平衡，并得到一个好的网络模型.主要涉及了==网络优化==和==网络正则化==两个方面.
+在网络优化方面，包括了一些常用的优化算法、参数初始化方法、数据预处理方法、逐层归一化方法和超参数优化方法.
+<img src="assets/网络优化.svg" alt="网络优化.svg"/>
+在网络正则化方面，包括了一些提高网络泛化能力的方法， 包括<span class="arithmatex"><span class="MathJax_Preview">\ell_1</span><script type="math/tex">\ell_1</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\ell_2</span><script type="math/tex">\ell_2</script></span>正则化、权重衰减、提前停止、丢弃法、数据增强和标签平滑.
+<img src="assets/网络正则化.svg" alt="网络正则化.svg"/></p>
+<h2 id="_2">网络优化的难点<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="_3">网络结构的多样性<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>神经网络的种类非常多，比如卷积网络、循环网络、图网络等.不同网络的结构也非常不同，有些比较深，有些比较宽.不同参数在网络中的作用也有很大的差异，比如连接权重和偏置的不同，以及循环网络中循环连接上的权重和其他权重的不同.
+由于网络结构的多样性，我们很难找到一种通用的优化方法.不同优化方法在不同网络结构上的表现也有比较大的差异.
+此外，网络的超参数一般比较多，这也给优化带来很大的挑战.</p>
+<h3 id="_4">高维变量的非凸优化<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>低维空间的非凸优化问题主要是存在一些局部最优点.基于梯度下降的优化方法会陷入局部最优点，因此在低维空间中非凸优化的主要难点是如何选择初始化参数和逃离局部最优点.深度神经网络的参数非常多，其参数学习是在非常高维空间中的非凸优化问题，其挑战和在低维空间中的非凸优化问题有所不同.
+在高维空间中，非凸优化的难点并不在于如何逃离局部最优点，而是如何逃离鞍点.鞍点的梯度是0，但是在一些维度上是最高点，在另一些维度上是最低点。
+<img src="assets/andian.png" alt="assets/andian.png" style="zoom:30%"/></p>
+<blockquote>
+<p><mark>驻点 又叫稳定点或临界点</mark>
+定义：函数一阶导数等于零的点</p>
+<p><mark>极值点</mark>
+定义：在 <span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> 的邻域内，<span class="arithmatex"><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span> 的值总是大于等于或小于等于其他值，则 <span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span> 为极值点
+性质：
+若极值点一阶可导，则导数为零，此时极值点为驻点。
+若极值点二阶可导，则一阶导数为零，二阶导数为正（极小值）或者为负（极大值）
+注意：极值点不一定是可导点，也不一定是连续点。
+推广：若多维函数 极值点 二阶可导，则梯度为零，Hessian 矩阵为正定或负定矩阵。</p>
+<p><mark>拐点</mark>
+定义：函数<span class="arithmatex"><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span>的凹凸弧分界点
+性质：
+若拐点二阶可导，则二阶导数为零
+注意: 拐点不一定是可导点，如两个上下半圆连接的点，导数等于无穷。</p>
+<p><mark>鞍点</mark>
+定义：一个不是局部最小值的驻点。
+数学含义为： 函数在此点一阶导数为零，但该点是某一方向上的函数极大值点，在另一方向上是函数极小值点。
+在矩阵中，若一个元素是所在行中的最大值，所在列中的最小值，称之为鞍点。
+判断鞍点的充分条件： 函数在驻点的 Hessian 矩阵为不定矩阵。</p>
+</blockquote>
+<h2 id="_5">神经网络优化的改善方法<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>改善神经网络优化的目标是找到更好的局部最小值和提高优化效率.目前比较有效的经验性改善方法通常分为以下几个方面:
+(1) 使用更有效的优化算法来提高梯度下降优化方法的效率和稳定性，比如动态学习率调整、梯度估计修正等.
+(2) 使用更好的参数初始化方法、数据预处理方法来提高优化效率.
+(3) 修改网络结构比如使用 ReLU 激活函数、残差连接、逐层归一化等. 
+(4) 使用更好的超参数优化方法.</p>
+<h3 id="_6">优化算法<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>令<span class="arithmatex"><span class="MathJax_Preview">f(\boldsymbol{x};\theta)</span><script type="math/tex">f(\boldsymbol{x};\theta)</script></span>表示一个深度神经网络，<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>为网络参数，每次选取<span class="arithmatex"><span class="MathJax_Preview">K</span><script type="math/tex">K</script></span>个训练样本<span class="arithmatex"><span class="MathJax_Preview">\mathcal{D}_t=\{(\boldsymbol{x}^{(k)},\boldsymbol{y}^{(k)})\}_{k=1}^K</span><script type="math/tex">\mathcal{D}_t=\{(\boldsymbol{x}^{(k)},\boldsymbol{y}^{(k)})\}_{k=1}^K</script></span>,第<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>次迭代(Iteration)时损失函数关于参数<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的偏导数为
+$$
+\boldsymbol{g}<em>t(\theta)=\frac{1}{K}
+\sum</em>{(\boldsymbol{x},\boldsymbol{y})\in \mathcal{D}<em>t}
+\frac{\partial L(\boldsymbol{y},f(\boldsymbol{x};\theta))}{\partial\theta}
+$$
+第<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>次更新的梯度<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{g}_t</span><script type="math/tex">\boldsymbol{g}_t</script></span>定义为
+$$
+\boldsymbol{g}_t \triangleq \boldsymbol{g}_t(\theta</em>{t-1})
+$$
+使用梯度下降来更新参数
+$$
+\theta_{t} \leftarrow \theta_{t-1}-\alpha \boldsymbol{g}<em>t
+$$
+其中<span class="arithmatex"><span class="MathJax_Preview">\alpha \gt 0</span><script type="math/tex">\alpha \gt 0</script></span>为学习率.每次迭代时参数更新的差值<span class="arithmatex"><span class="MathJax_Preview">\Delta \theta_t</span><script type="math/tex">\Delta \theta_t</script></span>的定义为
+$$
+\Delta \theta_t = \theta_t - \theta</em>{t-1}
+$$
+<span class="arithmatex"><span class="MathJax_Preview">\Delta \theta_t</span><script type="math/tex">\Delta \theta_t</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{g}_t</span><script type="math/tex">\boldsymbol{g}_t</script></span>并不需要完全一致.<span class="arithmatex"><span class="MathJax_Preview">\Delta \theta_t</span><script type="math/tex">\Delta \theta_t</script></span>为每次迭代时参数的实际更新方向，即<span class="arithmatex"><span class="MathJax_Preview">\theta_t = \theta_{t-1}+\Delta \theta_t</span><script type="math/tex">\theta_t = \theta_{t-1}+\Delta \theta_t</script></span>.在标准的梯度下降算法中<span class="arithmatex"><span class="MathJax_Preview">\Delta \theta_t=-\alpha \boldsymbol{g}_t</span><script type="math/tex">\Delta \theta_t=-\alpha \boldsymbol{g}_t</script></span>
+从上面公式可以看到，影响梯度下降算法的的主要因素有三方面：(1)批量大小；（2）学习率；（3）梯度估计.</p>
+<h4 id="1">(1)批量大小选择<a class="headerlink" href="#1" title="Permanent link">&para;</a></h4>
+<p>在具体实现中，梯度下降法可以分为:<code>批量梯度下降</code>、<code>随机梯度下降</code>以及<code>小批量梯度下降</code>三种形式.根据不同的数据量和参数量，可以选择一种具体的实现形式.在训练深度神经网络时，训练数据的规模通常都比较大.如果在梯度下降时，每次迭代都要计算整个训练数据上的梯度，这就需要比较多的计算资源.另外大规模训练集中的数据通常会非常冗余，也没有必要在整个训练集上计算梯度.因此，在训练深度神经网络时，经常使用小批量梯度下降法(Mini-Batch Gradient Descent).</p>
+<p>在小批量梯度下降法中，批量大小(Batch Size)对网络优化的影响也非常大.一般而言，批量大小不影响随机梯度的期望，但是会影响随机梯度的方差.批量大小越大，随机梯度的方差越小，引入的噪声也越小，训练也越稳定，因此可以设置较大的学习率.而批量大小较小时，需要设置较小的学习率，否则模型会不收敛.学习率通常要随着批量大小的增大而相应地增大.一个简单有效的方法是<code>线性缩放规则(Linear Scaling Rule)</code>:当批量大小增加<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>倍时，学习率也增加<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>倍.线性缩放规则往往在批量大小比较小时适用，当批量大小非常大时，线性缩放会使得训练不稳定.</p>
+<blockquote>
+<p>BatchSize：批大小。即每次训练在训练集中取batchsize个样本训练；
+Iteration：1个iteration等于使用batchsize个样本训练一次；
+Epoch：1个epoch等于使用训练集中的全部样本训练一次；</p>
+</blockquote>
+<h4 id="2">(2)学习率调整<a class="headerlink" href="#2" title="Permanent link">&para;</a></h4>
+<p>学习率是神经网络优化的重要超参数，在梯度下降法中，学习率<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>如果过大就不会收敛，如果过小则收敛速度太慢。常用的学习率调整方法有学习率衰减、周期性学习率调整以及一些自适应调整学习率的方法（如<code>AdaGrad/RMSprop/AdaDelta</code>等）。自适应学习率方法可以针对每个参数设置不同的学习率。</p>
+<h5 id="_7">学习率衰减<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h5>
+<p>从经验上看，学习率在一开始要保持大些来保证收敛速度，在收敛到最优点附件时要小些以避免来回振荡。假设初始化学习率为<span class="arithmatex"><span class="MathJax_Preview">\alpha_0</span><script type="math/tex">\alpha_0</script></span>,在第<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>次迭代时的学习率为<span class="arithmatex"><span class="MathJax_Preview">\alpha_t</span><script type="math/tex">\alpha_t</script></span>，常见的衰减方法有：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>阶段衰减</td>
+<td>每经过<span class="arithmatex"><span class="MathJax_Preview">T_1,T_2,…,T_m</span><script type="math/tex">T_1,T_2,…,T_m</script></span>次迭代将学习率衰减为原来的<span class="arithmatex"><span class="MathJax_Preview">\beta_1,\beta_2,…,\beta_m</span><script type="math/tex">\beta_1,\beta_2,…,\beta_m</script></span>倍,其中<span class="arithmatex"><span class="MathJax_Preview">T_m</span><script type="math/tex">T_m</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\beta_m \lt 1</span><script type="math/tex">\beta_m \lt 1</script></span>是根据设置的超参数</td>
+</tr>
+<tr>
+<td>逆时衰减</td>
+<td><span class="arithmatex"><span class="MathJax_Preview">\alpha_t=\alpha_0 \frac{1}{1+\beta\times t}</span><script type="math/tex">\alpha_t=\alpha_0 \frac{1}{1+\beta\times t}</script></span>,其中<span class="arithmatex"><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>为衰减率</td>
+</tr>
+<tr>
+<td>指数衰减</td>
+<td><span class="arithmatex"><span class="MathJax_Preview">\alpha_t=\alpha_0 \beta^t</span><script type="math/tex">\alpha_t=\alpha_0 \beta^t</script></span>,其中<span class="arithmatex"><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>为衰减率</td>
+</tr>
+<tr>
+<td>自然指数衰减</td>
+<td><span class="arithmatex"><span class="MathJax_Preview">\alpha_t=\alpha_0\operatorname{exp}(-\beta\times t)</span><script type="math/tex">\alpha_t=\alpha_0\operatorname{exp}(-\beta\times t)</script></span>,其中<span class="arithmatex"><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>为衰减率</td>
+</tr>
+<tr>
+<td>余弦衰减</td>
+<td><span class="arithmatex"><span class="MathJax_Preview">\alpha_t=\frac{1}{2}\alpha_0(1+\operatorname{cos}(\frac{t\pi}{T}))</span><script type="math/tex">\alpha_t=\frac{1}{2}\alpha_0(1+\operatorname{cos}(\frac{t\pi}{T}))</script></span>，其中<span class="arithmatex"><span class="MathJax_Preview">T</span><script type="math/tex">T</script></span>为总的迭代次数</td>
+</tr>
+</tbody>
+</table>
+<p><img src="assets/image-20210110111906651.png" alt="image-20210110111906651" style="zoom:30%;" /></p>
+<h5 id="_8">周期性学习率调整<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h5>
+<p>为了使得梯度下降法能够逃离鞍点或者尖锐最小值，一种经验性的方式是在训练过程中周期性地增大学习率。周期性地增大学习率虽然可能短期内损害优化过程，使得网络收敛的稳定性变差，但从长期来看有助于找到更好的局部最优解。常见的周期性调整学习率的方法有：三角循环学习率和带热重启的随机梯度下降，如图所示</p>
+<p><img src="assets/image-20210110112809892.png" alt="image-20210110112809892" style="zoom:30%;" /></p>
+<h5 id="adagrad">AdaGrad算法<a class="headerlink" href="#adagrad" title="Permanent link">&para;</a></h5>
+<p>在标准的梯度下降法中，每个参数在每次迭代时都使用相同的学习率.由于每个参数的维度上收敛速度都不相同，因此根据不同参数的收敛情况分别设置学习率.</p>
+<p><code>AdaGrad算法(Adaptive Gradient Algorithm)</code>是借鉴<span class="arithmatex"><span class="MathJax_Preview">\ell_1</span><script type="math/tex">\ell_1</script></span>正则化的思想，每次迭代时自适应地调整每个参数的学习率，在第<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>次迭代时，先计算每个参数梯度平方的累计值
+$$
+\begin{aligned}
+G_t 
+&amp;= G_{t-1}+ \boldsymbol{g}<em>t\odot\boldsymbol{g}_t \
+&amp;=\sum</em>{\tau_=1}^t \boldsymbol{g}<em>\tau \odot \boldsymbol{g}</em>{\tau}
+\end{aligned}
+$$
+其中<span class="arithmatex"><span class="MathJax_Preview">\odot</span><script type="math/tex">\odot</script></span>是按元素乘积，<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{g}_\tau\in \mathbb{R}^{|\theta|}</span><script type="math/tex">\boldsymbol{g}_\tau\in \mathbb{R}^{|\theta|}</script></span>是第<span class="arithmatex"><span class="MathJax_Preview">\tau</span><script type="math/tex">\tau</script></span>次迭代的梯度。
+<code>AdaGrad</code>算法的参数更新差值为
+$$
+\Delta\theta_t =-\frac{\alpha}{\sqrt{G_t+\epsilon}}\odot\boldsymbol{g}_t
+$$
+其中<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>是初始的学习率，<span class="arithmatex"><span class="MathJax_Preview">\epsilon</span><script type="math/tex">\epsilon</script></span>是为了防止数值稳定性而设置的非常小的常数，一般取值在<span class="arithmatex"><span class="MathJax_Preview">[\operatorname{e}^{-7},\operatorname{e}^{-10}]</span><script type="math/tex">[\operatorname{e}^{-7},\operatorname{e}^{-10}]</script></span>之间,上面公式中的开方、除法、加法等都是按元素进行的操作。
+在<code>AdaGrad</code>算法中，如果某个参数的偏导数累计比较大，其学习率相对较小；相反，如果偏导数累积较小，其学习率相对较大。但整体是随着迭代次数的增加，学习率逐渐缩小。<code>AdaGrad</code>算法的缺点是在经过一定次数的迭代依然没有找到最优解时，由于这时的学习率已经非常小，很难再继续找到最优点。</p>
+<h5 id="rmsprop">RMSprop算法<a class="headerlink" href="#rmsprop" title="Permanent link">&para;</a></h5>
+<p><code>RMSprop</code>算法是一种自适应学习率的方法，可能在有些情况下避免<code>AdaGrad</code>算法中学习率不断单调下降以至于过早衰减的缺点.
+<code>RMSprop</code>算法首先计算每次迭代梯度<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{g}_t</span><script type="math/tex">\boldsymbol{g}_t</script></span>平方的指数衰减移动平均，即
+$$
+\begin{aligned}
+    G_t 
+    &amp;= \beta G_{t-1}+(1-\beta)\boldsymbol{g}<em>t\odot\boldsymbol{g}_t\
+    &amp;= (1-\beta)\sum</em>{\tau=1}<sup>t\beta</sup>{t-\tau}\boldsymbol{g}<em>\tau \odot \boldsymbol{g}</em>\tau
+\end{aligned}
+$$
+其中<span class="arithmatex"><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>为衰减率，一般取值为0.9.<code>RMSprop</code>算法的参数更新差值为
+$$
+\Delta \theta_t=-\frac{\alpha}{\sqrt{G_t+\epsilon}}\odot \boldsymbol{g}_t
+$$
+其中<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>是初始的学习率，比如0.001。<code>RMSProp</code>算法和<code>AdaGrad</code>算法的区别在于<span class="arithmatex"><span class="MathJax_Preview">G_t</span><script type="math/tex">G_t</script></span>的计算由累积方式变成了指数衰减移动平均.在迭代过程中，每个参数的学习率并不是呈衰减趋势，既可以变小也可以变大.</p>
+<h5 id="adadelta">AdaDelta算法<a class="headerlink" href="#adadelta" title="Permanent link">&para;</a></h5>
+<p><code>AdaDelta</code>算法也是<code>AdaGrad</code>算法的一个改进.和<code>RMSprop</code>算法类似，<code>AdaDelta</code>算法也是通过梯度平方的指数衰减移动平均来调整学习率.
+$$
+\begin{aligned}
+    G_t 
+    &amp;= \beta G_{t-1}+(1-\beta)\boldsymbol{g}<em>t\odot\boldsymbol{g}_t= (1-\beta)\sum</em>{\tau=1}<sup>t\beta</sup>{t-\tau}\boldsymbol{g}<em>\tau \odot \boldsymbol{g}</em>\tau\
+    \Delta \theta_t
+    &amp;=-\frac{\alpha}{\sqrt{G_t+\epsilon}}\odot \boldsymbol{g}<em>t
+\end{aligned}
+$$
+此外，<code>AdaDelta</code>算法还引入了每次参数更新差值<span class="arithmatex"><span class="MathJax_Preview">\Delta\theta</span><script type="math/tex">\Delta\theta</script></span>的平方的指数衰减权移动平均.
+$$
+\Delta x_t^2 = \gamma \Delta x</em>{t-1}^2+(1-\gamma)\Delta\theta_t \odot \Delta\theta_t
+$$
+其中<span class="arithmatex"><span class="MathJax_Preview">\gamma</span><script type="math/tex">\gamma</script></span>为衰减率.因此<code>AdaDelta</code>算法参数的更新差值为
+$$
+\Delta\theta_t =-\frac{\sqrt{\Delta x_{t-1}^2+\epsilon}}{\sqrt{G_t+\epsilon}}\odot \boldsymbol{g}_t
+$$
+此时由于<span class="arithmatex"><span class="MathJax_Preview">\Delta\theta_t</span><script type="math/tex">\Delta\theta_t</script></span>还未知，因此只能计算到<span class="arithmatex"><span class="MathJax_Preview">\Delta x_{t-1}</span><script type="math/tex">\Delta x_{t-1}</script></span>.</p>
+<blockquote>
+<p>在原始论文中<span class="arithmatex"><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\gamma</span><script type="math/tex">\gamma</script></span>都是使用相同的超参数<span class="arithmatex"><span class="MathJax_Preview">\rho</span><script type="math/tex">\rho</script></span>，因此可见<code>AdaDelta</code>算法没有学习率这个超参数，只需要关注超参数<span class="arithmatex"><span class="MathJax_Preview">\rho</span><script type="math/tex">\rho</script></span></p>
+</blockquote>
+<h4 id="3">(3)梯度估计修正<a class="headerlink" href="#3" title="Permanent link">&para;</a></h4>
+<p>除了学习率的调整之外，还可以进行梯度估计的修正。在随机（小批量）梯度下降法中，如果每次选取样本数量较小，损失会呈现振荡的方式下降，也就是说，随机梯度下降法中每次迭代的梯度估计和整个训练集上的最有梯度并不一致，具有一定的随机性.一种有效地缓 解梯度估计随机性的方式是通过使用最近一段时间内的平均梯度来代替当前时 刻的随机梯度来作为参数更新的方向，从而提高优化速度.</p>
+<h5 id="_9">动量法<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h5>
+<p>动量法(Momentum Method)是用之前累积动量来替代真正的梯度.在第<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>次迭代时，计算==负梯度==的"加权移动平均"作为参数的更新方向.
+$$
+\begin{aligned}
+  \Delta \theta_t 
+  &amp;= \rho\Delta\theta_{t-1}-\alpha\boldsymbol{g}<em>t\
+  &amp;=-\alpha \sum</em>{\tau=1}^t \rho^{t-\tau}\boldsymbol{g}_\tau
+\end{aligned}
+$$
+其中<span class="arithmatex"><span class="MathJax_Preview">\rho</span><script type="math/tex">\rho</script></span>是动量因子，通常设置为0.9，<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>为学习率。这里<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{g}_t</span><script type="math/tex">\boldsymbol{g}_t</script></span>实际是对<span class="arithmatex"><span class="MathJax_Preview">\theta_{t-1}</span><script type="math/tex">\theta_{t-1}</script></span>的梯度即<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{g}_t=\boldsymbol{g}_{t}(\theta_{t-1})</span><script type="math/tex">\boldsymbol{g}_t=\boldsymbol{g}_{t}(\theta_{t-1})</script></span>。
+这样，每个参数的实际更新差值取决于最近一段时间内梯度的加权平均值.当某个参数在最近一段时间内的梯度方向不一致时，其真实的参数更新幅度变小;相反，当在最近一段时间内的梯度方向都一致时，其真实的参数更新幅度变大，起到加速作用.一般而言，在迭代初期，梯度方向都比较一致，动量法会起到加速作用，可以更快地到达最优点.在迭代后期，梯度方向会不一致，在收敛值附近振荡，动量法会起到减速作用，增加稳定性.</p>
+<h5 id="nesterov">Nesterov加速梯度<a class="headerlink" href="#nesterov" title="Permanent link">&para;</a></h5>
+<p><code>Nesterov加速梯度</code>(Nesterov Accelerated Gradient，NAG)是一种对动量法的改进,也称为Nesterov动量法,对比<code>Momentum动量法</code>的更新方向
+$$
+  \Delta \theta_t = \rho\Delta\theta_{t-1}-\alpha\boldsymbol{g}<em>t(\theta</em>{t-1})
+$$
+Nesterov的更新方向为
+$$
+    \Delta \theta_t = \rho\Delta\theta_{t-1}-\alpha\boldsymbol{g}<em>t(\theta</em>{t-1}+\rho\Delta\theta_{t-1})
+$$
+其中<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{g}_t(\theta_{t-1}+\rho\Delta\theta_{t-1})</span><script type="math/tex">\boldsymbol{g}_t(\theta_{t-1}+\rho\Delta\theta_{t-1})</script></span>表示损失函数在点<span class="arithmatex"><span class="MathJax_Preview">(\theta_{t-1}+\rho\Delta\theta_{t-1})</span><script type="math/tex">(\theta_{t-1}+\rho\Delta\theta_{t-1})</script></span>的偏导数.所以NAG本质上是多考虑了目标函数的二阶导信息，可以加速收敛了,其实所谓“往前看”的说法.</p>
+<h5 id="adam">Adam算法<a class="headerlink" href="#adam" title="Permanent link">&para;</a></h5>
+<p><code>Adam</code>算法(<code>Adaptive Moment Estimation Algorithm</code>)可以看作动量法和<code>RMSprop</code>算法的结合，不但使用动量作为参数更新方向，而且可以自适应调整学习率.
+$$
+\begin{aligned}
+M_{t} &amp;=\beta_{1} M_{t-1}+\left(1-\beta_{1}\right) \boldsymbol{g}<em>{t} \
+G</em>{t}=&amp; \beta_{2} G_{t-1}+\left(1-\beta_{2}\right) \boldsymbol{g}<em>{t} \odot \boldsymbol{g}</em>{t}
+\end{aligned}
+$$
+假设 <span class="arithmatex"><span class="MathJax_Preview">M_0= 0, G_0 = 0</span><script type="math/tex">M_0= 0, G_0 = 0</script></span>，那么在迭代初期 <span class="arithmatex"><span class="MathJax_Preview">M_t</span><script type="math/tex">M_t</script></span> 和 <span class="arithmatex"><span class="MathJax_Preview">G_t</span><script type="math/tex">G_t</script></span> 的值会比真实的均值和方差要小.特别是当<span class="arithmatex"><span class="MathJax_Preview">\beta_1</span><script type="math/tex">\beta_1</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\beta_2</span><script type="math/tex">\beta_2</script></span>都接近1 时,偏差会很大.因此,需要对偏差进行修正.
+$$
+\begin{aligned}
+   \hat{M}<em>{t} &amp;= \frac{M</em>{t}}{1-\beta_1^t} \
+    \hat{G}<em>{t} &amp;= \frac{G</em>{t}}{1-\beta_2^t}
+\end{aligned}
+$$
+<code>Adam</code>算法的参数更新为
+$$
+\Delta \theta_t =-\frac{\alpha}{\sqrt{\hat{G}_t+\epsilon}}\hat{M}_t
+$$
+其中通常<span class="arithmatex"><span class="MathJax_Preview">\beta_1=0.9,\beta_2=0.99</span><script type="math/tex">\beta_1=0.9,\beta_2=0.99</script></span>,学习率<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>设置为0.001，并且也可以进行衰减如<span class="arithmatex"><span class="MathJax_Preview">\alpha_t=\alpha_0/\sqrt{t}</span><script type="math/tex">\alpha_t=\alpha_0/\sqrt{t}</script></span>.</p>
+<p><code>Adam</code>算法是<code>RMSprop</code>算法和动量法的结合，因此一种自然的<code>Adam</code>算法改进是引入Nesterov加速度，称为<code>Nadam</code>算法。</p>
+<h5 id="_10">梯度截断<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h5>
+<p>在深度神经网络或循环神经网络中，除了梯度消失之外，梯度爆炸也是影响学习效率的主要因素.在基于梯度下降的优化过程中，如果梯度突然增大，用大的梯度更新参数反而会导致其远离最优点.为了避免这种情况，当梯度的模大于一定阈值时，就对梯度进行截断，称为<code>梯度截断(Gradient Clipping)</code>.
+梯度截断是一种比较简单的启发式方法，把梯度的模限定在一个区间，当梯度的模小于或大于这个区间时就进行截断.一般截断的方式有以下几种:</p>
+<h6 id="1_1">(1)按值截断<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h6>
+<p>在第<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>次迭代时，梯度为<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{g}_t</span><script type="math/tex">\boldsymbol{g}_t</script></span>，给定一个区间<span class="arithmatex"><span class="MathJax_Preview">[a,b]</span><script type="math/tex">[a,b]</script></span>，如果一个参数的梯度小于<span class="arithmatex"><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span>时，就将其设为<span class="arithmatex"><span class="MathJax_Preview">a</span><script type="math/tex">a</script></span>;如果大于<span class="arithmatex"><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span>时，就将其设为<span class="arithmatex"><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span>.
+$$
+\boldsymbol{g}_t=\operatorname{max}(\operatorname{min}(\boldsymbol{g}_t,b),a)
+$$</p>
+<h6 id="2_1">(2)按模截断<a class="headerlink" href="#2_1" title="Permanent link">&para;</a></h6>
+<p>将梯度的模截断到一个给定的截断阈值<span class="arithmatex"><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span>. 如果<span class="arithmatex"><span class="MathJax_Preview">||\boldsymbol{g}_t||^2 ≤ b</span><script type="math/tex">||\boldsymbol{g}_t||^2 ≤ b</script></span>，保持<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{g}_t</span><script type="math/tex">\boldsymbol{g}_t</script></span>不变.如果<span class="arithmatex"><span class="MathJax_Preview">||\boldsymbol{g}_t||^2&gt;b</span><script type="math/tex">||\boldsymbol{g}_t||^2>b</script></span>，令 
+$$
+\boldsymbol{g}_t=\frac{b}{||\boldsymbol{g}_t||}\boldsymbol{g}_t
+$$</p>
+<p>总结</p>
+<p><img src="assets/1630478-20190411233311229-350428673.png" alt="img" style="zoom:50%;" /></p>
+<h3 id="_11">参数初始化<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<p>使用梯度下降法来进行优化网络参数时，参数初始值的选取十分关键，关系到网络的优化效率和泛化能力。参数初始化的方式通常有以下三种：
+1. 预训练初始化：不同的参数初始值会收敛到不同的局部最优解，虽然这些局部最优解在训练集上的损失比较接近，但是它们的泛化能力差异很大，一个好的初始值会使得网络收敛到一个泛化能力高的局部最优解。通常情况下，一个已经在大规模数据上训练过的模型可以提供一个好的参数初初始值，这种方法被称为预训练初始化。预训练初始化通常会提升模型的泛化能力的一种解释是预训练任务起到了一定的正则化作用。
+2. 固定初始值初始化：对于一些特殊的参数，可以根据用一个特殊的固定值来进行初始化，如：
+   + 偏置Bias通常设置为0，但有时可以根据某些经验值可以提高效率；
+   + LSTM网络中遗忘门的偏置往往设置为1或2，使得时序上的梯度变大；
+   + 对Relu激活函数，有时将偏置设置为0.01，使得Relu在初期训练时更加容易激活；
+3. 随机值初始化：在线性模型的训练中（如感知器和Logistic回归）中，一般将参数全部初始化为0，但是在神经网络中就会出现问题，因为如果参数都是0，在第一遍前向计算时，所有的隐藏层神经元激活值都是相同的；那么在反向传播中，所有权重的更新也都相同，从而导致隐藏层神经元灭有区分性，这种现象也称为对称权重现象，为了打破这个平衡，比较好的方式是对每个参数都随机初始化，使得不同神经元之间的区分性更好。比较常见的三种随机初始化方法有：基于固定方差的参数初始化、基于方差缩放的参数初始化和正交初始化方法。</p>
+<h4 id="_12">基于固定方差的参数初始化<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h4>
+<p>一种简单的随机初始化方法是从一个固定均值（通常为0）和方差<span class="arithmatex"><span class="MathJax_Preview">\sigma</span><script type="math/tex">\sigma</script></span>的分布中采样来生成参数的初始值，主要有两种常见的采样方法：
+1. 高斯分布初始化：使用一个高斯分布<span class="arithmatex"><span class="MathJax_Preview">\mathcal{N}(0,\sigma^2)</span><script type="math/tex">\mathcal{N}(0,\sigma^2)</script></span>对每个参数进行随机初始化
+2. 均匀分布初始化：在一个给定区间<span class="arithmatex"><span class="MathJax_Preview">[-r,r]</span><script type="math/tex">[-r,r]</script></span>内采用均匀分布来随机初始化</p>
+<blockquote>
+<p>假设随机变量<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>在区间<span class="arithmatex"><span class="MathJax_Preview">[a,b]</span><script type="math/tex">[a,b]</script></span>内均匀分布，则其方差为
+$$
+\operatorname{var}(x)=\frac{(b-a)^2}{12}
+<span class="arithmatex"><span class="MathJax_Preview"><span class="arithmatex"><span class="MathJax_Preview">若使用区间为</span><script type="math/tex">若使用区间为</script></span>[-r,r][-r,r]</span><script type="math/tex"><span class="arithmatex"><span class="MathJax_Preview">若使用区间为</span><script type="math/tex">若使用区间为</script></span>[-r,r][-r,r]</script></span>的均分分布采样，且满足<span class="arithmatex"><span class="MathJax_Preview">\operatorname{var}(x)=\sigma^2</span><script type="math/tex">\operatorname{var}(x)=\sigma^2</script></span>时，则<span class="arithmatex"><span class="MathJax_Preview">r</span><script type="math/tex">r</script></span>的取值为
+$$
+r=\sqrt{3\sigma^2}
+$$</p>
+</blockquote>
+<p>基于固定方差的随机初始化方法中，比较关键的是如何设置方差<span class="arithmatex"><span class="MathJax_Preview">\sigma^2</span><script type="math/tex">\sigma^2</script></span>，如果参数范围取得太小：
++ 导致神经元的输出太小，进过多层以后信号就慢慢消失了；
++ 使得<code>sigmoid</code>激活函数在0附近，基本上是近似线性的，从而导致激活函数失去了非线性能力。</p>
+<p>如果参数范围取得太大，会导致输入状态过大，对于<code>sigmoid</code>激活函数而言，激活值变得饱和，梯度将近于0，从而导致梯度消失问题。为了降低固定方差对网络性能以及优化效率的影响，基于固定方差的随机 初始化方法一般需要配合逐层归一化来使用</p>
+<h4 id="_13">基于方差缩放的参数初始化<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h4>
+<p>一般而言，参数初始化的区间应该根据神经元的性质进行差异化的设置。如果一个神经元的输入连接很多，它的每个输入连接上的权重就应该小一些，以避免神经元的输出过大或者过饱和。
+ 初始化一个深度网络时，为了缓解梯度消失或者爆炸问题，需要尽可能保持每个神经元的输入和输出的方差一致，根据神经元的连接数量来自适应地调整初始化分布的方差，这类方法被称为方差缩放。</p>
+<p>##### Xavier初始化
+ 假设在一个神经网络中，第<span class="arithmatex"><span class="MathJax_Preview">l</span><script type="math/tex">l</script></span>层的一个神经元<span class="arithmatex"><span class="MathJax_Preview">a^l</span><script type="math/tex">a^l</script></span>，其接受前一层的<span class="arithmatex"><span class="MathJax_Preview">M_{l-1}</span><script type="math/tex">M_{l-1}</script></span>个神经元的输出<span class="arithmatex"><span class="MathJax_Preview">a_{i}^{l-1},1\le i \le M_{l-1}</span><script type="math/tex">a_{i}^{l-1},1\le i \le M_{l-1}</script></span>
+$$
+a<sup>{l}=f(\sum_{i=1}</sup>{M_{l-1}}w_{i}^l a_{i}^{l-1})
+$$
+ 其中<span class="arithmatex"><span class="MathJax_Preview">f(\cdot)</span><script type="math/tex">f(\cdot)</script></span>为激活函数，这里为了简单起见，零激活函数为恒等函数即<span class="arithmatex"><span class="MathJax_Preview">f(x)=x</span><script type="math/tex">f(x)=x</script></span>.
+ 假设<span class="arithmatex"><span class="MathJax_Preview">w_i^{l}</span><script type="math/tex">w_i^{l}</script></span>和<span class="arithmatex"><span class="MathJax_Preview">a_i^{l-1}</span><script type="math/tex">a_i^{l-1}</script></span>的均值都为0，并且互相独立，则<span class="arithmatex"><span class="MathJax_Preview">a^{l}</span><script type="math/tex">a^{l}</script></span>的均值为
+$$
+ \mathbb{E}[a<sup>l]=\mathbb{E}[\sum_{i=1}</sup>{M_{l-1}}w_{i}^l a_{i}^{l-1}]
+= \sum_{i=1}<sup>{M_{l-1}}\mathbb{E}[w_i</sup>l]\mathbb{E}[a_i^{l-1}]=0
+$$
+ <span class="arithmatex"><span class="MathJax_Preview">a^l</span><script type="math/tex">a^l</script></span>的方差为
+$$
+ var(a<sup>l)=\operatorname{var}(\sum_{i=1}</sup>{M_{l-1}}w_{i}^l a_{i}^{l-1})
+ =\sum_{i=1}^{M_{l-1}} \operatorname{var}(w_i<sup>l)\operatorname{var}(a_i</sup>{l-1})
+ =M_{l-1} \operatorname{var}(w_i<sup>l)\operatorname{var}(a_i</sup>{l-1})
+$$
+从公式可以看出，输入信号的方差在经过该神经元后被放大或缩小了<span class="arithmatex"><span class="MathJax_Preview">M_{l-1}\operatorname{var}(w_i^l)</span><script type="math/tex">M_{l-1}\operatorname{var}(w_i^l)</script></span>倍。为了使得在经过多层网络后，信号不被过分放大或过分缩小，应该尽可能保持每个神经元的输入和输出的方差一致，即<span class="arithmatex"><span class="MathJax_Preview">M_{l-1}\operatorname{var}(w_i^l)</span><script type="math/tex">M_{l-1}\operatorname{var}(w_i^l)</script></span>设置为1比较合理，即
+$$
+\operatorname{var}(w_i^l)=\frac{1}{M_{l-1}}
+$$
+同理，为了使得在反向传播中，误差信号也不被放大或缩小，需要将<span class="arithmatex"><span class="MathJax_Preview">w_i^l</span><script type="math/tex">w_i^l</script></span>的方差保持为
+$$
+\operatorname{var}(w_i^l)=\frac{1}{M_l}
+$$
+作为折中，考虑信号在前向和后向传播中都不被放大或缩小，可以设置为
+$$
+\operatorname{var}(w_i^l)=\frac{2}{M_{l}+M_{l-1}}
+$$
+虽然在Xavier初始化中假设激活函数为恒等函数，但是Xavier初始化也适用于Logistic函数和Tanh函数，在实际使用中，通常将方差<span class="arithmatex"><span class="MathJax_Preview">\frac{2}{M_{l}+M_{l-1}}</span><script type="math/tex">\frac{2}{M_{l}+M_{l-1}}</script></span>乘以一个缩放因子<span class="arithmatex"><span class="MathJax_Preview">\rho</span><script type="math/tex">\rho</script></span>.</p>
+<p>#####  He初始化
+ 当第<span class="arithmatex"><span class="MathJax_Preview">l</span><script type="math/tex">l</script></span>层神经元使用Relu激活函数时，通常有一半的神经元输出为0.因此其分布的方差也近似为使用恒等函数时的一半，这样，只考虑前向传播时，参数<span class="arithmatex"><span class="MathJax_Preview">w_i^l</span><script type="math/tex">w_i^l</script></span>的理想方差为
+$$
+ \operatorname{var}(w_i^l)=\frac{2}{M_{l-1}}
+$$
+因此当使用Relu激活函数时
++ 若采用高斯分布来初始化参数<span class="arithmatex"><span class="MathJax_Preview">w_i^l</span><script type="math/tex">w_i^l</script></span>，其方差为<span class="arithmatex"><span class="MathJax_Preview">\frac{2}{M_{l-1}}</span><script type="math/tex">\frac{2}{M_{l-1}}</script></span>;
++ 若采用区间为<span class="arithmatex"><span class="MathJax_Preview">[-r,r]</span><script type="math/tex">[-r,r]</script></span>的均分布来初始化参数<span class="arithmatex"><span class="MathJax_Preview">w_i^l</span><script type="math/tex">w_i^l</script></span>，则<span class="arithmatex"><span class="MathJax_Preview">r=\sqrt{\frac{6}{M_{l-1}}}</span><script type="math/tex">r=\sqrt{\frac{6}{M_{l-1}}}</script></span>
+这种初始化方法为He初始化</p>
+<p>下面给出Xavier初始化和He初始化的具体配置
+<img src="assets/image-20210116233629574.png" alt="image-20210116233629574" style="zoom:25%;" /></p>
+<h5 id="_14">正交初始化<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h5>
+<p>前面两种基于方差的初始化方法都是对权重矩阵中的每个参数进行独立采样.由于采样的随机性，采样出来的权重矩阵依然可能存在梯度消失或梯度爆炸问题.</p>
+<p>因此，一种更加直接的方式是将<span class="arithmatex"><span class="MathJax_Preview">𝑾^l</span><script type="math/tex">𝑾^l</script></span>初始化为正交矩阵，即<span class="arithmatex"><span class="MathJax_Preview">𝑾^l(𝑾^l)^{\top} = 𝐼</span><script type="math/tex">𝑾^l(𝑾^l)^{\top} = 𝐼</script></span>，这种方法称为正交初始化,正交初始化的具体实现过程可以分为两步:(1)用均值为0、方差为1的高斯分布初始化一个矩阵;(2)将这个矩阵用奇异值分解得到两个正交矩阵，并使用其中之一作为权重矩阵.</p>
+<p>根据正交矩阵的性质,这个线性网络在信息的前向传播过程和误差的反向传播过程中都具有范数保持性，从而可以避免在训练开始时就出现梯度消失或梯度爆炸现象.</p>
+<p>当在非线性神经网络中应用正交初始化时，通常需要将正交矩阵乘以一个缩放系数<span class="arithmatex"><span class="MathJax_Preview">\rho</span><script type="math/tex">\rho</script></span>.比如当激活函数为ReLU 时，激活函数在0附近的平均梯度可以近似为0.5.为了保持范数不变，缩放系数<span class="arithmatex"><span class="MathJax_Preview">\rho</span><script type="math/tex">\rho</script></span>可以设置为<span class="arithmatex"><span class="MathJax_Preview">\sqrt{2}</span><script type="math/tex">\sqrt{2}</script></span></p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="页脚">
+      
+        
+        <a href="../04_%E5%9F%BA%E4%BA%8E%E9%97%A8%E6%8E%A7%E7%9A%84%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 基于门控的循环神经网络" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              基于门控的循环神经网络
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../05_%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%282%29/" class="md-footer__link md-footer__link--next" aria-label="下一页: 数据预处理" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              数据预处理
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.6e54b5cd.min.js"></script>
+      
+        <script src="../../javascript/config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+    
+  </body>
+</html>
