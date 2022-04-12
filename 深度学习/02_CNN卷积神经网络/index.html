@@ -1090,11 +1090,11 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1deltaldeltall-1l-1deltal-1deltal-1" class="md-nav__link">
-    (1)已知池化层误差\delta^l\delta^l,求l-1l-1层误差\delta^{l-1}\delta^{l-1}
+  <a href="#deltaldeltall-1l-1deltal-1deltal-1" class="md-nav__link">
+    已知池化层误差\delta^l\delta^l,求l-1l-1层误差\delta^{l-1}\delta^{l-1}
   </a>
   
-    <nav class="md-nav" aria-label="(1)已知池化层误差\delta^l\delta^l,求l-1l-1层误差\delta^{l-1}\delta^{l-1}">
+    <nav class="md-nav" aria-label="已知池化层误差\delta^l\delta^l,求l-1l-1层误差\delta^{l-1}\delta^{l-1}">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1172,7 +1172,7 @@
   
     <li class="md-nav__item">
       <a href="../05_%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%281%29/" class="md-nav__link">
-        神经网络优化概述
+        神经网络优化概述(一)
       </a>
     </li>
   
@@ -1186,7 +1186,7 @@
   
     <li class="md-nav__item">
       <a href="../05_%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%282%29/" class="md-nav__link">
-        数据预处理
+        神经网络优化概述(二)
       </a>
     </li>
   
@@ -1214,7 +1214,7 @@
   
     <li class="md-nav__item">
       <a href="../07_%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" class="md-nav__link">
-        07 注意力机制
+        注意力机制
       </a>
     </li>
   
@@ -1289,11 +1289,11 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1deltaldeltall-1l-1deltal-1deltal-1" class="md-nav__link">
-    (1)已知池化层误差\delta^l\delta^l,求l-1l-1层误差\delta^{l-1}\delta^{l-1}
+  <a href="#deltaldeltall-1l-1deltal-1deltal-1" class="md-nav__link">
+    已知池化层误差\delta^l\delta^l,求l-1l-1层误差\delta^{l-1}\delta^{l-1}
   </a>
   
-    <nav class="md-nav" aria-label="(1)已知池化层误差\delta^l\delta^l,求l-1l-1层误差\delta^{l-1}\delta^{l-1}">
+    <nav class="md-nav" aria-label="已知池化层误差\delta^l\delta^l,求l-1l-1层误差\delta^{l-1}\delta^{l-1}">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1346,30 +1346,42 @@
 （1）参数太多：全连接前馈网络随着隐藏层神经元数量的增多，参数的规模也会急剧增加．这会导致整个神经网络的训练效率非常低，也很容易出现过拟合．
 （2）局部不变形特征：自然图像中的物体都具有局部不变性特征，比如尺度缩放、平移、旋转等操作不影响其语义信息．而全连接前馈网络很难提取这些局部不变性特征，一般需要进行数据增强来提高性能．卷积神经网络主要使用在图像和视频分析的各种任务（比如图像分类、人脸识别、物体识别、图像分割等）上，其准确率一般也远远超出了其他的神经网络模型.
 卷积神经网络是受生物学上感受野机制的启发而提出来的。一个神经元的感受野是指视网膜上的特定区域，只有这个区域内的刺激才能够激活神经元。目前的卷积神经网络一般是卷积层、池化层和全连接层交叉堆叠而成的前馈神经网络。卷积层+池化层的组合可以在隐藏层出现多次，在若干卷积层+池化层后面是全连接层，即DNN层。
-<img src="assets/CNN.jpg" alt="CNN.jpg" /></p>
+<img alt="CNN" height="95%" src="../assets/CNN.jpg" width="95%" /></p>
 <h2 id="cnn_1">CNN前向传播算法<a class="headerlink" href="#cnn_1" title="Permanent link">&para;</a></h2>
 <p>卷积神经网络对比全连接神经网络，其保留了图像像素的空间排列信息。卷积操作将一个全连接层稀疏连接和共享参数。如图展示了全连接层到卷积层的转换过程。</p>
-<p><img src="assets/CNN5.png" alt="CNN5.png" style="zoom:40%;"/></p>
+<p><img alt="CNN" height="65%" src="../assets/CNN5.png" width="65%" /></p>
 <p>在卷积神经网络的前向传播过程中，不同类型的网络层其前向传播方式不同。下面分别说明卷积层、池化层的前向传播过程。</p>
 <h3 id="1">（1）卷积层的前向传播计算<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
-<p>卷积层的前向传播公式为
-$$
-\boldsymbol{a}<em>{ij}^l 
-= \sigma(\boldsymbol{z}^l</em>{ij})
-=\sigma(\sum_{a}\sum_{b} \boldsymbol{W}<em>{a,b}^l \boldsymbol{a}</em>{i+a,j+b}<sup>{l-1}+\boldsymbol{b}</sup>l)  <br />
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{W}_{ab}^l</span><script type="math/tex">\boldsymbol{W}_{ab}^l</script></span>为卷积核的权重参数，<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{b}^l</span><script type="math/tex">\boldsymbol{b}^l</script></span>为偏置参数，<span class="arithmatex"><span class="MathJax_Preview">\sigma(\cdot)</span><script type="math/tex">\sigma(\cdot)</script></span>为卷积层节点的激活函数，<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{z}^l_{ij}</span><script type="math/tex">\boldsymbol{z}^l_{ij}</script></span>为卷积层节点的输入值，<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{a}^l_{ij}</span><script type="math/tex">\boldsymbol{a}^l_{ij}</script></span>为卷积层接点的激活值。卷积层前向传播计算的矩阵表达形式为：
-$$
+<p>卷积层的前向传播公式为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\boldsymbol{a}_{ij}^l 
+= \sigma(\boldsymbol{z}^l_{ij})
+=\sigma(\sum_{a}\sum_{b} \boldsymbol{W}_{a,b}^l \boldsymbol{a}_{i+a,j+b}^{l-1}+\boldsymbol{b}^l)    
+</div>
+<script type="math/tex; mode=display">
+\boldsymbol{a}_{ij}^l 
+= \sigma(\boldsymbol{z}^l_{ij})
+=\sigma(\sum_{a}\sum_{b} \boldsymbol{W}_{a,b}^l \boldsymbol{a}_{i+a,j+b}^{l-1}+\boldsymbol{b}^l)    
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{W}_{ab}^l</span><script type="math/tex">\boldsymbol{W}_{ab}^l</script></span>为卷积核的权重参数，<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{b}^l</span><script type="math/tex">\boldsymbol{b}^l</script></span>为偏置参数，<span class="arithmatex"><span class="MathJax_Preview">\sigma(\cdot)</span><script type="math/tex">\sigma(\cdot)</script></span>为卷积层节点的激活函数，<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{z}^l_{ij}</span><script type="math/tex">\boldsymbol{z}^l_{ij}</script></span>为卷积层节点的输入值，<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{a}^l_{ij}</span><script type="math/tex">\boldsymbol{a}^l_{ij}</script></span>为卷积层接点的激活值。卷积层前向传播计算的矩阵表达形式为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \boldsymbol{a}^l = \sigma(\boldsymbol{z}^l)
-=\sigma(\boldsymbol{W}^l \ast \boldsymbol{a}<sup>{l-1}+\boldsymbol{b}</sup>l)
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">\ast</span><script type="math/tex">\ast</script></span>表示卷积运算。</p>
+=\sigma(\boldsymbol{W}^l \ast \boldsymbol{a}^{l-1}+\boldsymbol{b}^l)
+</div>
+<script type="math/tex; mode=display">
+\boldsymbol{a}^l = \sigma(\boldsymbol{z}^l)
+=\sigma(\boldsymbol{W}^l \ast \boldsymbol{a}^{l-1}+\boldsymbol{b}^l)
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">\ast</span><script type="math/tex">\ast</script></span>表示卷积运算。</p>
 <blockquote>
 <p>在卷积神经网络中的卷积运算，并不是数学上"卷积"运算，而是"互相关"运算。由于卷积核的参数是通过模型数据训练得到，所以在卷积神经网络中这两者并没有明显的差异。后面涉及到的卷积都是按照以上公式定义的。</p>
 </blockquote>
-<p>举例说明卷积的计算过程，图中输入是一个二维的<code>3×4</code>的矩阵，卷积核是一个<code>2×2</code>的矩阵，这里假设卷积是一次移动一个像素。在输出矩阵中第<code>00</code>位置的元素计算值为<code>aw+bx+ey+fz</code>。最终得到一个<code>2×3</code>的矩阵。这里有一个<a href="https://cs231n.github.io/assets/conv-demo/index.html">动态图的链接</a>说明卷积的计算过程。
-<img src="assets/CNN2.png" alt="CNN2.png" style="zoom:80%;"/></p>
-<p><a href="https://zhuanlan.zhihu.com/p/29119239">CNN卷积层的计算细节</a></p>
+<p>举例说明卷积的计算过程，图中输入是一个二维的<code>3×4</code>的矩阵，卷积核是一个<code>2×2</code>的矩阵，这里假设卷积是一次移动一个像素。在输出矩阵中第<code>00</code>位置的元素计算值为<code>aw+bx+ey+fz</code>。最终得到一个<code>2×3</code>的矩阵。这里有一个<a href="https://cs231n.github.io/assets/conv-demo/index.html">动态图的链接</a>说明卷积的计算过程。</p>
+<p><img alt="CNN" height="85%" src="../assets/CNN2.png" width="85%" /></p>
 <h3 id="2">（2）池化层的前向传播计算<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
 <p>池化层是卷积神经网络中常用的组件之一，它最早见于<code>LeNet</code>网络中，被称之为<code>Subsample</code>.自从<code>AlexNet</code>之后采用<code>Pooling</code>命名。池化层是模仿人的视觉系统对数据进行降维，用更加高层次的特征表示图像。
 池化层的作用：
@@ -1377,97 +1389,194 @@ $$
 2.  提升模型的尺度和旋转不变性；
 3.  防止过拟合</p>
 <p>最常见的两种池化操作为==最大值池化==和==平均值池化==等。
-最大值池化的前向传播计算公式为
-$$
-\boldsymbol{a}<em>{ij}^l 
-= \sigma(\boldsymbol{z}^l</em>{ij})
-=\operatorname{max}({\boldsymbol{a}<em>{i+a,j+b}^{l-1}|a,b })
-$$
-平均值池化的前向传播计算公式为
-$$
-\boldsymbol{a}</em>{ij}^l 
+最大值池化的前向传播计算公式为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\boldsymbol{a}_{ij}^l 
 = \sigma(\boldsymbol{z}^l_{ij})
-=\frac{1}{k \times k}\sum_{a}<sup>{k1}\sum_{b}</sup>{k2}\boldsymbol{a}_{i+a,j+b}
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>为池化区域的大小。从上面的公式可以看到池化层是没有激活函数的，也没有权重参数和偏置采纳数。下图中给出最大值池化层的例子
-<img src="assets/pooling.png" alt="pooling.jpg" style="zoom:80%;"/></p>
+=\operatorname{max}(\{\boldsymbol{a}_{i+a,j+b}^{l-1}|a,b \})
+</div>
+<script type="math/tex; mode=display">
+\boldsymbol{a}_{ij}^l 
+= \sigma(\boldsymbol{z}^l_{ij})
+=\operatorname{max}(\{\boldsymbol{a}_{i+a,j+b}^{l-1}|a,b \})
+</script>
+</div>
+<p>平均值池化的前向传播计算公式为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\boldsymbol{a}_{ij}^l 
+= \sigma(\boldsymbol{z}^l_{ij})
+=\frac{1}{k \times k}\sum_{a}^{k1}\sum_{b}^{k2}\boldsymbol{a}_{i+a,j+b}
+</div>
+<script type="math/tex; mode=display">
+\boldsymbol{a}_{ij}^l 
+= \sigma(\boldsymbol{z}^l_{ij})
+=\frac{1}{k \times k}\sum_{a}^{k1}\sum_{b}^{k2}\boldsymbol{a}_{i+a,j+b}
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>为池化区域的大小。从上面的公式可以看到池化层是没有激活函数的，也没有权重参数和偏置采纳数。下图中给出最大值池化层的例子
+<img alt="CNN" height="75%" src="../assets/pooling.png" width="75%&quot;" /></p>
 <h2 id="_1">误差反向传播算法<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>在卷积神经网络的误差反向传播过程中，不同类型的网络层结构其反向传播方式也有所不同，首先回顾下DNN神经网络的反向传播公式.
-关于第<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>层的第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>个神经元错误量<span class="arithmatex"><span class="MathJax_Preview">\delta_j^l</span><script type="math/tex">\delta_j^l</script></span>定义为
-$$
+关于第<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>层的第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>个神经元错误量<span class="arithmatex"><span class="MathJax_Preview">\delta_j^l</span><script type="math/tex">\delta_j^l</script></span>定义为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \delta_j^l =\frac{\partial C}{\partial \boldsymbol{z}^l_j} 
-$$
-最后一层关于错误量<span class="arithmatex"><span class="MathJax_Preview">\delta^L</span><script type="math/tex">\delta^L</script></span>的公式为
-$$
-\begin{aligned}
+</div>
+<script type="math/tex; mode=display">
+\delta_j^l =\frac{\partial C}{\partial \boldsymbol{z}^l_j} 
+</script>
+</div>
+<p>最后一层关于错误量<span class="arithmatex"><span class="MathJax_Preview">\delta^L</span><script type="math/tex">\delta^L</script></span>的公式为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
     \delta^L_j 
-    &amp;= \frac{\partial C}{\partial \boldsymbol{z}^L_j}\
-    &amp;=\frac{\partial C}{\partial \boldsymbol{a}^L_j} \frac{\partial \boldsymbol{a}^L_j }{\partial \boldsymbol{z}^L_j}\
+    &amp;= \frac{\partial C}{\partial \boldsymbol{z}^L_j}\\
+    &amp;=\frac{\partial C}{\partial \boldsymbol{a}^L_j} \frac{\partial \boldsymbol{a}^L_j }{\partial \boldsymbol{z}^L_j}\\
     &amp;=\frac{\partial C}{\partial \boldsymbol{a}^L_j} \sigma^\prime (\boldsymbol{z}^L_j)
     \tag{BP-1}
-\end{aligned}
-$$</p>
-<p>已知第<span class="arithmatex"><span class="MathJax_Preview">l+1</span><script type="math/tex">l+1</script></span>层的<span class="arithmatex"><span class="MathJax_Preview">\delta^{l+1}_j</span><script type="math/tex">\delta^{l+1}_j</script></span>，求第<span class="arithmatex"><span class="MathJax_Preview">l</span><script type="math/tex">l</script></span>层的错误量<span class="arithmatex"><span class="MathJax_Preview">\delta^{l+1}_j</span><script type="math/tex">\delta^{l+1}_j</script></span>公式
-$$
-\begin{aligned}
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+    \delta^L_j 
+    &= \frac{\partial C}{\partial \boldsymbol{z}^L_j}\\
+    &=\frac{\partial C}{\partial \boldsymbol{a}^L_j} \frac{\partial \boldsymbol{a}^L_j }{\partial \boldsymbol{z}^L_j}\\
+    &=\frac{\partial C}{\partial \boldsymbol{a}^L_j} \sigma^\prime (\boldsymbol{z}^L_j)
+    \tag{BP-1}
+\end{align}
+</script>
+</div>
+<p>已知第<span class="arithmatex"><span class="MathJax_Preview">l+1</span><script type="math/tex">l+1</script></span>层的<span class="arithmatex"><span class="MathJax_Preview">\delta^{l+1}_j</span><script type="math/tex">\delta^{l+1}_j</script></span>，求第<span class="arithmatex"><span class="MathJax_Preview">l</span><script type="math/tex">l</script></span>层的错误量<span class="arithmatex"><span class="MathJax_Preview">\delta^{l+1}_j</span><script type="math/tex">\delta^{l+1}_j</script></span>公式</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
     \delta^l_j 
-        &amp;=\frac{\partial C}{\partial \boldsymbol{z}<em>j^l}\
-        &amp;=\sum_k \frac{\partial C}{\partial \boldsymbol{z}_k^{l+1}} \frac{\partial \boldsymbol{z}_k^{l+1}}{\partial \boldsymbol{a}^l_j} \frac{\boldsymbol{a}<sup>l_j}{\boldsymbol{z}</sup>l_j}\
-        &amp;=\sum_k \delta_k^{l+1} \boldsymbol{W}</em>{kj}^{l+1} \sigma^\prime (\boldsymbol{z}_j^l)  \tag{BP-2}
-\end{aligned}
-$$</p>
-<p>前馈神经网络中代价函数对于权重的改变速率公式
-$$
-\begin{aligned}
-    \frac{\partial C}{\partial \boldsymbol{W}<em>{jk}^{l}}
-        &amp;=\frac{\partial C}{\partial \boldsymbol{z}_k^{l}} \frac{\partial \boldsymbol{z}_k^{l}}{\partial \boldsymbol{W}</em>{jk}^{l}}\
-        &amp;=\delta^l_j \boldsymbol{a}^{l-1}<em>k \tag{BP-3}
-\end{aligned}
-$$
-前馈神经网络中代价函数对于偏置的改变速率公式
-$$
-\begin{aligned}
-    \frac{\partial C}{\partial \boldsymbol{b}</em>{j}^{l}}
-        &amp;=\frac{\partial C}{\partial \boldsymbol{z}<em>j^{l}} \frac{\partial \boldsymbol{z}_j^{l}}{\partial \boldsymbol{b}</em>{j}^{l}}\
-        &amp;=\delta^l_j \cdot 1 \
+        &amp;=\frac{\partial C}{\partial \boldsymbol{z}_j^l}\\
+        &amp;=\sum_k \frac{\partial C}{\partial \boldsymbol{z}_k^{l+1}} \frac{\partial \boldsymbol{z}_k^{l+1}}{\partial \boldsymbol{a}^l_j} \frac{\boldsymbol{a}^l_j}{\boldsymbol{z}^l_j}\\
+        &amp;=\sum_k \delta_k^{l+1} \boldsymbol{W}_{kj}^{l+1} \sigma^\prime (\boldsymbol{z}_j^l)  \tag{BP-2}
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+    \delta^l_j 
+        &=\frac{\partial C}{\partial \boldsymbol{z}_j^l}\\
+        &=\sum_k \frac{\partial C}{\partial \boldsymbol{z}_k^{l+1}} \frac{\partial \boldsymbol{z}_k^{l+1}}{\partial \boldsymbol{a}^l_j} \frac{\boldsymbol{a}^l_j}{\boldsymbol{z}^l_j}\\
+        &=\sum_k \delta_k^{l+1} \boldsymbol{W}_{kj}^{l+1} \sigma^\prime (\boldsymbol{z}_j^l)  \tag{BP-2}
+\end{align}
+</script>
+</div>
+<p>前馈神经网络中代价函数对于权重的改变速率公式</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+    \frac{\partial C}{\partial \boldsymbol{W}_{jk}^{l}}
+        &amp;=\frac{\partial C}{\partial \boldsymbol{z}_k^{l}} \frac{\partial \boldsymbol{z}_k^{l}}{\partial \boldsymbol{W}_{jk}^{l}}\\
+        &amp;=\delta^l_j \boldsymbol{a}^{l-1}_k \tag{BP-3}
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+    \frac{\partial C}{\partial \boldsymbol{W}_{jk}^{l}}
+        &=\frac{\partial C}{\partial \boldsymbol{z}_k^{l}} \frac{\partial \boldsymbol{z}_k^{l}}{\partial \boldsymbol{W}_{jk}^{l}}\\
+        &=\delta^l_j \boldsymbol{a}^{l-1}_k \tag{BP-3}
+\end{align}
+</script>
+</div>
+<p>前馈神经网络中代价函数对于偏置的改变速率公式</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+    \frac{\partial C}{\partial \boldsymbol{b}_{j}^{l}}
+        &amp;=\frac{\partial C}{\partial \boldsymbol{z}_j^{l}} \frac{\partial \boldsymbol{z}_j^{l}}{\partial \boldsymbol{b}_{j}^{l}}\\
+        &amp;=\delta^l_j \cdot 1 \\
         &amp;=\delta^l_j \tag{BP-4}
-\end{aligned}
-$$</p>
-<h3 id="1deltaldeltall-1l-1deltal-1deltal-1">(1)已知池化层误差<span class="arithmatex"><span class="MathJax_Preview">\delta^l</span><script type="math/tex">\delta^l</script></span>,求<span class="arithmatex"><span class="MathJax_Preview">l-1</span><script type="math/tex">l-1</script></span>层误差<span class="arithmatex"><span class="MathJax_Preview">\delta^{l-1}</span><script type="math/tex">\delta^{l-1}</script></span><a class="headerlink" href="#1deltaldeltall-1l-1deltal-1deltal-1" title="Permanent link">&para;</a></h3>
-<p>根据前面的相关推导，易知
-$$
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+    \frac{\partial C}{\partial \boldsymbol{b}_{j}^{l}}
+        &=\frac{\partial C}{\partial \boldsymbol{z}_j^{l}} \frac{\partial \boldsymbol{z}_j^{l}}{\partial \boldsymbol{b}_{j}^{l}}\\
+        &=\delta^l_j \cdot 1 \\
+        &=\delta^l_j \tag{BP-4}
+\end{align}
+</script>
+</div>
+<h3 id="deltaldeltall-1l-1deltal-1deltal-1">已知池化层误差<span class="arithmatex"><span class="MathJax_Preview">\delta^l</span><script type="math/tex">\delta^l</script></span>,求<span class="arithmatex"><span class="MathJax_Preview">l-1</span><script type="math/tex">l-1</script></span>层误差<span class="arithmatex"><span class="MathJax_Preview">\delta^{l-1}</span><script type="math/tex">\delta^{l-1}</script></span><a class="headerlink" href="#deltaldeltall-1l-1deltal-1deltal-1" title="Permanent link">&para;</a></h3>
+<p>根据前面的相关推导，易知</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+    \delta^{l-1}_{ij} 
+        &amp;=\frac{\partial C}{\partial \boldsymbol{z}_{ij}^{l-1}}\\
+        &amp;=\sum_{m}\sum_{n} \frac{\partial C}{\partial \boldsymbol{z}_{mm}^{l}} 
+        \frac{\partial \boldsymbol{z}_{mm}^{l}}{\partial \boldsymbol{a}_{ij}^{l-1}} 
+        \frac{\partial \boldsymbol{a}_{ij}^{l-1}}{\partial \boldsymbol{z}_{ij}^{l-1}} \\
+        &amp;=\sum_{m}\sum_{n} \delta_{mn}^l \frac{\partial \boldsymbol{z}_{mm}^{l}}{\partial \boldsymbol{a}_{ij}^{l-1}}  \sigma^\prime(\boldsymbol{z}_{ij}^{l-1})
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+    \delta^{l-1}_{ij} 
+        &=\frac{\partial C}{\partial \boldsymbol{z}_{ij}^{l-1}}\\
+        &=\sum_{m}\sum_{n} \frac{\partial C}{\partial \boldsymbol{z}_{mm}^{l}} 
+        \frac{\partial \boldsymbol{z}_{mm}^{l}}{\partial \boldsymbol{a}_{ij}^{l-1}} 
+        \frac{\partial \boldsymbol{a}_{ij}^{l-1}}{\partial \boldsymbol{z}_{ij}^{l-1}} \\
+        &=\sum_{m}\sum_{n} \delta_{mn}^l \frac{\partial \boldsymbol{z}_{mm}^{l}}{\partial \boldsymbol{a}_{ij}^{l-1}}  \sigma^\prime(\boldsymbol{z}_{ij}^{l-1})
+\end{align}
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial C}{\partial \boldsymbol{z}_{mn}^{l}}=\delta_{mn}^l</span><script type="math/tex">\frac{\partial C}{\partial \boldsymbol{z}_{mn}^{l}}=\delta_{mn}^l</script></span>，<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial \boldsymbol{a}_{ij}^{l-1}}{\partial \boldsymbol{z}_{ij}^{l-1}}=\sigma^\prime(\boldsymbol{z}_{ij}^{l-1})</span><script type="math/tex">\frac{\partial \boldsymbol{a}_{ij}^{l-1}}{\partial \boldsymbol{z}_{ij}^{l-1}}=\sigma^\prime(\boldsymbol{z}_{ij}^{l-1})</script></span>,现在只剩下求<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial \boldsymbol{z}_{mn}^{l}}{\partial \boldsymbol{a}_{ij}^{l-1}}</span><script type="math/tex">\frac{\partial \boldsymbol{z}_{mn}^{l}}{\partial \boldsymbol{a}_{ij}^{l-1}}</script></span>。</p>
+<p>假设现在池化大小为<code>2×2</code>的区域，若使用平均值池化有</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\boldsymbol{z}_{mn}^l=\frac{1}{4}(\boldsymbol{a}_{2m,2n}^{l-1}+\boldsymbol{a}_{2m,2n+1}^{l-1}+\boldsymbol{a}_{2m+1,2n}^{l-1}+\boldsymbol{a}_{2m+1,2n+1}^{l-1})
+</div>
+<script type="math/tex; mode=display">
+\boldsymbol{z}_{mn}^l=\frac{1}{4}(\boldsymbol{a}_{2m,2n}^{l-1}+\boldsymbol{a}_{2m,2n+1}^{l-1}+\boldsymbol{a}_{2m+1,2n}^{l-1}+\boldsymbol{a}_{2m+1,2n+1}^{l-1})
+</script>
+</div>
+<p>若使用最大值池化有</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\boldsymbol{z}_{mn}^l=\operatorname{max}(\boldsymbol{a}_{2m,2n}^{l-1}+\boldsymbol{a}_{2m,2n+1}^{l-1}+\boldsymbol{a}_{2m+1,2n}^{l-1}+\boldsymbol{a}_{2m+1,2n+1}^{l-1})
+</div>
+<script type="math/tex; mode=display">
+\boldsymbol{z}_{mn}^l=\operatorname{max}(\boldsymbol{a}_{2m,2n}^{l-1}+\boldsymbol{a}_{2m,2n+1}^{l-1}+\boldsymbol{a}_{2m+1,2n}^{l-1}+\boldsymbol{a}_{2m+1,2n+1}^{l-1})
+</script>
+</div>
+<p>可以看出，对于平均值池化有</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\frac{\partial \boldsymbol{z}^l_{mn}}{\partial\boldsymbol{a}_{ij}^{l-1}}=\frac{1}{k \times k}
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial \boldsymbol{z}^l_{mn}}{\partial\boldsymbol{a}_{ij}^{l-1}}=\frac{1}{k \times k}
+</script>
+</div>
+<p>对于最大值池化有</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\frac{\partial \boldsymbol{z}^l_{mn}}{\partial\boldsymbol{a}_{ij}^{l-1}}=
+\left\{
 \begin{aligned}
-    \delta^{l-1}<em>{ij} 
-        &amp;=\frac{\partial C}{\partial \boldsymbol{z}</em>{ij}^{l-1}}\
-        &amp;=\sum_{m}\sum_{n} \frac{\partial C}{\partial \boldsymbol{z}<em>{mm}^{l}} 
-        \frac{\partial \boldsymbol{z}</em>{mm}^{l}}{\partial \boldsymbol{a}<em>{ij}^{l-1}} 
-        \frac{\partial \boldsymbol{a}</em>{ij}^{l-1}}{\partial \boldsymbol{z}<em>{ij}^{l-1}} \
-        &amp;=\sum</em>{m}\sum_{n} \delta_{mn}^l \frac{\partial \boldsymbol{z}<em>{mm}^{l}}{\partial \boldsymbol{a}</em>{ij}^{l-1}}  \sigma<sup>\prime(\boldsymbol{z}_{ij}</sup>{l-1})
-\end{aligned}
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial C}{\partial \boldsymbol{z}_{mn}^{l}}=\delta_{mn}^l</span><script type="math/tex">\frac{\partial C}{\partial \boldsymbol{z}_{mn}^{l}}=\delta_{mn}^l</script></span>，<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial \boldsymbol{a}_{ij}^{l-1}}{\partial \boldsymbol{z}_{ij}^{l-1}}=\sigma^\prime(\boldsymbol{z}_{ij}^{l-1})</span><script type="math/tex">\frac{\partial \boldsymbol{a}_{ij}^{l-1}}{\partial \boldsymbol{z}_{ij}^{l-1}}=\sigma^\prime(\boldsymbol{z}_{ij}^{l-1})</script></span>,现在只剩下求<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial \boldsymbol{z}_{mn}^{l}}{\partial \boldsymbol{a}_{ij}^{l-1}}</span><script type="math/tex">\frac{\partial \boldsymbol{z}_{mn}^{l}}{\partial \boldsymbol{a}_{ij}^{l-1}}</script></span>。</p>
-<p>假设现在池化大小为<code>2×2</code>的区域，若使用平均值池化有
-$$
-\boldsymbol{z}<em>{mn}<sup>l=\frac{1}{4}(\boldsymbol{a}_{2m,2n}</sup>{l-1}+\boldsymbol{a}</em>{2m,2n+1}<sup>{l-1}+\boldsymbol{a}_{2m+1,2n}</sup>{l-1}+\boldsymbol{a}<em>{2m+1,2n+1}^{l-1})
-$$
-若使用最大值池化有
-$$
-\boldsymbol{z}</em>{mn}<sup>l=\operatorname{max}(\boldsymbol{a}_{2m,2n}</sup>{l-1}+\boldsymbol{a}<em>{2m,2n+1}<sup>{l-1}+\boldsymbol{a}_{2m+1,2n}</sup>{l-1}+\boldsymbol{a}</em>{2m+1,2n+1}^{l-1})
-$$</p>
-<p>可以看出，对于平均值池化有
-$$
-\frac{\partial \boldsymbol{z}<sup>l_{mn}}{\partial\boldsymbol{a}_{ij}</sup>{l-1}}=\frac{1}{k \times k}
-$$
-对于最大值池化有
-$$
-\frac{\partial \boldsymbol{z}<sup>l_{mn}}{\partial\boldsymbol{a}_{ij}</sup>{l-1}}=
-\left{
-\begin{aligned}
-1 \qquad  \boldsymbol{a}<em>{mn}^{l-1} =\operatorname{max}\
-0 \qquad  \boldsymbol{a}</em>{mn}^{l-1} \ne \operatorname{max} 
+1 \qquad  \boldsymbol{a}_{mn}^{l-1} =\operatorname{max}\\
+0 \qquad  \boldsymbol{a}_{mn}^{l-1} \ne \operatorname{max} 
 \end{aligned}
 \right.
-$$</p>
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial \boldsymbol{z}^l_{mn}}{\partial\boldsymbol{a}_{ij}^{l-1}}=
+\left\{
+\begin{aligned}
+1 \qquad  \boldsymbol{a}_{mn}^{l-1} =\operatorname{max}\\
+0 \qquad  \boldsymbol{a}_{mn}^{l-1} \ne \operatorname{max} 
+\end{aligned}
+\right.
+</script>
+</div>
 <p>根据上面的公式，可以对池化层的误差矩阵<span class="arithmatex"><span class="MathJax_Preview">\delta^l</span><script type="math/tex">\delta^l</script></span>进行<code>上采样</code>操作.
 假设现有池化大小为<code>2×2</code>的区域，误差矩阵如下
 $$
@@ -1480,162 +1589,322 @@ $$
   \right]
 $$</p>
 <h4 id="1_1">① 平均值池化后的上采样过程<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h4>
-<p>若是平均值池化，那么上采样后每个区域的值为池化层对应的值在乘以<span class="arithmatex"><span class="MathJax_Preview">\frac{1}{k\times k}</span><script type="math/tex">\frac{1}{k\times k}</script></span>，得到
-$$
+<p>若是平均值池化，那么上采样后每个区域的值为池化层对应的值在乘以<span class="arithmatex"><span class="MathJax_Preview">\frac{1}{k\times k}</span><script type="math/tex">\frac{1}{k\times k}</script></span>，得到</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \operatorname{upsample}(\delta^l) =
  \left[
  \begin{matrix}
-   0.5 &amp; 0.5 &amp; 1 &amp; 1\
-   0.5 &amp; 0.5 &amp; 1 &amp; 1\
-   1.5 &amp; 1.5 &amp; 2 &amp; 2\
-   1.5 &amp; 1.5 &amp; 2 &amp; 2\
+   0.5 &amp; 0.5 &amp; 1 &amp; 1\\
+   0.5 &amp; 0.5 &amp; 1 &amp; 1\\
+   1.5 &amp; 1.5 &amp; 2 &amp; 2\\
+   1.5 &amp; 1.5 &amp; 2 &amp; 2\\
   \end{matrix}
   \right]
-$$
-这个过程可以用以下公式表示
-$$
+</div>
+<script type="math/tex; mode=display">
+\operatorname{upsample}(\delta^l) =
+ \left[
+ \begin{matrix}
+   0.5 & 0.5 & 1 & 1\\
+   0.5 & 0.5 & 1 & 1\\
+   1.5 & 1.5 & 2 & 2\\
+   1.5 & 1.5 & 2 & 2\\
+  \end{matrix}
+  \right]
+</script>
+</div>
+<p>这个过程可以用以下公式表示</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \operatorname{upsample}(\delta^l) = \delta^l \otimes 1_{k \times k} \odot\frac{1}{k \times k}
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">\otimes</span><script type="math/tex">\otimes</script></span>表示克罗内克积，<span class="arithmatex"><span class="MathJax_Preview">\odot</span><script type="math/tex">\odot</script></span>表示按元素相乘。</p>
+</div>
+<script type="math/tex; mode=display">
+\operatorname{upsample}(\delta^l) = \delta^l \otimes 1_{k \times k} \odot\frac{1}{k \times k}
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">\otimes</span><script type="math/tex">\otimes</script></span>表示克罗内克积，<span class="arithmatex"><span class="MathJax_Preview">\odot</span><script type="math/tex">\odot</script></span>表示按元素相乘。</p>
 <h4 id="2_1">② 最大值池化后的上采样过程<a class="headerlink" href="#2_1" title="Permanent link">&para;</a></h4>
-<p>若为最大值，上采样时先将误差矩阵<span class="arithmatex"><span class="MathJax_Preview">\delta^l</span><script type="math/tex">\delta^l</script></span>还原，再将每个区域的误差移动到前向传播时最大值所在的位置上。比如记录的位置分别为<code>(0,0),(1,3),(3,1),(2,2)</code>则上采样<span class="arithmatex"><span class="MathJax_Preview">\operatorname{upsample}(\delta^l)</span><script type="math/tex">\operatorname{upsample}(\delta^l)</script></span>的过程为
-$$
+<p>若为最大值，上采样时先将误差矩阵<span class="arithmatex"><span class="MathJax_Preview">\delta^l</span><script type="math/tex">\delta^l</script></span>还原，再将每个区域的误差移动到前向传播时最大值所在的位置上。比如记录的位置分别为<code>(0,0),(1,3),(3,1),(2,2)</code>则上采样<span class="arithmatex"><span class="MathJax_Preview">\operatorname{upsample}(\delta^l)</span><script type="math/tex">\operatorname{upsample}(\delta^l)</script></span>的过程为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \delta^l =
  \left[
  \begin{matrix}
-   2 &amp; 4 \
-   6 &amp; 8 \
+   2 &amp; 4 \\
+   6 &amp; 8 \\
   \end{matrix}
   \right]
 \Longrightarrow
  \left[
  \begin{matrix}
-   0 &amp; 0 &amp; 0 &amp; 0\
-   0 &amp; 2 &amp; 4 &amp; 0\
-   0 &amp; 6 &amp; 8 &amp; 0\
-   0 &amp; 0 &amp; 0 &amp; 0\
+   0 &amp; 0 &amp; 0 &amp; 0\\
+   0 &amp; 2 &amp; 4 &amp; 0\\
+   0 &amp; 6 &amp; 8 &amp; 0\\
+   0 &amp; 0 &amp; 0 &amp; 0\\
   \end{matrix}
   \right]
 \Longrightarrow
    \left[
  \begin{matrix}
-   2 &amp; 0 &amp; 0 &amp; 0\
-   0 &amp; 0 &amp; 0 &amp; 4\
-   0 &amp; 0 &amp; 8 &amp; 0\
-   0 &amp; 6 &amp; 0 &amp; 0\
+   2 &amp; 0 &amp; 0 &amp; 0\\
+   0 &amp; 0 &amp; 0 &amp; 4\\
+   0 &amp; 0 &amp; 8 &amp; 0\\
+   0 &amp; 6 &amp; 0 &amp; 0\\
   \end{matrix}
   \right]
-$$</p>
-<p>最后，在已知池化层误差<span class="arithmatex"><span class="MathJax_Preview">\delta^l</span><script type="math/tex">\delta^l</script></span>,求<span class="arithmatex"><span class="MathJax_Preview">l-1</span><script type="math/tex">l-1</script></span>层误差<span class="arithmatex"><span class="MathJax_Preview">\delta^{l-1}</span><script type="math/tex">\delta^{l-1}</script></span>为
-$$
-\begin{aligned}
+</div>
+<script type="math/tex; mode=display">
+\delta^l =
+ \left[
+ \begin{matrix}
+   2 & 4 \\
+   6 & 8 \\
+  \end{matrix}
+  \right]
+\Longrightarrow
+ \left[
+ \begin{matrix}
+   0 & 0 & 0 & 0\\
+   0 & 2 & 4 & 0\\
+   0 & 6 & 8 & 0\\
+   0 & 0 & 0 & 0\\
+  \end{matrix}
+  \right]
+\Longrightarrow
+   \left[
+ \begin{matrix}
+   2 & 0 & 0 & 0\\
+   0 & 0 & 0 & 4\\
+   0 & 0 & 8 & 0\\
+   0 & 6 & 0 & 0\\
+  \end{matrix}
+  \right]
+</script>
+</div>
+<p>最后，在已知池化层误差<span class="arithmatex"><span class="MathJax_Preview">\delta^l</span><script type="math/tex">\delta^l</script></span>,求<span class="arithmatex"><span class="MathJax_Preview">l-1</span><script type="math/tex">l-1</script></span>层误差<span class="arithmatex"><span class="MathJax_Preview">\delta^{l-1}</span><script type="math/tex">\delta^{l-1}</script></span>为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
         \delta^{l-1} 
-        &amp;=\frac{\partial C}{\partial \boldsymbol{z}^{l-1}}\
-        &amp;=\frac{\partial C}{\partial \boldsymbol{z}^{l}} \frac{\partial \boldsymbol{z}^{l}}{\partial \boldsymbol{a}^{l-1}} \frac{\partial \boldsymbol{a}^{l-1}}{\partial \boldsymbol{z}^{l-1}}\
-        &amp;=\operatorname{upsample}(\delta^l) \odot \sigma<sup>\prime(\boldsymbol{z}</sup>{l-1})
+        &amp;=\frac{\partial C}{\partial \boldsymbol{z}^{l-1}}\\
+        &amp;=\frac{\partial C}{\partial \boldsymbol{z}^{l}} \frac{\partial \boldsymbol{z}^{l}}{\partial \boldsymbol{a}^{l-1}} \frac{\partial \boldsymbol{a}^{l-1}}{\partial \boldsymbol{z}^{l-1}}\\
+        &amp;=\operatorname{upsample}(\delta^l) \odot \sigma^\prime(\boldsymbol{z}^{l-1})
         \tag{CNN-1}
-\end{aligned}
-$$</p>
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+        \delta^{l-1} 
+        &=\frac{\partial C}{\partial \boldsymbol{z}^{l-1}}\\
+        &=\frac{\partial C}{\partial \boldsymbol{z}^{l}} \frac{\partial \boldsymbol{z}^{l}}{\partial \boldsymbol{a}^{l-1}} \frac{\partial \boldsymbol{a}^{l-1}}{\partial \boldsymbol{z}^{l-1}}\\
+        &=\operatorname{upsample}(\delta^l) \odot \sigma^\prime(\boldsymbol{z}^{l-1})
+        \tag{CNN-1}
+\end{align}
+</script>
+</div>
 <h3 id="2deltaldeltall-1l-1deltal-1deltal-1">(2)已知卷积层误差<span class="arithmatex"><span class="MathJax_Preview">\delta^l</span><script type="math/tex">\delta^l</script></span>,求<span class="arithmatex"><span class="MathJax_Preview">l-1</span><script type="math/tex">l-1</script></span>层误差<span class="arithmatex"><span class="MathJax_Preview">\delta^{l-1}</span><script type="math/tex">\delta^{l-1}</script></span><a class="headerlink" href="#2deltaldeltall-1l-1deltal-1deltal-1" title="Permanent link">&para;</a></h3>
-<p>根据前面的公式<code>BP-2</code>有
-$$
-\delta^{l-1}<em>j 
-=\sum_k \delta_k^{l} \boldsymbol{W}</em>{kj}^{l} \sigma^\prime (\boldsymbol{z}_j^{l-1}) 
-$$
-第<span class="arithmatex"><span class="MathJax_Preview">l-1</span><script type="math/tex">l-1</script></span>层中的第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>个结点误差<span class="arithmatex"><span class="MathJax_Preview">\delta^{l-1}_j</span><script type="math/tex">\delta^{l-1}_j</script></span>与前面的第<span class="arithmatex"><span class="MathJax_Preview">l</span><script type="math/tex">l</script></span>层中与其相连的神经元<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>的误差<span class="arithmatex"><span class="MathJax_Preview">\delta^l_k</span><script type="math/tex">\delta^l_k</script></span>以及两者之间的权重有关。由于卷积操作是局部感知和权重共享，因此误差传播过程和DNN是有所差异的。
+<p>根据前面的公式<code>BP-2</code>有</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\delta^{l-1}_j 
+=\sum_k \delta_k^{l} \boldsymbol{W}_{kj}^{l} \sigma^\prime (\boldsymbol{z}_j^{l-1}) 
+</div>
+<script type="math/tex; mode=display">
+\delta^{l-1}_j 
+=\sum_k \delta_k^{l} \boldsymbol{W}_{kj}^{l} \sigma^\prime (\boldsymbol{z}_j^{l-1}) 
+</script>
+</div>
+<p>第<span class="arithmatex"><span class="MathJax_Preview">l-1</span><script type="math/tex">l-1</script></span>层中的第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>个结点误差<span class="arithmatex"><span class="MathJax_Preview">\delta^{l-1}_j</span><script type="math/tex">\delta^{l-1}_j</script></span>与前面的第<span class="arithmatex"><span class="MathJax_Preview">l</span><script type="math/tex">l</script></span>层中与其相连的神经元<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>的误差<span class="arithmatex"><span class="MathJax_Preview">\delta^l_k</span><script type="math/tex">\delta^l_k</script></span>以及两者之间的权重有关。由于卷积操作是局部感知和权重共享，因此误差传播过程和DNN是有所差异的。
 首先给出一个具体的示例说明计算推导的过程以便于理解，之后再给出详尽的证明。现假设输入的矩阵大小为<code>3×3</code>,卷积核的大小为<code>2×2</code>，输出的矩阵大小为<code>2×2</code></p>
-<p><img src="assets/CNN3.png" alt="CNN3.png"/></p>
+<p><img alt="CNN" height="95%" src="../assets/CNN3.png" width="95%" /></p>
 <p>将上面的卷积过程展开，并用神经网络的形式描述——权重上的标注是其在卷积核中的位置,相同的权重用同一种颜色表示.</p>
-<p><img src="assets/CNN4.png" alt="CNN4.png"/>
-根据上图的连接情况可以如下的计算过程</p>
-<p>$$
-\begin{aligned}
-    \delta<sup>{l-1}_{00}&amp;=(\delta</sup>{l}<em>{00}\boldsymbol{W}<sup>{l}_{00})\sigma</sup>{\prime}(\boldsymbol{z}^{l-1}</em>{00})\
-    \delta<sup>{l-1}_{01}&amp;=(\delta</sup>{l}<em>{00}\boldsymbol{W}<sup>{l}_{01}+\delta</sup>{l}</em>{01}\boldsymbol{W}<sup>{l}_{00})\sigma</sup>{\prime}(\boldsymbol{z}^{l-1}<em>{01})\
-    \delta<sup>{l-1}_{02}&amp;=(\delta</sup>{l}</em>{01}\boldsymbol{W}<sup>{l}_{01})\sigma</sup>{\prime}(\boldsymbol{z}^{l-1}<em>{02})\
-    \delta<sup>{l-1}_{10}&amp;=(\delta</sup>{l}</em>{00}\boldsymbol{W}<sup>{l}_{10}+\delta</sup>{l}<em>{10}\boldsymbol{W}<sup>{l}_{00})\sigma</sup>{\prime}(\boldsymbol{z}^{l-1}</em>{10})\
-    \delta<sup>{l-1}_{11}&amp;=(\delta</sup>{l}<em>{00}\boldsymbol{W}<sup>{l}_{11}+\delta</sup>{l}</em>{01}\boldsymbol{W}<sup>{l}_{10}+\delta</sup>{l}<em>{10}\boldsymbol{W}<sup>{l}_{01}+\delta</sup>{l}</em>{11}\boldsymbol{W}<sup>{l}_{00})\sigma</sup>{\prime}(\boldsymbol{z}^{l-1}<em>{11})\
-    \delta<sup>{l-1}_{12}&amp;=(\delta</sup>{l}</em>{01}\boldsymbol{W}<sup>{l}_{11}+\delta</sup>{l}<em>{11}\boldsymbol{W}<sup>{l}_{01})\sigma</sup>{\prime}(\boldsymbol{z}^{l-1}</em>{12})\
-    \delta<sup>{l-1}_{20}&amp;=(\delta</sup>{l}<em>{10}\boldsymbol{W}<sup>{l}_{10})\sigma</sup>{\prime}(\boldsymbol{z}^{l-1}</em>{20})\
-    \delta<sup>{l-1}_{21}&amp;=(\delta</sup>{l}<em>{10}\boldsymbol{W}<sup>{l}_{11}+\delta</sup>{l}</em>{11}\boldsymbol{W}<sup>{l}_{10})\sigma</sup>{\prime}(\boldsymbol{z}^{l-1}<em>{21})\
-    \delta<sup>{l-1}_{22}&amp;=(\delta</sup>{l}</em>{11}\boldsymbol{W}<sup>{l}_{11})\sigma</sup>{\prime}(\boldsymbol{z}^{l-1}<em>{22})
-\end{aligned}
-$$
-可以将上面的9个式子用矩阵形式统一表示
-$$
+<p><img alt="CNN" height="50%" src="../assets/CNN4.png" width="50%" /></p>
+<p>根据上图的连接情况可以如下的计算过程</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+    \delta^{l-1}_{00}&amp;=(\delta^{l}_{00}\boldsymbol{W}^{l}_{00})\sigma^{\prime}(\boldsymbol{z}^{l-1}_{00})\\
+    \delta^{l-1}_{01}&amp;=(\delta^{l}_{00}\boldsymbol{W}^{l}_{01}+\delta^{l}_{01}\boldsymbol{W}^{l}_{00})\sigma^{\prime}(\boldsymbol{z}^{l-1}_{01})\\
+    \delta^{l-1}_{02}&amp;=(\delta^{l}_{01}\boldsymbol{W}^{l}_{01})\sigma^{\prime}(\boldsymbol{z}^{l-1}_{02})\\
+    \delta^{l-1}_{10}&amp;=(\delta^{l}_{00}\boldsymbol{W}^{l}_{10}+\delta^{l}_{10}\boldsymbol{W}^{l}_{00})\sigma^{\prime}(\boldsymbol{z}^{l-1}_{10})\\
+    \delta^{l-1}_{11}&amp;=(\delta^{l}_{00}\boldsymbol{W}^{l}_{11}+\delta^{l}_{01}\boldsymbol{W}^{l}_{10}+\delta^{l}_{10}\boldsymbol{W}^{l}_{01}+\delta^{l}_{11}\boldsymbol{W}^{l}_{00})\sigma^{\prime}(\boldsymbol{z}^{l-1}_{11})\\
+    \delta^{l-1}_{12}&amp;=(\delta^{l}_{01}\boldsymbol{W}^{l}_{11}+\delta^{l}_{11}\boldsymbol{W}^{l}_{01})\sigma^{\prime}(\boldsymbol{z}^{l-1}_{12})\\
+    \delta^{l-1}_{20}&amp;=(\delta^{l}_{10}\boldsymbol{W}^{l}_{10})\sigma^{\prime}(\boldsymbol{z}^{l-1}_{20})\\
+    \delta^{l-1}_{21}&amp;=(\delta^{l}_{10}\boldsymbol{W}^{l}_{11}+\delta^{l}_{11}\boldsymbol{W}^{l}_{10})\sigma^{\prime}(\boldsymbol{z}^{l-1}_{21})\\
+    \delta^{l-1}_{22}&amp;=(\delta^{l}_{11}\boldsymbol{W}^{l}_{11})\sigma^{\prime}(\boldsymbol{z}^{l-1}_{22})
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+    \delta^{l-1}_{00}&=(\delta^{l}_{00}\boldsymbol{W}^{l}_{00})\sigma^{\prime}(\boldsymbol{z}^{l-1}_{00})\\
+    \delta^{l-1}_{01}&=(\delta^{l}_{00}\boldsymbol{W}^{l}_{01}+\delta^{l}_{01}\boldsymbol{W}^{l}_{00})\sigma^{\prime}(\boldsymbol{z}^{l-1}_{01})\\
+    \delta^{l-1}_{02}&=(\delta^{l}_{01}\boldsymbol{W}^{l}_{01})\sigma^{\prime}(\boldsymbol{z}^{l-1}_{02})\\
+    \delta^{l-1}_{10}&=(\delta^{l}_{00}\boldsymbol{W}^{l}_{10}+\delta^{l}_{10}\boldsymbol{W}^{l}_{00})\sigma^{\prime}(\boldsymbol{z}^{l-1}_{10})\\
+    \delta^{l-1}_{11}&=(\delta^{l}_{00}\boldsymbol{W}^{l}_{11}+\delta^{l}_{01}\boldsymbol{W}^{l}_{10}+\delta^{l}_{10}\boldsymbol{W}^{l}_{01}+\delta^{l}_{11}\boldsymbol{W}^{l}_{00})\sigma^{\prime}(\boldsymbol{z}^{l-1}_{11})\\
+    \delta^{l-1}_{12}&=(\delta^{l}_{01}\boldsymbol{W}^{l}_{11}+\delta^{l}_{11}\boldsymbol{W}^{l}_{01})\sigma^{\prime}(\boldsymbol{z}^{l-1}_{12})\\
+    \delta^{l-1}_{20}&=(\delta^{l}_{10}\boldsymbol{W}^{l}_{10})\sigma^{\prime}(\boldsymbol{z}^{l-1}_{20})\\
+    \delta^{l-1}_{21}&=(\delta^{l}_{10}\boldsymbol{W}^{l}_{11}+\delta^{l}_{11}\boldsymbol{W}^{l}_{10})\sigma^{\prime}(\boldsymbol{z}^{l-1}_{21})\\
+    \delta^{l-1}_{22}&=(\delta^{l}_{11}\boldsymbol{W}^{l}_{11})\sigma^{\prime}(\boldsymbol{z}^{l-1}_{22})
+\end{align}
+</script>
+</div>
+<p>可以将上面的9个式子用矩阵形式统一表示</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \left[
  \begin{matrix}
-   0 &amp; 0 &amp; 0 &amp; 0\
-   0 &amp; \delta</em>{00}^l &amp; \delta_{01}^l &amp; 0\
-   0 &amp; \delta_{10}^l &amp; \delta_{11}^l &amp; 0\
-   0 &amp; 0 &amp; 0 &amp; 0\
+   0 &amp; 0 &amp; 0 &amp; 0\\
+   0 &amp; \delta_{00}^l &amp; \delta_{01}^l &amp; 0\\
+   0 &amp; \delta_{10}^l &amp; \delta_{11}^l &amp; 0\\
+   0 &amp; 0 &amp; 0 &amp; 0\\
   \end{matrix} 
 \right]
   \ast
   \left[
   \begin{matrix}
-\boldsymbol{W}<em>{00}^l &amp;\boldsymbol{W}</em>{01}^l \
-\boldsymbol{W}<em>{10}^l &amp; \boldsymbol{W}</em>{11}^l 
+\boldsymbol{W}_{00}^l &amp;\boldsymbol{W}_{01}^l \\
+\boldsymbol{W}_{10}^l &amp; \boldsymbol{W}_{11}^l 
   \end{matrix} 
   \right]
   \odot
 \left[
   \begin{matrix}
-\sigma<sup>{\prime}(\boldsymbol{z_{00}</sup>{l}}) &amp;\sigma<sup>{\prime}(\boldsymbol{z_{01}</sup>{l}}) &amp;\sigma<sup>{\prime}(\boldsymbol{z_{02}</sup>{l}})   \
-\sigma<sup>{\prime}(\boldsymbol{z_{10}</sup>{l}}) &amp;\sigma<sup>{\prime}(\boldsymbol{z_{11}</sup>{l}}) &amp;\sigma<sup>{\prime}(\boldsymbol{z_{12}</sup>{l}})   \
-\sigma<sup>{\prime}(\boldsymbol{z_{20}</sup>{l}}) &amp;\sigma<sup>{\prime}(\boldsymbol{z_{21}</sup>{l}}) &amp;\sigma<sup>{\prime}(\boldsymbol{z_{22}</sup>{l}}) <br />
+\sigma^{\prime}(\boldsymbol{z_{00}^{l}}) &amp;\sigma^{\prime}(\boldsymbol{z_{01}^{l}}) &amp;\sigma^{\prime}(\boldsymbol{z_{02}^{l}})   \\
+\sigma^{\prime}(\boldsymbol{z_{10}^{l}}) &amp;\sigma^{\prime}(\boldsymbol{z_{11}^{l}}) &amp;\sigma^{\prime}(\boldsymbol{z_{12}^{l}})   \\
+\sigma^{\prime}(\boldsymbol{z_{20}^{l}}) &amp;\sigma^{\prime}(\boldsymbol{z_{21}^{l}}) &amp;\sigma^{\prime}(\boldsymbol{z_{22}^{l}})   
   \end{matrix} 
   \right] =
   \left[
     \begin{matrix}
-\sigma_{00}^{l-1} &amp;\sigma_{01}^{l-1} &amp;\sigma_{02}^{l-1}   \ 
-\sigma_{10}^{l-1} &amp;\sigma_{11}^{l-1} &amp;\sigma_{12}^{l-1}   \ 
-\sigma_{20}^{l-1} &amp;\sigma_{21}^{l-1} &amp;\sigma_{22}^{l-1}   \ 
+\sigma_{00}^{l-1} &amp;\sigma_{01}^{l-1} &amp;\sigma_{02}^{l-1}   \\ 
+\sigma_{10}^{l-1} &amp;\sigma_{11}^{l-1} &amp;\sigma_{12}^{l-1}   \\ 
+\sigma_{20}^{l-1} &amp;\sigma_{21}^{l-1} &amp;\sigma_{22}^{l-1}   \\ 
   \end{matrix} 
   \right]
-$$
-先在误差矩阵<span class="arithmatex"><span class="MathJax_Preview">\delta^l</span><script type="math/tex">\delta^l</script></span>周围填上一圈0，然后将卷积核<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{W}^l</span><script type="math/tex">\boldsymbol{W}^l</script></span>旋转180,两者进行卷积，再与矩阵<span class="arithmatex"><span class="MathJax_Preview">\delta^{\prime}(\boldsymbol{z}^{l-1})</span><script type="math/tex">\delta^{\prime}(\boldsymbol{z}^{l-1})</script></span>按元素相乘，就得到了前一层的误差矩阵<span class="arithmatex"><span class="MathJax_Preview">\delta^{l-1}</span><script type="math/tex">\delta^{l-1}</script></span>，用数学公式表示为
-$$
-\delta<sup>{l-1}=\delta</sup>l \ast \operatorname{rot180}(\boldsymbol{W}<sup>l)\odot\sigma</sup>{\prime}(\boldsymbol{z}^{l-1})
+</div>
+<script type="math/tex; mode=display">
+\left[
+ \begin{matrix}
+   0 & 0 & 0 & 0\\
+   0 & \delta_{00}^l & \delta_{01}^l & 0\\
+   0 & \delta_{10}^l & \delta_{11}^l & 0\\
+   0 & 0 & 0 & 0\\
+  \end{matrix} 
+\right]
+  \ast
+  \left[
+  \begin{matrix}
+\boldsymbol{W}_{00}^l &\boldsymbol{W}_{01}^l \\
+\boldsymbol{W}_{10}^l & \boldsymbol{W}_{11}^l 
+  \end{matrix} 
+  \right]
+  \odot
+\left[
+  \begin{matrix}
+\sigma^{\prime}(\boldsymbol{z_{00}^{l}}) &\sigma^{\prime}(\boldsymbol{z_{01}^{l}}) &\sigma^{\prime}(\boldsymbol{z_{02}^{l}})   \\
+\sigma^{\prime}(\boldsymbol{z_{10}^{l}}) &\sigma^{\prime}(\boldsymbol{z_{11}^{l}}) &\sigma^{\prime}(\boldsymbol{z_{12}^{l}})   \\
+\sigma^{\prime}(\boldsymbol{z_{20}^{l}}) &\sigma^{\prime}(\boldsymbol{z_{21}^{l}}) &\sigma^{\prime}(\boldsymbol{z_{22}^{l}})   
+  \end{matrix} 
+  \right] =
+  \left[
+    \begin{matrix}
+\sigma_{00}^{l-1} &\sigma_{01}^{l-1} &\sigma_{02}^{l-1}   \\ 
+\sigma_{10}^{l-1} &\sigma_{11}^{l-1} &\sigma_{12}^{l-1}   \\ 
+\sigma_{20}^{l-1} &\sigma_{21}^{l-1} &\sigma_{22}^{l-1}   \\ 
+  \end{matrix} 
+  \right]
+</script>
+</div>
+<p>先在误差矩阵<span class="arithmatex"><span class="MathJax_Preview">\delta^l</span><script type="math/tex">\delta^l</script></span>周围填上一圈0，然后将卷积核<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{W}^l</span><script type="math/tex">\boldsymbol{W}^l</script></span>旋转180,两者进行卷积，再与矩阵<span class="arithmatex"><span class="MathJax_Preview">\delta^{\prime}(\boldsymbol{z}^{l-1})</span><script type="math/tex">\delta^{\prime}(\boldsymbol{z}^{l-1})</script></span>按元素相乘，就得到了前一层的误差矩阵<span class="arithmatex"><span class="MathJax_Preview">\delta^{l-1}</span><script type="math/tex">\delta^{l-1}</script></span>，用数学公式表示为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\delta^{l-1}=\delta^l \ast \operatorname{rot180}(\boldsymbol{W}^l)\odot\sigma^{\prime}(\boldsymbol{z}^{l-1})
 \tag{CNN-2}
-$$
-上面的推导是以一个简单的示例进行拼凑的"证明"，下面给出严格完整的数学形式.
-$$
-\begin{aligned}
-\delta_{i, j}^{l-1} &amp;=\frac{\partial C}{\partial \boldsymbol{z}<em>{i, j}^{l-1}} \
-&amp;=\sum</em>{m} \sum_{n} \frac{\partial C}{\partial \boldsymbol{z}<em>{m, n}^{l}} \frac{\partial \boldsymbol{z}</em>{m, n}^{l}}{\partial \boldsymbol{z}<em>{i, j}^{l-1}} \
-&amp;=\sum</em>{m} \sum_{n} \delta_{m, n}^{l} \frac{\partial \boldsymbol{z}<em>{m, n}^{l}}{\partial \boldsymbol{a}</em>{i, j}^{l-1}} \frac{\partial \boldsymbol{a}<em>{i, j}^{l-1}}{\partial \boldsymbol{z}</em>{i, j}^{l-1}} \
-&amp;=\sum_{m} \sum_{n} \delta_{m, n}^{l} \frac{\partial\left(\sum_{a} \sum_{b} \boldsymbol{W}<em>{a, b}^{l} \boldsymbol{a}</em>{m+a, n+b}<sup>{l-1}+b</sup>{l+1}\right)}{\partial \boldsymbol{a}<em>{i, j}^{l-1}} \sigma^{\prime}\left(\boldsymbol{z}</em>{i, j}^{l-1}\right) \
-&amp;\xlongequal[m+a=i]{n+b=j} \sum_{m} \sum_{n} \delta_{m, n}^{l} \boldsymbol{W}<em>{i-m, j-n}^{l} \sigma^{\prime}\left(\boldsymbol{z}</em>{i, j}^{l-1}\right)
-\end{aligned}
-$$
-将上面的式子写成矩阵的就是公式<code>CNN-2</code>了。</p>
-<p>在已知当前层的结点误差，那么第<span class="arithmatex"><span class="MathJax_Preview">l</span><script type="math/tex">l</script></span>层的卷积核节点的权重梯度公式为
-$$
-\begin{aligned}
-\frac{\partial C}{\partial \boldsymbol{W}<em>{i, j}^{l}} &amp;=\sum</em>{m} \sum_{n} \frac{\partial C}{\partial \boldsymbol{z}<em>{m, n}^{l}} \frac{\partial \boldsymbol{z}</em>{m, n}^{l}}{\partial \boldsymbol{W}<em>{i, j}^{l}} \
-&amp;=\sum</em>{m} \sum_{n} \delta_{m, n}^{l} \frac{\partial\left(\sum_{a} \sum_{b} \boldsymbol{W}<em>{a, b}^{l} \boldsymbol{a}</em>{m+a, n+b}<sup>{l-1}+\boldsymbol{b}</sup>{l}\right)}{\partial \boldsymbol{W}<em>{i, j}^{l}} \
-&amp; \xlongequal[a=i]{b=j} \sum</em>{m} \sum_{n} \delta_{m, n}^{l} \boldsymbol{a}_{m+i, n+j}^{l-1}
+</div>
+<script type="math/tex; mode=display">
+\delta^{l-1}=\delta^l \ast \operatorname{rot180}(\boldsymbol{W}^l)\odot\sigma^{\prime}(\boldsymbol{z}^{l-1})
+\tag{CNN-2}
+</script>
+</div>
+<p>上面的推导是以一个简单的示例进行拼凑的"证明"，下面给出严格完整的数学形式.</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+\delta_{i, j}^{l-1} &amp;=\frac{\partial C}{\partial \boldsymbol{z}_{i, j}^{l-1}} \\
+&amp;=\sum_{m} \sum_{n} \frac{\partial C}{\partial \boldsymbol{z}_{m, n}^{l}} \frac{\partial \boldsymbol{z}_{m, n}^{l}}{\partial \boldsymbol{z}_{i, j}^{l-1}} \\
+&amp;=\sum_{m} \sum_{n} \delta_{m, n}^{l} \frac{\partial \boldsymbol{z}_{m, n}^{l}}{\partial \boldsymbol{a}_{i, j}^{l-1}} \frac{\partial \boldsymbol{a}_{i, j}^{l-1}}{\partial \boldsymbol{z}_{i, j}^{l-1}} \\
+&amp;=\sum_{m} \sum_{n} \delta_{m, n}^{l} \frac{\partial\left(\sum_{a} \sum_{b} \boldsymbol{W}_{a, b}^{l} \boldsymbol{a}_{m+a, n+b}^{l-1}+b^{l+1}\right)}{\partial \boldsymbol{a}_{i, j}^{l-1}} \sigma^{\prime}\left(\boldsymbol{z}_{i, j}^{l-1}\right) \\
+&amp; \xrightarrow[m+a=i]{n+b=j} \sum_{m} \sum_{n} \delta_{m, n}^{l} \boldsymbol{W}_{i-m, j-n}^{l} \sigma^{\prime}\left(\boldsymbol{z}_{i, j}^{l-1}\right)
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\delta_{i, j}^{l-1} &=\frac{\partial C}{\partial \boldsymbol{z}_{i, j}^{l-1}} \\
+&=\sum_{m} \sum_{n} \frac{\partial C}{\partial \boldsymbol{z}_{m, n}^{l}} \frac{\partial \boldsymbol{z}_{m, n}^{l}}{\partial \boldsymbol{z}_{i, j}^{l-1}} \\
+&=\sum_{m} \sum_{n} \delta_{m, n}^{l} \frac{\partial \boldsymbol{z}_{m, n}^{l}}{\partial \boldsymbol{a}_{i, j}^{l-1}} \frac{\partial \boldsymbol{a}_{i, j}^{l-1}}{\partial \boldsymbol{z}_{i, j}^{l-1}} \\
+&=\sum_{m} \sum_{n} \delta_{m, n}^{l} \frac{\partial\left(\sum_{a} \sum_{b} \boldsymbol{W}_{a, b}^{l} \boldsymbol{a}_{m+a, n+b}^{l-1}+b^{l+1}\right)}{\partial \boldsymbol{a}_{i, j}^{l-1}} \sigma^{\prime}\left(\boldsymbol{z}_{i, j}^{l-1}\right) \\
+& \xrightarrow[m+a=i]{n+b=j} \sum_{m} \sum_{n} \delta_{m, n}^{l} \boldsymbol{W}_{i-m, j-n}^{l} \sigma^{\prime}\left(\boldsymbol{z}_{i, j}^{l-1}\right)
+\end{align}
+</script>
+</div>
+<p>将上面的式子写成矩阵的就是公式<code>CNN-2</code>了。</p>
+<p>在已知当前层的结点误差，那么第<span class="arithmatex"><span class="MathJax_Preview">l</span><script type="math/tex">l</script></span>层的卷积核节点的权重梯度公式为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+\frac{\partial C}{\partial \boldsymbol{W}_{i, j}^{l}} &amp;=\sum_{m} \sum_{n} \frac{\partial C}{\partial \boldsymbol{z}_{m, n}^{l}} \frac{\partial \boldsymbol{z}_{m, n}^{l}}{\partial \boldsymbol{W}_{i, j}^{l}} \\
+&amp;=\sum_{m} \sum_{n} \delta_{m, n}^{l} \frac{\partial\left(\sum_{a} \sum_{b} \boldsymbol{W}_{a, b}^{l} \boldsymbol{a}_{m+a, n+b}^{l-1}+\boldsymbol{b}^{l}\right)}{\partial \boldsymbol{W}_{i, j}^{l}} \\
+&amp; \xrightarrow[a=i]{b=j} \sum_{m} \sum_{n} \delta_{m, n}^{l} \boldsymbol{a}_{m+i, n+j}^{l-1}
 \tag{CNN-3}
-\end{aligned}
-$$
-上面公式的矩阵形式为
-$$
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial C}{\partial \boldsymbol{W}_{i, j}^{l}} &=\sum_{m} \sum_{n} \frac{\partial C}{\partial \boldsymbol{z}_{m, n}^{l}} \frac{\partial \boldsymbol{z}_{m, n}^{l}}{\partial \boldsymbol{W}_{i, j}^{l}} \\
+&=\sum_{m} \sum_{n} \delta_{m, n}^{l} \frac{\partial\left(\sum_{a} \sum_{b} \boldsymbol{W}_{a, b}^{l} \boldsymbol{a}_{m+a, n+b}^{l-1}+\boldsymbol{b}^{l}\right)}{\partial \boldsymbol{W}_{i, j}^{l}} \\
+& \xrightarrow[a=i]{b=j} \sum_{m} \sum_{n} \delta_{m, n}^{l} \boldsymbol{a}_{m+i, n+j}^{l-1}
+\tag{CNN-3}
+\end{align}
+</script>
+</div>
+<p>上面公式的矩阵形式为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \frac{\partial C}{\partial \boldsymbol{W}^{l}} =
 \delta^{l}\ast \boldsymbol{a}^{l-1}
 \tag{CNN-3}
-$$</p>
-<p>同理，在已知当前层的结点误差，那么第<span class="arithmatex"><span class="MathJax_Preview">l</span><script type="math/tex">l</script></span>层的卷积核节点的偏置梯度公式为
-$$
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial \boldsymbol{W}^{l}} =
+\delta^{l}\ast \boldsymbol{a}^{l-1}
+\tag{CNN-3}
+</script>
+</div>
+<p>同理，在已知当前层的结点误差，那么第<span class="arithmatex"><span class="MathJax_Preview">l</span><script type="math/tex">l</script></span>层的卷积核节点的偏置梯度公式为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{aligned}
-\frac{\partial C}{\partial \boldsymbol{b}^{l}} &amp;=\sum_{m} \sum_{n} \frac{\partial C}{\partial \boldsymbol{z}<em>{m, n}^{l}} \frac{\partial \boldsymbol{z}</em>{m, n}^{l}}{\partial \boldsymbol{b}^{l}} \
+\frac{\partial C}{\partial \boldsymbol{b}^{l}} &amp;=\sum_{m} \sum_{n} \frac{\partial C}{\partial \boldsymbol{z}_{m, n}^{l}} \frac{\partial \boldsymbol{z}_{m, n}^{l}}{\partial \boldsymbol{b}^{l}} \\
 &amp;=\sum_{m} \sum_{n} \delta_{m, n}^{l}
 \end{aligned}
-$$
-因为每一个卷积核只有一个共享的偏置参数，所以上面公式中<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{b}^{l} \in \mathbb{R}</span><script type="math/tex">\boldsymbol{b}^{l} \in \mathbb{R}</script></span>,是一个实数。将上面公式的矩阵形式为
-$$
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{\partial C}{\partial \boldsymbol{b}^{l}} &=\sum_{m} \sum_{n} \frac{\partial C}{\partial \boldsymbol{z}_{m, n}^{l}} \frac{\partial \boldsymbol{z}_{m, n}^{l}}{\partial \boldsymbol{b}^{l}} \\
+&=\sum_{m} \sum_{n} \delta_{m, n}^{l}
+\end{aligned}
+</script>
+</div>
+<p>因为每一个卷积核只有一个共享的偏置参数，所以上面公式中<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{b}^{l} \in \mathbb{R}</span><script type="math/tex">\boldsymbol{b}^{l} \in \mathbb{R}</script></span>,是一个实数。将上面公式的矩阵形式为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \frac{\partial C}{\partial \boldsymbol{b}^{l}} = \delta^l \tag{CNN-4}
-$$</p>
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial C}{\partial \boldsymbol{b}^{l}} = \delta^l \tag{CNN-4}
+</script>
+</div>
 <p>综上，CNN反向传播过程中四个重要公式<code>CNN-1</code>,<code>CNN-2</code>,<code>CNN-3</code>,<code>CNN-4</code>总结如下</p>
 <table>
 <thead>

@@ -1119,7 +1119,7 @@
   
     <li class="md-nav__item">
       <a href="../05_%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%281%29/" class="md-nav__link">
-        神经网络优化概述
+        神经网络优化概述(一)
       </a>
     </li>
   
@@ -1133,7 +1133,7 @@
   
     <li class="md-nav__item">
       <a href="../05_%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%282%29/" class="md-nav__link">
-        数据预处理
+        神经网络优化概述(二)
       </a>
     </li>
   
@@ -1161,7 +1161,7 @@
   
     <li class="md-nav__item">
       <a href="../07_%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" class="md-nav__link">
-        07 注意力机制
+        注意力机制
       </a>
     </li>
   
@@ -1293,62 +1293,115 @@
 </tr>
 </tbody>
 </table>
-<p>需要说明下这里<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{W}^l\in\mathbb{R}^{M_l\times M_{l-1}}</span><script type="math/tex">\boldsymbol{W}^l\in\mathbb{R}^{M_l\times M_{l-1}}</script></span>,没有将矩阵定义为<span class="arithmatex"><span class="MathJax_Preview">\mathbb{R}^{M_{l-1}\times M_{l}}</span><script type="math/tex">\mathbb{R}^{M_{l-1}\times M_{l}}</script></span> 的形式是为了避免在矩阵运算过程中进行转置操作。
-<img src="assets/dnn.svg" alt="dnn.svg" /></p>
-<p>对于第二层的输出<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{a}^2_1,\boldsymbol{a}^2_2,\boldsymbol{a}^2_3</span><script type="math/tex">\boldsymbol{a}^2_1,\boldsymbol{a}^2_2,\boldsymbol{a}^2_3</script></span>，有
-$$
+<p>需要说明下这里<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{W}^l\in\mathbb{R}^{M_l\times M_{l-1}}</span><script type="math/tex">\boldsymbol{W}^l\in\mathbb{R}^{M_l\times M_{l-1}}</script></span>,没有将矩阵定义为<span class="arithmatex"><span class="MathJax_Preview">\mathbb{R}^{M_{l-1}\times M_{l}}</span><script type="math/tex">\mathbb{R}^{M_{l-1}\times M_{l}}</script></span> 的形式是为了避免在矩阵运算过程中进行转置操作。</p>
+<p><img alt="image-dnn" src="../assets/dnn.svg" /></p>
+<p>对于第二层的输出<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{a}^2_1,\boldsymbol{a}^2_2,\boldsymbol{a}^2_3</span><script type="math/tex">\boldsymbol{a}^2_1,\boldsymbol{a}^2_2,\boldsymbol{a}^2_3</script></span>，有</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{aligned}
-\boldsymbol{a}<em>1<sup>2=\sigma(\boldsymbol{z}_1</sup>2) = \sigma(\boldsymbol{W}</em>{11}^2\boldsymbol{x}<em>1 + 
-\boldsymbol{W}</em>{12}^2\boldsymbol{x}<em>2 + \boldsymbol{W}</em>{13}^2\boldsymbol{x}<em>3 + \boldsymbol{b}_1^{2})
-\
-\boldsymbol{a}_2<sup>2=\sigma(\boldsymbol{z}_2</sup>2) = \sigma(\boldsymbol{W}</em>{21}^2\boldsymbol{x}<em>1 + \boldsymbol{W}</em>{22}^2\boldsymbol{x}<em>2 + \boldsymbol{W}</em>{23}^2\boldsymbol{x}<em>3 + \boldsymbol{b}_2^{2})
-\
-\boldsymbol{a}_3<sup>2=\sigma(\boldsymbol{z}_3</sup>2) = \sigma(\boldsymbol{W}</em>{31}^2\boldsymbol{x}<em>1 + \boldsymbol{W}</em>{32}^2\boldsymbol{x}<em>2 + \boldsymbol{W}</em>{33}^2\boldsymbol{x}_3 + \boldsymbol{b}_3^{2})
+\boldsymbol{a}_1^2=\sigma(\boldsymbol{z}_1^2) = \sigma(\boldsymbol{W}_{11}^2\boldsymbol{x}_1 + 
+\boldsymbol{W}_{12}^2\boldsymbol{x}_2 + \boldsymbol{W}_{13}^2\boldsymbol{x}_3 + \boldsymbol{b}_1^{2})
+\\
+\boldsymbol{a}_2^2=\sigma(\boldsymbol{z}_2^2) = \sigma(\boldsymbol{W}_{21}^2\boldsymbol{x}_1 + \boldsymbol{W}_{22}^2\boldsymbol{x}_2 + \boldsymbol{W}_{23}^2\boldsymbol{x}_3 + \boldsymbol{b}_2^{2})
+\\
+\boldsymbol{a}_3^2=\sigma(\boldsymbol{z}_3^2) = \sigma(\boldsymbol{W}_{31}^2\boldsymbol{x}_1 + \boldsymbol{W}_{32}^2\boldsymbol{x}_2 + \boldsymbol{W}_{33}^2\boldsymbol{x}_3 + \boldsymbol{b}_3^{2})
 \end{aligned}
-$$</p>
-<p>对于第三层的输出<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{a}^3_1</span><script type="math/tex">\boldsymbol{a}^3_1</script></span>,有
-$$
-\boldsymbol{a}<em>1<sup>3=\sigma(\boldsymbol{z}_1</sup>3) = \sigma(\boldsymbol{W}</em>{11}^3\boldsymbol{x}<em>1 + 
-\boldsymbol{W}</em>{12}^3\boldsymbol{x}<em>2 + \boldsymbol{W}</em>{13}^3\boldsymbol{x}_3 + \boldsymbol{b}_1^{3})
-$$</p>
-<p>将上面的式子一般化，第<span class="arithmatex"><span class="MathJax_Preview">l</span><script type="math/tex">l</script></span>层有<span class="arithmatex"><span class="MathJax_Preview">M_{l}</span><script type="math/tex">M_{l}</script></span>个神经元，那么对于第<span class="arithmatex"><span class="MathJax_Preview">l</span><script type="math/tex">l</script></span>层的第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>个神经元的输入和输出可以表示为：
-$$
+</div>
+<script type="math/tex; mode=display">
 \begin{aligned}
-\boldsymbol{z}<em>j^l
-&amp;=\sum\limits</em>{k=1}<sup>{M_l}\boldsymbol{W}_{jk}</sup>l\boldsymbol{a}<em>k^{l-1} + \boldsymbol{b}_j^l  \
-\boldsymbol{a}_j^l<br />
-&amp;= \sigma(\boldsymbol{z}_j^l) = \sigma(\sum\limits</em>{k=1}<sup>{M_l}\boldsymbol{W}_{jk}</sup>l\boldsymbol{a}_k^{l-1} + \boldsymbol{b}_j^l) \tag{Forward-Formula}
+\boldsymbol{a}_1^2=\sigma(\boldsymbol{z}_1^2) = \sigma(\boldsymbol{W}_{11}^2\boldsymbol{x}_1 + 
+\boldsymbol{W}_{12}^2\boldsymbol{x}_2 + \boldsymbol{W}_{13}^2\boldsymbol{x}_3 + \boldsymbol{b}_1^{2})
+\\
+\boldsymbol{a}_2^2=\sigma(\boldsymbol{z}_2^2) = \sigma(\boldsymbol{W}_{21}^2\boldsymbol{x}_1 + \boldsymbol{W}_{22}^2\boldsymbol{x}_2 + \boldsymbol{W}_{23}^2\boldsymbol{x}_3 + \boldsymbol{b}_2^{2})
+\\
+\boldsymbol{a}_3^2=\sigma(\boldsymbol{z}_3^2) = \sigma(\boldsymbol{W}_{31}^2\boldsymbol{x}_1 + \boldsymbol{W}_{32}^2\boldsymbol{x}_2 + \boldsymbol{W}_{33}^2\boldsymbol{x}_3 + \boldsymbol{b}_3^{2})
 \end{aligned}
-$$
-可以使用矩阵法进行表示，这样更加简洁漂亮，但是两者本质是一样的。
-$$
-\boldsymbol{a}^l = \sigma(\boldsymbol{z}^l) = \sigma(\boldsymbol{W}<sup>l\boldsymbol{a}</sup>{l-1} + \boldsymbol{b}^l)
-$$</p>
+</script>
+</div>
+<p>对于第三层的输出<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{a}^3_1</span><script type="math/tex">\boldsymbol{a}^3_1</script></span>,有</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\boldsymbol{a}_1^3=\sigma(\boldsymbol{z}_1^3) = \sigma(\boldsymbol{W}_{11}^3\boldsymbol{x}_1 + 
+\boldsymbol{W}_{12}^3\boldsymbol{x}_2 + \boldsymbol{W}_{13}^3\boldsymbol{x}_3 + \boldsymbol{b}_1^{3})
+</div>
+<script type="math/tex; mode=display">
+\boldsymbol{a}_1^3=\sigma(\boldsymbol{z}_1^3) = \sigma(\boldsymbol{W}_{11}^3\boldsymbol{x}_1 + 
+\boldsymbol{W}_{12}^3\boldsymbol{x}_2 + \boldsymbol{W}_{13}^3\boldsymbol{x}_3 + \boldsymbol{b}_1^{3})
+</script>
+</div>
+<p>将上面的式子一般化，第<span class="arithmatex"><span class="MathJax_Preview">l</span><script type="math/tex">l</script></span>层有<span class="arithmatex"><span class="MathJax_Preview">M_{l}</span><script type="math/tex">M_{l}</script></span>个神经元，那么对于第<span class="arithmatex"><span class="MathJax_Preview">l</span><script type="math/tex">l</script></span>层的第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>个神经元的输入和输出可以表示为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+\boldsymbol{z}_j^l
+&amp;=\sum\limits_{k=1}^{M_l}\boldsymbol{W}_{jk}^l\boldsymbol{a}_k^{l-1} + \boldsymbol{b}_j^l  \\
+\boldsymbol{a}_j^l  
+&amp;= \sigma(\boldsymbol{z}_j^l) = \sigma(\sum\limits_{k=1}^{M_l}\boldsymbol{W}_{jk}^l\boldsymbol{a}_k^{l-1} + \boldsymbol{b}_j^l) \tag{Forward-Formula}
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\boldsymbol{z}_j^l
+&=\sum\limits_{k=1}^{M_l}\boldsymbol{W}_{jk}^l\boldsymbol{a}_k^{l-1} + \boldsymbol{b}_j^l  \\
+\boldsymbol{a}_j^l  
+&= \sigma(\boldsymbol{z}_j^l) = \sigma(\sum\limits_{k=1}^{M_l}\boldsymbol{W}_{jk}^l\boldsymbol{a}_k^{l-1} + \boldsymbol{b}_j^l) \tag{Forward-Formula}
+\end{align}
+</script>
+</div>
+<p>可以使用矩阵法进行表示，这样更加简洁漂亮，但是两者本质是一样的。</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\boldsymbol{a}^l = \sigma(\boldsymbol{z}^l) = \sigma(\boldsymbol{W}^l\boldsymbol{a}^{l-1} + \boldsymbol{b}^l)
+</div>
+<script type="math/tex; mode=display">
+\boldsymbol{a}^l = \sigma(\boldsymbol{z}^l) = \sigma(\boldsymbol{W}^l\boldsymbol{a}^{l-1} + \boldsymbol{b}^l)
+</script>
+</div>
 <p>那么，所谓的DNN的前向传播算法也就是利用我们的若干个权重系数矩阵<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{W}</span><script type="math/tex">\boldsymbol{W}</script></span>,偏倚向量<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{b}</span><script type="math/tex">\boldsymbol{b}</script></span>来和输入值向量<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{x}</span><script type="math/tex">\boldsymbol{x}</script></span>进行一系列线性运算和激活运算，从输入层开始，一层层的向后计算，一直到运算到输出层，得到输出结果为值。</p>
 <blockquote>
 <p>输入：总层数<span class="arithmatex"><span class="MathJax_Preview">L</span><script type="math/tex">L</script></span>，所有隐藏层和输出层对应的矩阵<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{W}</span><script type="math/tex">\boldsymbol{W}</script></span>,偏倚向量<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{b}</span><script type="math/tex">\boldsymbol{b}</script></span>，输入值向量<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{x}</span><script type="math/tex">\boldsymbol{x}</script></span>
-　　　　输出：输出层的输出<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{a}^L</span><script type="math/tex">\boldsymbol{a}^L</script></span>
-　　　　1) 初始化 <span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{a}^1=\boldsymbol{x}</span><script type="math/tex">\boldsymbol{a}^1=\boldsymbol{x}</script></span>
-　　　　2) 对于 <span class="arithmatex"><span class="MathJax_Preview">l=2 \quad \operatorname{to} \quad L</span><script type="math/tex">l=2 \quad \operatorname{to} \quad L</script></span>, 计算：
-                $$
-                 \boldsymbol{a}<sup>l=σ(\boldsymbol{z}</sup>l)=σ(\boldsymbol{W}<sup>l\boldsymbol{a}</sup>{l−1}+\boldsymbol{b}^l)
-                $$
-　　　　最后的结果即为输出<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{a}^L</span><script type="math/tex">\boldsymbol{a}^L</script></span></p>
+输出：输出层的输出<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{a}^L</span><script type="math/tex">\boldsymbol{a}^L</script></span></p>
+<p>1) 初始化 <span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{a}^1=\boldsymbol{x}</span><script type="math/tex">\boldsymbol{a}^1=\boldsymbol{x}</script></span></p>
+<p>2) 对于 <span class="arithmatex"><span class="MathJax_Preview">l=2 \quad \operatorname{to} \quad L</span><script type="math/tex">l=2 \quad \operatorname{to} \quad L</script></span>, 计算：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+                \boldsymbol{a}^l=σ(\boldsymbol{z}^l)=σ(\boldsymbol{W}^l\boldsymbol{a}^{l−1}+\boldsymbol{b}^l)
+</div>
+<script type="math/tex; mode=display">
+                \boldsymbol{a}^l=σ(\boldsymbol{z}^l)=σ(\boldsymbol{W}^l\boldsymbol{a}^{l−1}+\boldsymbol{b}^l)
+</script>
+</div>
+<p>最后的结果即为输出<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{a}^L</span><script type="math/tex">\boldsymbol{a}^L</script></span></p>
 </blockquote>
 <h2 id="dnn_2">DNN反向传播算法<a class="headerlink" href="#dnn_2" title="Permanent link">&para;</a></h2>
 <p>在进行DNN反向传播前，需要选择一个损失函数，来度量训练样本计算出的输出和真实的训练样本输出之间的损失。
-那么通过模型度量得到的输出为
-$$
-\hat{\boldsymbol{y}}=\boldsymbol{a}^L = \sigma(\boldsymbol{W}<sup>{L}\boldsymbol{a}</sup>{L-1}+\boldsymbol{b}^L)
-$$</p>
-<p>在回归任务中，常用的损失函数为均方差损失函数，其定义为
-$$
+那么通过模型度量得到的输出为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\hat{\boldsymbol{y}}=\boldsymbol{a}^L = \sigma(\boldsymbol{W}^{L}\boldsymbol{a}^{L-1}+\boldsymbol{b}^L)
+</div>
+<script type="math/tex; mode=display">
+\hat{\boldsymbol{y}}=\boldsymbol{a}^L = \sigma(\boldsymbol{W}^{L}\boldsymbol{a}^{L-1}+\boldsymbol{b}^L)
+</script>
+</div>
+<p>在回归任务中，常用的损失函数为均方差损失函数，其定义为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 C=\frac{1}{2}||\hat{\boldsymbol{y}}-\boldsymbol{y}||_2^2 \quad \in \mathbb{R}
-$$
-在分类任务中，通常使用交叉熵损失函数，其定义为
-$$
+</div>
+<script type="math/tex; mode=display">
+C=\frac{1}{2}||\hat{\boldsymbol{y}}-\boldsymbol{y}||_2^2 \quad \in \mathbb{R}
+</script>
+</div>
+<p>在分类任务中，通常使用交叉熵损失函数，其定义为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 C=-\boldsymbol{y}\operatorname{log}\hat{\boldsymbol{y}} \quad \in \mathbb{R}
-$$</p>
+</div>
+<script type="math/tex; mode=display">
+C=-\boldsymbol{y}\operatorname{log}\hat{\boldsymbol{y}} \quad \in \mathbb{R}
+</script>
+</div>
 <p>在损失函数确定的情况下，现在可以使用梯度下降法迭代求解每一层的<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{W}</span><script type="math/tex">\boldsymbol{W}</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{b}</span><script type="math/tex">\boldsymbol{b}</script></span>。这里的推导证明可以直接使用矩阵的形式进行求导，也可以写成对矩阵中每个元素的求导。前者比较简洁但是过程中涉及矩阵微积分的知识，后者虽然有点繁琐但是过程比较清晰。 这里采用后者的证明方式，并会给出相应的矩阵形式作为对照。</p>
 <p>现在需要求解<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial C}{\partial \boldsymbol{W}}</span><script type="math/tex">\frac{\partial C}{\partial \boldsymbol{W}}</script></span> 和<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial C}{\partial \boldsymbol{b}}</span><script type="math/tex">\frac{\partial C}{\partial \boldsymbol{b}}</script></span>，为了便于理解首先计算参数中每个元素的偏导数。</p>
 <div class="arithmatex">
@@ -1376,69 +1429,135 @@ $$</p>
 </script>
 </div>
 <p>这里的推导只用借助前面的<code>Forward-Formula</code>就可以得到，从推导的结果可以发现，现在只需要计算得到<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial C}{\partial \boldsymbol{z}_j^l}</span><script type="math/tex">\frac{\partial C}{\partial \boldsymbol{z}_j^l}</script></span>那么问题就解决了。</p>
-<p>为了后面推导的方便以及避免重复计算，这里引入一个中间量<span class="arithmatex"><span class="MathJax_Preview">\delta^l_j</span><script type="math/tex">\delta^l_j</script></span>，其定义为
-$$
+<p>为了后面推导的方便以及避免重复计算，这里引入一个中间量<span class="arithmatex"><span class="MathJax_Preview">\delta^l_j</span><script type="math/tex">\delta^l_j</script></span>，其定义为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \delta^l_j
-\triangleq \frac{\partial C}{\partial \boldsymbol{z}<em>j^l} \in \mathbb{R}
-$$
-<span class="arithmatex"><span class="MathJax_Preview">\delta^l_j</span><script type="math/tex">\delta^l_j</script></span>所表示的含义是损失函数对于神经网络中第<span class="arithmatex"><span class="MathJax_Preview">l</span><script type="math/tex">l</script></span>层的第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>个神经元的错误量。
-于是有
-$$
-\begin{aligned}
+\triangleq \frac{\partial C}{\partial \boldsymbol{z}_j^l} \in \mathbb{R}
+</div>
+<script type="math/tex; mode=display">
 \delta^l_j
-&amp;\triangleq \frac{\partial C}{\partial \boldsymbol{z}_j^l}   \
-&amp; =\sum</em>{k=1}^{M_{l+1}} \frac{\partial C}{\partial \boldsymbol{z}<em>{k}^{l+1}}
-\frac{\boldsymbol{z}</em>{k}^{l+1}}{\partial \boldsymbol{z}<em>{j}^l}\
-&amp;= \sum</em>{k}\frac{\partial \boldsymbol{z}<em>{k}^{l+1}}{\partial \boldsymbol{z}_j^l} \delta^{l+1}_k \
-&amp;=\sum</em>{k} \boldsymbol{W}_{kj}^{l+1} \delta^{l+1}_k \sigma<sup>{\prime}(\boldsymbol{z}_j</sup>l)
+\triangleq \frac{\partial C}{\partial \boldsymbol{z}_j^l} \in \mathbb{R}
+</script>
+</div>
+<p><span class="arithmatex"><span class="MathJax_Preview">\delta^l_j</span><script type="math/tex">\delta^l_j</script></span>所表示的含义是损失函数对于神经网络中第<span class="arithmatex"><span class="MathJax_Preview">l</span><script type="math/tex">l</script></span>层的第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>个神经元的错误量。
+于是有</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+\delta^l_j
+&amp;\triangleq \frac{\partial C}{\partial \boldsymbol{z}_j^l}   \\
+&amp; =\sum_{k=1}^{M_{l+1}} \frac{\partial C}{\partial \boldsymbol{z}_{k}^{l+1}}
+\frac{\boldsymbol{z}_{k}^{l+1}}{\partial \boldsymbol{z}_{j}^l}\\
+&amp;= \sum_{k}\frac{\partial \boldsymbol{z}_{k}^{l+1}}{\partial \boldsymbol{z}_j^l} \delta^{l+1}_k \\
+&amp;=\sum_{k} \boldsymbol{W}_{kj}^{l+1} \delta^{l+1}_k \sigma^{\prime}(\boldsymbol{z}_j^l)
 \tag{BP-2}
-\end{aligned}
-$$</p>
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\delta^l_j
+&\triangleq \frac{\partial C}{\partial \boldsymbol{z}_j^l}   \\
+& =\sum_{k=1}^{M_{l+1}} \frac{\partial C}{\partial \boldsymbol{z}_{k}^{l+1}}
+\frac{\boldsymbol{z}_{k}^{l+1}}{\partial \boldsymbol{z}_{j}^l}\\
+&= \sum_{k}\frac{\partial \boldsymbol{z}_{k}^{l+1}}{\partial \boldsymbol{z}_j^l} \delta^{l+1}_k \\
+&=\sum_{k} \boldsymbol{W}_{kj}^{l+1} \delta^{l+1}_k \sigma^{\prime}(\boldsymbol{z}_j^l)
+\tag{BP-2}
+\end{align}
+</script>
+</div>
 <blockquote>
-<p>这里的推导公式借助了一个结论
-$$
+<p>这里的推导公式借助了一个结论</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{aligned}
-  \boldsymbol{z}^{l+1}<em>k = \sum_j \boldsymbol{W}^{l+1}</em>{kj} \boldsymbol{a}^l_j +\boldsymbol{b}^{l+1}<em>k = \sum_j \boldsymbol{W}^{l+1}</em>{kj} \sigma(\boldsymbol{z}^l_j) +\boldsymbol{b}^{l+1}<em>k.
-\end{aligned}
-$$
-所以有
-$$
-\frac{\partial \boldsymbol{z}</em>{k}^{l+1}}{\partial \boldsymbol{z}<em>j^l}
-=\boldsymbol{W}</em>{kj}^{l+1} \sigma<sup>{\prime}(\boldsymbol{z}_j</sup>l)
-$$</p>
+ \boldsymbol{z}^{l+1}_k = \sum_j \boldsymbol{W}^{l+1}_{kj} \boldsymbol{a}^l_j +\boldsymbol{b}^{l+1}_k = \sum_j &gt;  \boldsymbol{W}^{l+1}_{kj} \sigma(\boldsymbol{z}^l_j) +\boldsymbol{b}^{l+1}_k.
+ \end{aligned}
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}
+ \boldsymbol{z}^{l+1}_k = \sum_j \boldsymbol{W}^{l+1}_{kj} \boldsymbol{a}^l_j +\boldsymbol{b}^{l+1}_k = \sum_j >  \boldsymbol{W}^{l+1}_{kj} \sigma(\boldsymbol{z}^l_j) +\boldsymbol{b}^{l+1}_k.
+ \end{aligned}
+</script>
+</div>
 </blockquote>
-<p>这时，已经得到了<span class="arithmatex"><span class="MathJax_Preview">\delta^{l}</span><script type="math/tex">\delta^{l}</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\delta^{l+1}</span><script type="math/tex">\delta^{l+1}</script></span>的关系，如果能够计算出最后一层的误差<span class="arithmatex"><span class="MathJax_Preview">\delta^L</span><script type="math/tex">\delta^L</script></span>,那么我们依次就可以求得<span class="arithmatex"><span class="MathJax_Preview">\delta^{L-1},\delta^{L-2},\cdots</span><script type="math/tex">\delta^{L-1},\delta^{L-2},\cdots</script></span>直至最后的输入层。最后一层的误差推导
-$$
-\begin{aligned}
+<p>所以有</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\frac{\partial \boldsymbol{z}_{k}^{l+1}}{\partial \boldsymbol{z}_j^l}
+=\boldsymbol{W}_{kj}^{l+1} \sigma^{\prime}(\boldsymbol{z}_j^l)
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial \boldsymbol{z}_{k}^{l+1}}{\partial \boldsymbol{z}_j^l}
+=\boldsymbol{W}_{kj}^{l+1} \sigma^{\prime}(\boldsymbol{z}_j^l)
+</script>
+</div>
+<p>这时，已经得到了<span class="arithmatex"><span class="MathJax_Preview">\delta^{l}</span><script type="math/tex">\delta^{l}</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\delta^{l+1}</span><script type="math/tex">\delta^{l+1}</script></span>的关系，如果能够计算出最后一层的误差<span class="arithmatex"><span class="MathJax_Preview">\delta^L</span><script type="math/tex">\delta^L</script></span>,那么我们依次就可以求得<span class="arithmatex"><span class="MathJax_Preview">\delta^{L-1},\delta^{L-2},\cdots</span><script type="math/tex">\delta^{L-1},\delta^{L-2},\cdots</script></span>直至最后的输入层。最后一层的误差推导</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
 \delta^L_j 
-&amp;= \frac{\partial C}{\partial \boldsymbol{z}^L_j}\
-&amp;=\sum_k \frac{\partial C}{\partial \boldsymbol{a}^L_k} \frac{\partial \boldsymbol{a}^L_k}{\partial \boldsymbol{z}^L_j} \
-&amp;= \frac{\partial C}{\partial \boldsymbol{a}^L_j} \frac{\partial \boldsymbol{a}^L_j}{\partial \boldsymbol{z}^L_j} \
-&amp;= \frac{\partial C}{\partial \boldsymbol{a}^L_j} \sigma<sup>{\prime}(\boldsymbol{z}_j</sup>L)
+&amp;= \frac{\partial C}{\partial \boldsymbol{z}^L_j}\\
+&amp;=\sum_k \frac{\partial C}{\partial \boldsymbol{a}^L_k} \frac{\partial \boldsymbol{a}^L_k}{\partial \boldsymbol{z}^L_j} \\
+&amp;= \frac{\partial C}{\partial \boldsymbol{a}^L_j} \frac{\partial \boldsymbol{a}^L_j}{\partial \boldsymbol{z}^L_j} \\
+&amp;= \frac{\partial C}{\partial \boldsymbol{a}^L_j} \sigma^{\prime}(\boldsymbol{z}_j^L)
 \tag{BP-1}
-\end{aligned}
-$$
-公式里面可以将<span class="arithmatex"><span class="MathJax_Preview">\sum</span><script type="math/tex">\sum</script></span>去掉，因为在最后一层第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>个神经元的误差只来自与它本身，和其他神经元无关。</p>
-<p>在每一层的误差都能够计算出来的前提下，回到最开始的问题。对于参数<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{W}^l_{jk}</span><script type="math/tex">\boldsymbol{W}^l_{jk}</script></span>求偏导有
-$$
-\begin{aligned}
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\delta^L_j 
+&= \frac{\partial C}{\partial \boldsymbol{z}^L_j}\\
+&=\sum_k \frac{\partial C}{\partial \boldsymbol{a}^L_k} \frac{\partial \boldsymbol{a}^L_k}{\partial \boldsymbol{z}^L_j} \\
+&= \frac{\partial C}{\partial \boldsymbol{a}^L_j} \frac{\partial \boldsymbol{a}^L_j}{\partial \boldsymbol{z}^L_j} \\
+&= \frac{\partial C}{\partial \boldsymbol{a}^L_j} \sigma^{\prime}(\boldsymbol{z}_j^L)
+\tag{BP-1}
+\end{align}
+</script>
+</div>
+<p>公式里面可以将<span class="arithmatex"><span class="MathJax_Preview">\sum</span><script type="math/tex">\sum</script></span>去掉，因为在最后一层第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>个神经元的误差只来自与它本身，和其他神经元无关。</p>
+<p>在每一层的误差都能够计算出来的前提下，回到最开始的问题。对于参数<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{W}^l_{jk}</span><script type="math/tex">\boldsymbol{W}^l_{jk}</script></span>求偏导有</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
 \frac{\partial C}{\partial \boldsymbol{W}^l_{jk}}
-&amp;=\frac{\partial C}{\partial \boldsymbol{z}<em>j^l} \frac{\partial \boldsymbol{z}_j^l}{\partial \boldsymbol{W}^l</em>{jk}}
-=\frac{\partial C}{\partial \boldsymbol{z}<em>j^l} \boldsymbol{a}_k^{l-1}
+&amp;=\frac{\partial C}{\partial \boldsymbol{z}_j^l} \frac{\partial \boldsymbol{z}_j^l}{\partial \boldsymbol{W}^l_{jk}}
+=\frac{\partial C}{\partial \boldsymbol{z}_j^l} \boldsymbol{a}_k^{l-1}
 =\boldsymbol{a}_k^{l-1} \delta^l_j
 \tag{BP-3}
-\end{aligned}
-$$
-对于参数<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{b}^l_{j}</span><script type="math/tex">\boldsymbol{b}^l_{j}</script></span>求偏导有
-$$
-\begin{aligned}
-\frac{\partial C}{\partial \boldsymbol{b}^l</em>{j}}
-&amp;=\frac{\partial C}{\partial \boldsymbol{z}<em>j^l} \frac{\partial \boldsymbol{z}_j^l}{\partial \boldsymbol{b}^l</em>{j}}
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial C}{\partial \boldsymbol{W}^l_{jk}}
+&=\frac{\partial C}{\partial \boldsymbol{z}_j^l} \frac{\partial \boldsymbol{z}_j^l}{\partial \boldsymbol{W}^l_{jk}}
+=\frac{\partial C}{\partial \boldsymbol{z}_j^l} \boldsymbol{a}_k^{l-1}
+=\boldsymbol{a}_k^{l-1} \delta^l_j
+\tag{BP-3}
+\end{align}
+</script>
+</div>
+<p>对于参数<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{b}^l_{j}</span><script type="math/tex">\boldsymbol{b}^l_{j}</script></span>求偏导有</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+\frac{\partial C}{\partial \boldsymbol{b}^l_{j}}
+&amp;=\frac{\partial C}{\partial \boldsymbol{z}_j^l} \frac{\partial \boldsymbol{z}_j^l}{\partial \boldsymbol{b}^l_{j}}
 =\frac{\partial C}{\partial \boldsymbol{z}_j^l} \cdot 1
 =\delta_j^l
 \tag{BP-4}
-\end{aligned}
-$$</p>
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial C}{\partial \boldsymbol{b}^l_{j}}
+&=\frac{\partial C}{\partial \boldsymbol{z}_j^l} \frac{\partial \boldsymbol{z}_j^l}{\partial \boldsymbol{b}^l_{j}}
+=\frac{\partial C}{\partial \boldsymbol{z}_j^l} \cdot 1
+=\delta_j^l
+\tag{BP-4}
+\end{align}
+</script>
+</div>
 <p>综上，DNN反向传播过程中四个重要公式<code>BP-1</code>,<code>BP-2</code>,<code>BP-3</code>,<code>BP-4</code>总结如下</p>
 <table>
 <thead>
@@ -1472,20 +1591,33 @@ $$</p>
 </tbody>
 </table>
 <h2 id="_1">梯度消失<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>在神经网络中误差反向传播的迭代公式为
-$$
-\delta<sup>l=((\boldsymbol{W}</sup>{l+1})^\top \delta^{l+1}) \odot \sigma<sup>{\prime}(\boldsymbol{z}</sup>l)
-$$
-误差从输出层反向传播时，在每一层都要乘以该层的激活函数的导数.当我们使用<code>Sigmoid</code>型函数:<code>Logistic</code>函数或<code>Tanh</code>函数时，其导数为
-$$
+<p>在神经网络中误差反向传播的迭代公式为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\delta^l=((\boldsymbol{W}^{l+1})^\top \delta^{l+1}) \odot \sigma^{\prime}(\boldsymbol{z}^l)
+</div>
+<script type="math/tex; mode=display">
+\delta^l=((\boldsymbol{W}^{l+1})^\top \delta^{l+1}) \odot \sigma^{\prime}(\boldsymbol{z}^l)
+</script>
+</div>
+<p>误差从输出层反向传播时，在每一层都要乘以该层的激活函数的导数.当我们使用<code>Sigmoid</code>型函数:<code>Logistic</code>函数或<code>Tanh</code>函数时，其导数为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{aligned}
-\sigma^{\prime}(x) &amp;=\sigma(x)(1-\sigma(x)) \qquad \in[0,0.25] \
+\sigma^{\prime}(x) &amp;=\sigma(x)(1-\sigma(x)) \qquad \in[0,0.25] \\
 \tanh ^{\prime}(x) &amp;=1-(\tanh (x))^{2} \qquad \in[0,1] 
 \end{aligned}
-$$
-Sigmoid 型函数的导数的值域都小于或等于 1，如图所示
-<img src="assets/image-20201214095920981.png" alt="image-20201214095920981" style="zoom:45%;" />
-由于<code>Sigmoid</code>型函数的饱和性，饱和区的导数更是接近于0。这样，误差经过每一层传递都会不断衰减。当网络层数很深时，梯度就会不停衰减甚至消失，使得整个网络很难训练.这就是所谓的梯度消失问题，也称为梯度弥散问题。</p>
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\sigma^{\prime}(x) &=\sigma(x)(1-\sigma(x)) \qquad \in[0,0.25] \\
+\tanh ^{\prime}(x) &=1-(\tanh (x))^{2} \qquad \in[0,1] 
+\end{aligned}
+</script>
+</div>
+<p>Sigmoid 型函数的导数的值域都小于或等于 1，如图所示</p>
+<p><img alt="image-dnn" height="95%" src="../assets/image-20201214095920981.png" width="95%" /></p>
+<p>由于<code>Sigmoid</code>型函数的饱和性，饱和区的导数更是接近于0。这样，误差经过每一层传递都会不断衰减。当网络层数很深时，梯度就会不停衰减甚至消失，使得整个网络很难训练.这就是所谓的梯度消失问题，也称为梯度弥散问题。</p>
 <p>在深度神经网络中，减轻梯度消失问题的方法有很多种。一种简单有效的方式是使用导数比较大的激活函数，比如 ReLU 等。</p>
 
               
