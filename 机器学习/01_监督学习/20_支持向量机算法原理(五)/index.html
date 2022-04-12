@@ -703,8 +703,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
-        集成学习算法之GBDT
+      <a href="../23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
       </a>
     </li>
   
@@ -717,8 +717,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
-        集成学习算法之RF
+      <a href="../24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
+        集成学习算法之GBDT
       </a>
     </li>
   
@@ -1226,78 +1226,179 @@
 <h1 id="_1">支持向量机算法原理(五)<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <p>SVM算法可以扩展到回归问题。</p>
 <h2 id="svm">SVM回归模型损失函数<a class="headerlink" href="#svm" title="Permanent link">&para;</a></h2>
-<p>在SVM分类模型中，目标函数是让<span class="arithmatex"><span class="MathJax_Preview">\frac{1}{2}||w||^2_2</span><script type="math/tex">\frac{1}{2}||w||^2_2</script></span>最小，同时让各个训练集中的点尽量原理自己类别一边的支持向量，即<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}(w\cdot \phi(x^{(i)})+b)\ge 1</span><script type="math/tex">y^{(i)}(w\cdot \phi(x^{(i)})+b)\ge 1</script></span>。如果是加入一个松弛变量<span class="arithmatex"><span class="MathJax_Preview">\zeta_i\ge0</span><script type="math/tex">\zeta_i\ge0</script></span>，则目标函数是<span class="arithmatex"><span class="MathJax_Preview">\frac{1}{2}||w||^2_2+C\sum_{i=1}^m\zeta_i</span><script type="math/tex">\frac{1}{2}||w||^2_2+C\sum_{i=1}^m\zeta_i</script></span>，对应的约束条件变成：<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}(w\cdot\phi(x^{(i)})+b)\ge 1-\zeta_i</span><script type="math/tex">y^{(i)}(w\cdot\phi(x^{(i)})+b)\ge 1-\zeta_i</script></span>。</p>
-<p>在回归问题中，目标是让训练集中的每个点<span class="arithmatex"><span class="MathJax_Preview">(x^{(i)},y^{(i)})</span><script type="math/tex">(x^{(i)},y^{(i)})</script></span> ，尽量拟合到一个线性模型<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}=w\cdot\phi(x^{(i)})+b</span><script type="math/tex">y^{(i)}=w\cdot\phi(x^{(i)})+b</script></span>，优化的目标函数可以和SVM分类模型保持一致。</p>
-<p>定义一个常量<span class="arithmatex"><span class="MathJax_Preview">\epsilon\gt0</span><script type="math/tex">\epsilon\gt0</script></span>，对于某一个点<span class="arithmatex"><span class="MathJax_Preview">(x^{(i)},y^{(i)})</span><script type="math/tex">(x^{(i)},y^{(i)})</script></span>：</p>
+<p>在SVM分类模型中，目标函数是让<span class="arithmatex"><span class="MathJax_Preview">\frac{1}{2}||w||^2_2</span><script type="math/tex">\frac{1}{2}||w||^2_2</script></span>最小，同时让各个训练集中的点尽量远离自己类别一边的支持向量，即<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}(w\cdot \phi(x^{(i)})+b)\ge 1</span><script type="math/tex">y^{(i)}(w\cdot \phi(x^{(i)})+b)\ge 1</script></span>。如果是加入一个松弛变量<span class="arithmatex"><span class="MathJax_Preview">\zeta_i\ge0</span><script type="math/tex">\zeta_i\ge0</script></span>，则目标函数是</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+    \frac{1}{2}||w||^2_2+C\sum_{i=1}^m\zeta_i
+</div>
+<script type="math/tex; mode=display">
+    \frac{1}{2}||w||^2_2+C\sum_{i=1}^m\zeta_i
+</script>
+</div>
+<p>对应的约束条件变成：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+    y^{(i)}(w\cdot\phi(x^{(i)})+b)\ge 1-\zeta_i
+</div>
+<script type="math/tex; mode=display">
+    y^{(i)}(w\cdot\phi(x^{(i)})+b)\ge 1-\zeta_i
+</script>
+</div>
+<p>在回归问题中，目标是让训练集中的每个点<span class="arithmatex"><span class="MathJax_Preview">(x^{(i)},y^{(i)})</span><script type="math/tex">(x^{(i)},y^{(i)})</script></span> ，尽量拟合到一个线性模型</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+y^{(i)}=w\cdot\phi(x^{(i)})+b
+</div>
+<script type="math/tex; mode=display">
+y^{(i)}=w\cdot\phi(x^{(i)})+b
+</script>
+</div>
+<p>优化的目标函数可以和SVM分类模型保持一致。定义一个常量<span class="arithmatex"><span class="MathJax_Preview">\epsilon\gt0</span><script type="math/tex">\epsilon\gt0</script></span>，对于某一个点<span class="arithmatex"><span class="MathJax_Preview">(x^{(i)},y^{(i)})</span><script type="math/tex">(x^{(i)},y^{(i)})</script></span>：</p>
 <p>（1）如果<span class="arithmatex"><span class="MathJax_Preview">|y^{(i)}-w\cdot\phi(x^{(i)})-b|\le\epsilon</span><script type="math/tex">|y^{(i)}-w\cdot\phi(x^{(i)})-b|\le\epsilon</script></span>，则完全没有损失；</p>
 <p>（2）如果<span class="arithmatex"><span class="MathJax_Preview">|y^{(i)}-w\cdot\phi(x^{(i)})-b|\gt \epsilon</span><script type="math/tex">|y^{(i)}-w\cdot\phi(x^{(i)})-b|\gt \epsilon</script></span>，则对应的损失为：<span class="arithmatex"><span class="MathJax_Preview">|y^{(i)}-w\cdot\phi(x^{(i)})-b|- \epsilon</span><script type="math/tex">|y^{(i)}-w\cdot\phi(x^{(i)})-b|- \epsilon</script></span>。</p>
-<p>所以在SVM回归模型中的损失函数度量为：
-$$
-err(x<sup>{(i)},y</sup>{(i)})=\left{
+<p>所以在SVM回归模型中的损失函数度量为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+err(x^{(i)},y^{(i)})=\left\{
 \begin{aligned}
-    &amp;0  &amp;| y<sup>{(i)}-w\cdot\phi(x</sup>{(i)})-b|\le \epsilon \
-    &amp;y<sup>{(i)}-w\cdot\phi(x</sup>{(i)})-b|- \epsilon  &amp;|y<sup>{(i)}-w\cdot\phi(x</sup>{(i)})-b|\gt \epsilon
+    &amp;0  &amp;| y^{(i)}-w\cdot\phi(x^{(i)})-b|\le \epsilon \\
+    &amp;y^{(i)}-w\cdot\phi(x^{(i)})-b|- \epsilon  &amp;|y^{(i)}-w\cdot\phi(x^{(i)})-b|\gt \epsilon
    \end{aligned}
 \right.
-$$</p>
+</div>
+<script type="math/tex; mode=display">
+err(x^{(i)},y^{(i)})=\left\{
+\begin{aligned}
+    &0  &| y^{(i)}-w\cdot\phi(x^{(i)})-b|\le \epsilon \\
+    &y^{(i)}-w\cdot\phi(x^{(i)})-b|- \epsilon  &|y^{(i)}-w\cdot\phi(x^{(i)})-b|\gt \epsilon
+   \end{aligned}
+\right.
+</script>
+</div>
 <h2 id="svm_1">SVM回归模型<a class="headerlink" href="#svm_1" title="Permanent link">&para;</a></h2>
-<p>SVM回归模型的目标函数如下：
-$$
-\min_{w,b} \frac{1}{2}||w||^2_2 \
-s.t.\;\;|y<sup>{(i)}-w\cdot\phi(x</sup>{(i)})-b|\le \epsilon  \
-$$
-同样地，回归模型也可以对每个样本<span class="arithmatex"><span class="MathJax_Preview">(x^{(i)},y^{(i)})</span><script type="math/tex">(x^{(i)},y^{(i)})</script></span>加入松弛变量<span class="arithmatex"><span class="MathJax_Preview">\zeta_i\ge0</span><script type="math/tex">\zeta_i\ge0</script></span>。在式(1)中约束模型是绝对值形式的，实际上有两个不等式，所以加入的松弛变量也需要两个<span class="arithmatex"><span class="MathJax_Preview">\zeta_i,\hat{\zeta_i}</span><script type="math/tex">\zeta_i,\hat{\zeta_i}</script></span>。加入松弛变量后的损失函数变为：
-$$
-\min_{w,b}\frac{1}{2}||w||<sup>2_2+C\sum_{i=1}</sup>m(\zeta_i+\hat{\zeta_i})\
-s.t. \;\;  w\cdot\phi(x<sup>{(i)})+b-y</sup>{(i)}\le \epsilon +\zeta_i \
-\qquad y<sup>{(i)}-w\cdot\phi(x</sup>{(i)})-b\le \epsilon  +\hat{\zeta_i}\
+<p>SVM回归模型的目标函数如下：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\min_{w,b} \frac{1}{2}||w||^2_2 \\
+s.t.\;\;|y^{(i)}-w\cdot\phi(x^{(i)})-b|\le \epsilon  \\
+</div>
+<script type="math/tex; mode=display">
+\min_{w,b} \frac{1}{2}||w||^2_2 \\
+s.t.\;\;|y^{(i)}-w\cdot\phi(x^{(i)})-b|\le \epsilon  \\
+</script>
+</div>
+<p>同样地，回归模型也可以对每个样本<span class="arithmatex"><span class="MathJax_Preview">(x^{(i)},y^{(i)})</span><script type="math/tex">(x^{(i)},y^{(i)})</script></span>加入松弛变量<span class="arithmatex"><span class="MathJax_Preview">\zeta_i\ge0</span><script type="math/tex">\zeta_i\ge0</script></span>。在式(1)中约束模型是绝对值形式的，实际上有两个不等式，所以加入的松弛变量也需要两个<span class="arithmatex"><span class="MathJax_Preview">\zeta_i,\hat{\zeta_i}</span><script type="math/tex">\zeta_i,\hat{\zeta_i}</script></span>。加入松弛变量后的损失函数变为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\min_{w,b}\frac{1}{2}||w||^2_2+C\sum_{i=1}^m(\zeta_i+\hat{\zeta_i})\\
+s.t. \;\;  w\cdot\phi(x^{(i)})+b-y^{(i)}\le \epsilon +\zeta_i \\
+\qquad y^{(i)}-w\cdot\phi(x^{(i)})-b\le \epsilon  +\hat{\zeta_i}\\
 \qquad  \zeta_i\ge 0, \;  \hat{\zeta_i}\ge 0\qquad (i=1,2,...,m)
-$$
-引入拉格朗日乘子<span class="arithmatex"><span class="MathJax_Preview">\mu_i\ge0,\hat{\mu_i}\ge0,\alpha_i\ge0,\hat{\alpha_i}\ge0</span><script type="math/tex">\mu_i\ge0,\hat{\mu_i}\ge0,\alpha_i\ge0,\hat{\alpha_i}\ge0</script></span>，由拉格朗日乘子得到拉格朗日函数为：
-$$
-L(w,b,\alpha,\hat{\alpha},\zeta,\hat\zeta,\mu,\hat\mu)\
-=\frac{1}{2}||w||<sup>2_2+C\sum_{i=1}</sup>m(\zeta_i+\hat\zeta_i)-\sum_{i=1}<sup>m\mu_i\zeta_i-\sum_{i=1}</sup>m\hat\mu_i\hat\zeta_i\
-+\sum_{i=1}<sup>m\alpha_i(f(x</sup>{(i)})-y<sup>{(i)}-\epsilon-\zeta_i)+\sum_{i=1}</sup>m\hat\alpha_i(y<sup>{(i)}-f(x</sup>{(i)})-\epsilon-\hat\zeta_i)
-$$
-于是求解的目标变为：
-$$
+</div>
+<script type="math/tex; mode=display">
+\min_{w,b}\frac{1}{2}||w||^2_2+C\sum_{i=1}^m(\zeta_i+\hat{\zeta_i})\\
+s.t. \;\;  w\cdot\phi(x^{(i)})+b-y^{(i)}\le \epsilon +\zeta_i \\
+\qquad y^{(i)}-w\cdot\phi(x^{(i)})-b\le \epsilon  +\hat{\zeta_i}\\
+\qquad  \zeta_i\ge 0, \;  \hat{\zeta_i}\ge 0\qquad (i=1,2,...,m)
+</script>
+</div>
+<p>引入拉格朗日乘子<span class="arithmatex"><span class="MathJax_Preview">\mu_i\ge0,\hat{\mu_i}\ge0,\alpha_i\ge0,\hat{\alpha_i}\ge0</span><script type="math/tex">\mu_i\ge0,\hat{\mu_i}\ge0,\alpha_i\ge0,\hat{\alpha_i}\ge0</script></span>，由拉格朗日乘子得到拉格朗日函数为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+L(w,b,\alpha,\hat{\alpha},\zeta,\hat\zeta,\mu,\hat\mu)\\
+=\frac{1}{2}||w||^2_2+C\sum_{i=1}^m(\zeta_i+\hat\zeta_i)-\sum_{i=1}^m\mu_i\zeta_i-\sum_{i=1}^m\hat\mu_i\hat\zeta_i\\
++\sum_{i=1}^m\alpha_i(f(x^{(i)})-y^{(i)}-\epsilon-\zeta_i)+\sum_{i=1}^m\hat\alpha_i(y^{(i)}-f(x^{(i)})-\epsilon-\hat\zeta_i)
+</div>
+<script type="math/tex; mode=display">
+L(w,b,\alpha,\hat{\alpha},\zeta,\hat\zeta,\mu,\hat\mu)\\
+=\frac{1}{2}||w||^2_2+C\sum_{i=1}^m(\zeta_i+\hat\zeta_i)-\sum_{i=1}^m\mu_i\zeta_i-\sum_{i=1}^m\hat\mu_i\hat\zeta_i\\
++\sum_{i=1}^m\alpha_i(f(x^{(i)})-y^{(i)}-\epsilon-\zeta_i)+\sum_{i=1}^m\hat\alpha_i(y^{(i)}-f(x^{(i)})-\epsilon-\hat\zeta_i)
+</script>
+</div>
+<p>于是求解的目标变为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \min_{w,b,\zeta,\hat\zeta}\;\max_{\mu\ge0,\hat\mu\ge0,\alpha\ge0,\hat\alpha\ge0}L(w,b,\alpha,\hat{\alpha},\zeta,\hat\zeta,\mu,\hat\mu)
-$$
-可以通过拉格朗日对偶将优化问题转化为等价的对偶问题：
-$$
+</div>
+<script type="math/tex; mode=display">
+\min_{w,b,\zeta,\hat\zeta}\;\max_{\mu\ge0,\hat\mu\ge0,\alpha\ge0,\hat\alpha\ge0}L(w,b,\alpha,\hat{\alpha},\zeta,\hat\zeta,\mu,\hat\mu)
+</script>
+</div>
+<p>可以通过拉格朗日对偶将优化问题转化为等价的对偶问题：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \max_{\mu\ge0,\hat\mu\ge0,\alpha\ge0,\hat\alpha\ge0}\;\min_{w,b,\zeta,\hat\zeta}L(w,b,\alpha,\hat{\alpha},\zeta,\hat\zeta,\mu,\hat\mu)
-$$
-令<span class="arithmatex"><span class="MathJax_Preview">L(w,b,\alpha,\hat{\alpha},\zeta,\hat\zeta,\mu,\hat\mu)</span><script type="math/tex">L(w,b,\alpha,\hat{\alpha},\zeta,\hat\zeta,\mu,\hat\mu)</script></span>对<span class="arithmatex"><span class="MathJax_Preview">w,b,\zeta,\hat\zeta</span><script type="math/tex">w,b,\zeta,\hat\zeta</script></span>求偏导为零得到：
-$$
-\frac{\partial L}{\partial w}=0 \Rightarrow w=\sum_{i=1}<sup>m(\hat\alpha_i-\alpha_i)\phi(x</sup>{(i)})\
-\frac{\partial L}{\partial b}=0\Rightarrow 0=\sum_{i=1}^m(\hat\alpha_i-\alpha_i)\
-\frac{\partial L}{\partial \zeta_i}=0\Rightarrow  C=\alpha_i+\mu_i \
-\frac{\partial L}{\partial \hat\zeta_i}=0\Rightarrow C=\hat\alpha_i+\hat\mu_i \
-$$
-将式(6)带入<span class="arithmatex"><span class="MathJax_Preview">L(w,b,\alpha,\hat{\alpha},\zeta,\hat\zeta,\mu,\hat\mu)</span><script type="math/tex">L(w,b,\alpha,\hat{\alpha},\zeta,\hat\zeta,\mu,\hat\mu)</script></span>消去<span class="arithmatex"><span class="MathJax_Preview">w,b,\zeta,\hat\zeta</span><script type="math/tex">w,b,\zeta,\hat\zeta</script></span>得到：
-$$
-\max_{\alpha,\hat\alpha} -\frac{1}{2}\sum_{i=1}<sup>m\sum_{j=1}</sup>m(\hat\alpha_i-\alpha_i)(\hat\alpha_j-\alpha_j)K(x<sup>{(i)},x</sup>{(j)})+\sum_{i=1}^m[ y^{(i)}(\hat\alpha_i-\alpha_i)-\epsilon(\hat\alpha_i+\alpha_i)]\
-s.t. \sum_{i=1}^m(\hat\alpha_i-\alpha_i)=0\
+</div>
+<script type="math/tex; mode=display">
+\max_{\mu\ge0,\hat\mu\ge0,\alpha\ge0,\hat\alpha\ge0}\;\min_{w,b,\zeta,\hat\zeta}L(w,b,\alpha,\hat{\alpha},\zeta,\hat\zeta,\mu,\hat\mu)
+</script>
+</div>
+<p>令<span class="arithmatex"><span class="MathJax_Preview">L(w,b,\alpha,\hat{\alpha},\zeta,\hat\zeta,\mu,\hat\mu)</span><script type="math/tex">L(w,b,\alpha,\hat{\alpha},\zeta,\hat\zeta,\mu,\hat\mu)</script></span>对<span class="arithmatex"><span class="MathJax_Preview">w,b,\zeta,\hat\zeta</span><script type="math/tex">w,b,\zeta,\hat\zeta</script></span>求偏导为零得到：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\frac{\partial L}{\partial w}=0 \Rightarrow w=\sum_{i=1}^m(\hat\alpha_i-\alpha_i)\phi(x^{(i)})\\
+\frac{\partial L}{\partial b}=0\Rightarrow 0=\sum_{i=1}^m(\hat\alpha_i-\alpha_i)\\
+\frac{\partial L}{\partial \zeta_i}=0\Rightarrow  C=\alpha_i+\mu_i \\
+\frac{\partial L}{\partial \hat\zeta_i}=0\Rightarrow C=\hat\alpha_i+\hat\mu_i \\
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial w}=0 \Rightarrow w=\sum_{i=1}^m(\hat\alpha_i-\alpha_i)\phi(x^{(i)})\\
+\frac{\partial L}{\partial b}=0\Rightarrow 0=\sum_{i=1}^m(\hat\alpha_i-\alpha_i)\\
+\frac{\partial L}{\partial \zeta_i}=0\Rightarrow  C=\alpha_i+\mu_i \\
+\frac{\partial L}{\partial \hat\zeta_i}=0\Rightarrow C=\hat\alpha_i+\hat\mu_i \\
+</script>
+</div>
+<p>将式(6)带入<span class="arithmatex"><span class="MathJax_Preview">L(w,b,\alpha,\hat{\alpha},\zeta,\hat\zeta,\mu,\hat\mu)</span><script type="math/tex">L(w,b,\alpha,\hat{\alpha},\zeta,\hat\zeta,\mu,\hat\mu)</script></span>消去<span class="arithmatex"><span class="MathJax_Preview">w,b,\zeta,\hat\zeta</span><script type="math/tex">w,b,\zeta,\hat\zeta</script></span>得到：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\max_{\alpha,\hat\alpha} -\frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m(\hat\alpha_i-\alpha_i)(\hat\alpha_j-\alpha_j)K(x^{(i)},x^{(j)})+\sum_{i=1}^m[ y^{(i)}(\hat\alpha_i-\alpha_i)-\epsilon(\hat\alpha_i+\alpha_i)]\\
+s.t. \sum_{i=1}^m(\hat\alpha_i-\alpha_i)=0\\
 0\le \alpha_i,\hat\alpha_i\le C
-$$
-上述过程中需满足KKT条件，即：
-$$
-\left{
+</div>
+<script type="math/tex; mode=display">
+\max_{\alpha,\hat\alpha} -\frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m(\hat\alpha_i-\alpha_i)(\hat\alpha_j-\alpha_j)K(x^{(i)},x^{(j)})+\sum_{i=1}^m[ y^{(i)}(\hat\alpha_i-\alpha_i)-\epsilon(\hat\alpha_i+\alpha_i)]\\
+s.t. \sum_{i=1}^m(\hat\alpha_i-\alpha_i)=0\\
+0\le \alpha_i,\hat\alpha_i\le C
+</script>
+</div>
+<p>上述过程中需满足KKT条件，即：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\left\{
 \begin{array}{}
-\alpha_i(f(x<sup>{(i)})-y</sup>{(i)}-\epsilon-\zeta_i)=0\
-\hat\alpha_i(f(x<sup>{(i)})-y</sup>{(i)}-\epsilon-\hat\zeta_i)=0\
-\alpha_i\hat\alpha_i=0,\quad \zeta_i\hat\zeta_i=0\
+\alpha_i(f(x^{(i)})-y^{(i)}-\epsilon-\zeta_i)=0\\
+\hat\alpha_i(f(x^{(i)})-y^{(i)}-\epsilon-\hat\zeta_i)=0\\
+\alpha_i\hat\alpha_i=0,\quad \zeta_i\hat\zeta_i=0\\
 (C-\alpha_i)\zeta_i=0,\quad (C-\hat\alpha_i)\hat\zeta_i=0
 \end{array}
 \right.
-$$
-则SVR的解形如：
-$$
+</div>
+<script type="math/tex; mode=display">
+\left\{
+\begin{array}{}
+\alpha_i(f(x^{(i)})-y^{(i)}-\epsilon-\zeta_i)=0\\
+\hat\alpha_i(f(x^{(i)})-y^{(i)}-\epsilon-\hat\zeta_i)=0\\
+\alpha_i\hat\alpha_i=0,\quad \zeta_i\hat\zeta_i=0\\
+(C-\alpha_i)\zeta_i=0,\quad (C-\hat\alpha_i)\hat\zeta_i=0
+\end{array}
+\right.
+</script>
+</div>
+<p>则SVR的解形如：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
-w&amp;=\sum_{i=1}<sup>m(\hat\alpha_i-\alpha_i)\phi(x</sup>{(i)})\
-f(x)&amp;=\sum_{i=1}<sup>m(\hat\alpha_i-\alpha_i)K(x,x</sup>{(i)})+b
+w&amp;=\sum_{i=1}^m(\hat\alpha_i-\alpha_i)\phi(x^{(i)})\\
+f(x)&amp;=\sum_{i=1}^m(\hat\alpha_i-\alpha_i)K(x,x^{(i)})+b
 \end{align}
-$$</p>
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+w&=\sum_{i=1}^m(\hat\alpha_i-\alpha_i)\phi(x^{(i)})\\
+f(x)&=\sum_{i=1}^m(\hat\alpha_i-\alpha_i)K(x,x^{(i)})+b
+\end{align}
+</script>
+</div>
 
               
             </article>

@@ -653,8 +653,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
-        集成学习算法之GBDT
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
       </a>
     </li>
   
@@ -667,8 +667,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
-        集成学习算法之RF
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
+        集成学习算法之GBDT
       </a>
     </li>
   
@@ -1260,39 +1260,67 @@ $$</p>
 <h2 id="personalrank_1">PersonalRank算法原理<a class="headerlink" href="#personalrank_1" title="Permanent link">&para;</a></h2>
 <p>在PageRank算法中，计算得到的PR值是每个节点相对于全局的重要性程度，而在推荐问题中，求解的是所有的商品节点对于某个用户节点的重要性程度。</p>
 <p>PersonalRank算法是PageRank算法的变形形式，用于计算所有商品节点<span class="arithmatex"><span class="MathJax_Preview">D_j</span><script type="math/tex">D_j</script></span>相对于某个用户节点<span class="arithmatex"><span class="MathJax_Preview">U</span><script type="math/tex">U</script></span>的重要性程度。现假设用户为<span class="arithmatex"><span class="MathJax_Preview">U_1</span><script type="math/tex">U_1</script></span>，则从节点<span class="arithmatex"><span class="MathJax_Preview">U_1</span><script type="math/tex">U_1</script></span>开始在用户-商品二部图中游走，游走到任意一个节点时，与PageRank算法一样，会按照一定的概率选择游走或者继续游走。假设继续游走，则以当前节点作为新的出发点重复以上的游走过程，直到每个节点的访问概率不在变化为止。</p>
-<p>计算公式可以总结为：
-$$
-PR(j)=\left {
+<p>计算公式可以总结为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+PR(j)=\left \{
     \begin{matrix}
-    \alpha \cdot \sum_{i\in in(j)}\frac{PR(i)}{|out(i)|} &amp; j \ne u\
-    (1-\alpha)+\alpha \cdot \sum_{i\in in(j)}\frac{PR(i)}{|out(i)|} &amp;  j=u\
+    \alpha \cdot \sum_{i\in in(j)}\frac{PR(i)}{|out(i)|} &amp; j \ne u\\
+    (1-\alpha)+\alpha \cdot \sum_{i\in in(j)}\frac{PR(i)}{|out(i)|} &amp;  j=u\\
     \end{matrix}
 \right.
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">u</span><script type="math/tex">u</script></span>是待推荐的用户节点。</p>
+</div>
+<script type="math/tex; mode=display">
+PR(j)=\left \{
+    \begin{matrix}
+    \alpha \cdot \sum_{i\in in(j)}\frac{PR(i)}{|out(i)|} & j \ne u\\
+    (1-\alpha)+\alpha \cdot \sum_{i\in in(j)}\frac{PR(i)}{|out(i)|} &  j=u\\
+    \end{matrix}
+\right.
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">u</span><script type="math/tex">u</script></span>是待推荐的用户节点。</p>
 <p>虽然PersonalRank算法通过随机游走有较好的理论解释，但该算法在时间复杂度上有明显的缺点。因为在为每个用户进行推荐时，都需要在整个用户物品二分图上进行迭代，知道整个图上的每个顶点PR值收敛，这一过程的往往非常耗时。</p>
 <p>为了解决PersonalRank算法的这一问题，常用的解决方案有两种：①减少迭代次数，在收敛之前就停止。虽然这样会影响最终的精度，但一般来说影响不大；②从矩阵论出发，重新设计算法。</p>
 <p>公式(6)可以写成矩阵形式：
 $$
 r=(1-\alpha)r_0+\alpha M ^T
 $$
-现在需要对第<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>个节点进行推荐，<span class="arithmatex"><span class="MathJax_Preview">r</span><script type="math/tex">r</script></span>是个<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>维向量，每个元素代表一个节点PR重要度，<span class="arithmatex"><span class="MathJax_Preview">r_0</span><script type="math/tex">r_0</script></span>也是<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>维向量，第<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>个位置上是0，其余元素均为0。<span class="arithmatex"><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>是<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>阶转移矩阵
-$$
-M_{ij}=\left{
+现在需要对第<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>个节点进行推荐，<span class="arithmatex"><span class="MathJax_Preview">r</span><script type="math/tex">r</script></span>是个<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>维向量，每个元素代表一个节点PR重要度，<span class="arithmatex"><span class="MathJax_Preview">r_0</span><script type="math/tex">r_0</script></span>也是<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>维向量，第<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>个位置上是0，其余元素均为0。<span class="arithmatex"><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>是<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>阶转移矩阵</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+M_{ij}=\left\{
 \begin{matrix}
-\frac{1}{|out(i)|}&amp; j\in out(i)\
+\frac{1}{|out(i)|}&amp; j\in out(i)\\
 0 &amp; j\notin out(i)
 \end{matrix}
 \right.
-$$
-利用式(7)和式(8)可以得到：
-$$
+</div>
+<script type="math/tex; mode=display">
+M_{ij}=\left\{
+\begin{matrix}
+\frac{1}{|out(i)|}& j\in out(i)\\
+0 & j\notin out(i)
+\end{matrix}
+\right.
+</script>
+</div>
+<p>利用式(7)和式(8)可以得到：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
-&amp; (I-\alpha M^T) r= (1-\alpha)r_0\
-\Rightarrow \quad &amp; r=(I -\alpha M<sup>T)</sup>{-1}(1-\alpha)r_0
+&amp; (I-\alpha M^T) r= (1-\alpha)r_0\\
+\Rightarrow \quad &amp; r=(I -\alpha M^T)^{-1}(1-\alpha)r_0
 \end{align}
-$$
-解一次线性方程组就可以得到<span class="arithmatex"><span class="MathJax_Preview">r</span><script type="math/tex">r</script></span>，对<span class="arithmatex"><span class="MathJax_Preview">r</span><script type="math/tex">r</script></span>中各元素降序排列取出前<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>个就得到了节点<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>的推荐列表。</p>
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+& (I-\alpha M^T) r= (1-\alpha)r_0\\
+\Rightarrow \quad & r=(I -\alpha M^T)^{-1}(1-\alpha)r_0
+\end{align}
+</script>
+</div>
+<p>解一次线性方程组就可以得到<span class="arithmatex"><span class="MathJax_Preview">r</span><script type="math/tex">r</script></span>，对<span class="arithmatex"><span class="MathJax_Preview">r</span><script type="math/tex">r</script></span>中各元素降序排列取出前<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>个就得到了节点<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>的推荐列表。</p>
 
               
             </article>

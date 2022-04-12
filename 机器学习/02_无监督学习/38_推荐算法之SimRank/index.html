@@ -653,8 +653,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
-        集成学习算法之GBDT
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
       </a>
     </li>
   
@@ -667,8 +667,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
-        集成学习算法之RF
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
+        集成学习算法之GBDT
       </a>
     </li>
   
@@ -1243,36 +1243,67 @@
 <p><img alt="simrank" src="../assets/simrank.jpg" /></p>
 <h2 id="simrank_1">SimRank算法原理<a class="headerlink" href="#simrank_1" title="Permanent link">&para;</a></h2>
 <p>SimRank算法思想是，如果两个用户相似，则与这两个用户向关联的物品也类似；如果两个物品相似，则与这两个物品向关联的用户也类似。</p>
-<p>二部图<span class="arithmatex"><span class="MathJax_Preview">G(V,E)</span><script type="math/tex">G(V,E)</script></span>其中<span class="arithmatex"><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>是节点集合，<span class="arithmatex"><span class="MathJax_Preview">E</span><script type="math/tex">E</script></span>是边集合。某一个子集内两个点的相似度<span class="arithmatex"><span class="MathJax_Preview">s(a,b)</span><script type="math/tex">s(a,b)</script></span>可以用和相关联的另一个子集节点之间的相似度表示，即：
-$$
-s(a,b)=\frac{C}{|I(a)||I(b)|}\sum_{i=1}<sup>{|I(a)|}\sum_{j=1}</sup>{|I(b)|}s(I_i(a),I_j( b))
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span>是一个常数，而<span class="arithmatex"><span class="MathJax_Preview">I(a),I(b)</span><script type="math/tex">I(a),I(b)</script></span>分别代表和<span class="arithmatex"><span class="MathJax_Preview">a,b</span><script type="math/tex">a,b</script></span>相连的二部图另一个子集的节点集合。<span class="arithmatex"><span class="MathJax_Preview">s(I_i(a),I_i(b))</span><script type="math/tex">s(I_i(a),I_i(b))</script></span>即为相连的二部图另一个子集节点之间的相似度。</p>
-<p>此时还需考虑两种特殊情形：①自己和自己的相似度，即<span class="arithmatex"><span class="MathJax_Preview">s(a,a)=1</span><script type="math/tex">s(a,a)=1</script></span>；②<span class="arithmatex"><span class="MathJax_Preview">I(a),I(b)</span><script type="math/tex">I(a),I(b)</script></span>有一个为空，即<span class="arithmatex"><span class="MathJax_Preview">a,b</span><script type="math/tex">a,b</script></span>中某一个点没有相连的另一个子集中的点，即<span class="arithmatex"><span class="MathJax_Preview">s(a,b)=0</span><script type="math/tex">s(a,b)=0</script></span>。综上二部图一个子集内两个点的相似度<span class="arithmatex"><span class="MathJax_Preview">s(a,b)</span><script type="math/tex">s(a,b)</script></span>可以表示为：
-$$
-s(a,b)=\left {
+<p>二部图<span class="arithmatex"><span class="MathJax_Preview">G(V,E)</span><script type="math/tex">G(V,E)</script></span>其中<span class="arithmatex"><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>是节点集合，<span class="arithmatex"><span class="MathJax_Preview">E</span><script type="math/tex">E</script></span>是边集合。某一个子集内两个点的相似度<span class="arithmatex"><span class="MathJax_Preview">s(a,b)</span><script type="math/tex">s(a,b)</script></span>可以用和相关联的另一个子集节点之间的相似度表示，即：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+s(a,b)=\frac{C}{|I(a)||I(b)|}\sum_{i=1}^{|I(a)|}\sum_{j=1}^{|I(b)|}s(I_i(a),I_j( b))
+</div>
+<script type="math/tex; mode=display">
+s(a,b)=\frac{C}{|I(a)||I(b)|}\sum_{i=1}^{|I(a)|}\sum_{j=1}^{|I(b)|}s(I_i(a),I_j( b))
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span>是一个常数，而<span class="arithmatex"><span class="MathJax_Preview">I(a),I(b)</span><script type="math/tex">I(a),I(b)</script></span>分别代表和<span class="arithmatex"><span class="MathJax_Preview">a,b</span><script type="math/tex">a,b</script></span>相连的二部图另一个子集的节点集合。<span class="arithmatex"><span class="MathJax_Preview">s(I_i(a),I_i(b))</span><script type="math/tex">s(I_i(a),I_i(b))</script></span>即为相连的二部图另一个子集节点之间的相似度。</p>
+<p>此时还需考虑两种特殊情形：①自己和自己的相似度，即<span class="arithmatex"><span class="MathJax_Preview">s(a,a)=1</span><script type="math/tex">s(a,a)=1</script></span>；②<span class="arithmatex"><span class="MathJax_Preview">I(a),I(b)</span><script type="math/tex">I(a),I(b)</script></span>有一个为空，即<span class="arithmatex"><span class="MathJax_Preview">a,b</span><script type="math/tex">a,b</script></span>中某一个点没有相连的另一个子集中的点，即<span class="arithmatex"><span class="MathJax_Preview">s(a,b)=0</span><script type="math/tex">s(a,b)=0</script></span>。综上二部图一个子集内两个点的相似度<span class="arithmatex"><span class="MathJax_Preview">s(a,b)</span><script type="math/tex">s(a,b)</script></span>可以表示为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+s(a,b)=\left \{
     \begin{matrix}
-   1 &amp; a=b\
-   \frac{C}{|I(a)||I(b)|}\sum_{i=1}<sup>{|I(a)|}\sum_{j=1}</sup>{|I(b)|}s(I_i(a),I_j( b))&amp; a\ne b ,I(a)\ne \empty , I(b)=\empty\
+   1 &amp; a=b\\
+   \frac{C}{|I(a)||I(b)|}\sum_{i=1}^{|I(a)|}\sum_{j=1}^{|I(b)|}s(I_i(a),I_j( b))&amp; a\ne b ,I(a)\ne \emptyset , I(b)=\emptyset\\
    0 &amp; otherwise
     \end{matrix}
 \right.
-$$
-利用上式(2)直接计算两个物品或两个用户之间的相似度较为困难，一般采用迭代方式计算。对于<span class="arithmatex"><span class="MathJax_Preview">a\ne b , I(a)\ne \empty, I(b)\ne \empty</span><script type="math/tex">a\ne b , I(a)\ne \empty, I(b)\ne \empty</script></span>时，有：
-$$
+</div>
+<script type="math/tex; mode=display">
+s(a,b)=\left \{
+    \begin{matrix}
+   1 & a=b\\
+   \frac{C}{|I(a)||I(b)|}\sum_{i=1}^{|I(a)|}\sum_{j=1}^{|I(b)|}s(I_i(a),I_j( b))& a\ne b ,I(a)\ne \emptyset , I(b)=\emptyset\\
+   0 & otherwise
+    \end{matrix}
+\right.
+</script>
+</div>
+<p>利用上式(2)直接计算两个物品或两个用户之间的相似度较为困难，一般采用迭代方式计算。对于<span class="arithmatex"><span class="MathJax_Preview">a\ne b , I(a)\ne \emptyset, I(b)\ne \emptyset</span><script type="math/tex">a\ne b , I(a)\ne \emptyset, I(b)\ne \emptyset</script></span>时，有：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
 s(a,b)
-&amp;=\frac{C}{|I(a)||I(b)|}\sum_{i=1}<sup>{|I(a)|}\sum_{j=1}</sup>{|I(b)|}s(I_i(a),I_j( b))\
-&amp;=\frac{C}{|I(a)||I(b)|}\sum_{i=1}<sup>{N}\sum_{j=1}</sup>{N}p_{ia}s(a,b)p_{jb}\
-&amp;=C\sum_{i=1}<sup>{N}\sum_{j=1}</sup>{N}(\frac{p_{ia}}{\sum_{i=1}^N p_{ia}})\cdot s(a,b) \cdot (\frac{p_{jb}}{\sum_{j=1}^N p_{jb}}) \
+&amp;=\frac{C}{|I(a)||I(b)|}\sum_{i=1}^{|I(a)|}\sum_{j=1}^{|I(b)|}s(I_i(a),I_j( b))\\
+&amp;=\frac{C}{|I(a)||I(b)|}\sum_{i=1}^{N}\sum_{j=1}^{N}p_{ia}s(a,b)p_{jb}\\
+&amp;=C\sum_{i=1}^{N}\sum_{j=1}^{N}(\frac{p_{ia}}{\sum_{i=1}^N p_{ia}})\cdot s(a,b) \cdot (\frac{p_{jb}}{\sum_{j=1}^N p_{jb}}) \\
 \end{align}
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>为二部图关联边的权重，<span class="arithmatex"><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span>为二部图节点数。式(5)如果用矩阵表示，可以写成矩阵<span class="arithmatex"><span class="MathJax_Preview">S=CW^T SW</span><script type="math/tex">S=CW^T SW</script></span>，其中<span class="arithmatex"><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>是将权重值<span class="arithmatex"><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>构成的矩阵<span class="arithmatex"><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>归一化后的矩阵。</p>
-<p>由于节点和自己的相似度为1，所以矩阵<span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>对角线上的值都应该是1，所以这里需要针对矩阵<span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>做一个修正：首先去掉对角线上的值再加上单位矩阵，就可以得到对角线为1的相似度矩阵。即：
-$$
-S=CW<sup>TSW+I-Diag(diag(CW</sup>TSW))
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">diag(CW^TSW)</span><script type="math/tex">diag(CW^TSW)</script></span>是矩阵<span class="arithmatex"><span class="MathJax_Preview">CW^TSW</span><script type="math/tex">CW^TSW</script></span>的对角线元素构成的向量，<span class="arithmatex"><span class="MathJax_Preview">Diag(diag(CW^T SW))</span><script type="math/tex">Diag(diag(CW^T SW))</script></span>将这个向量构成对角矩阵。</p>
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+s(a,b)
+&=\frac{C}{|I(a)||I(b)|}\sum_{i=1}^{|I(a)|}\sum_{j=1}^{|I(b)|}s(I_i(a),I_j( b))\\
+&=\frac{C}{|I(a)||I(b)|}\sum_{i=1}^{N}\sum_{j=1}^{N}p_{ia}s(a,b)p_{jb}\\
+&=C\sum_{i=1}^{N}\sum_{j=1}^{N}(\frac{p_{ia}}{\sum_{i=1}^N p_{ia}})\cdot s(a,b) \cdot (\frac{p_{jb}}{\sum_{j=1}^N p_{jb}}) \\
+\end{align}
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>为二部图关联边的权重，<span class="arithmatex"><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span>为二部图节点数。式(5)如果用矩阵表示，可以写成矩阵<span class="arithmatex"><span class="MathJax_Preview">S=CW^T SW</span><script type="math/tex">S=CW^T SW</script></span>，其中<span class="arithmatex"><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>是将权重值<span class="arithmatex"><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>构成的矩阵<span class="arithmatex"><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>归一化后的矩阵。</p>
+<p>由于节点和自己的相似度为1，所以矩阵<span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>对角线上的值都应该是1，所以这里需要针对矩阵<span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>做一个修正：首先去掉对角线上的值再加上单位矩阵，就可以得到对角线为1的相似度矩阵。即：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+S=CW^TSW+I-Diag(diag(CW^TSW))
+</div>
+<script type="math/tex; mode=display">
+S=CW^TSW+I-Diag(diag(CW^TSW))
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">diag(CW^TSW)</span><script type="math/tex">diag(CW^TSW)</script></span>是矩阵<span class="arithmatex"><span class="MathJax_Preview">CW^TSW</span><script type="math/tex">CW^TSW</script></span>的对角线元素构成的向量，<span class="arithmatex"><span class="MathJax_Preview">Diag(diag(CW^T SW))</span><script type="math/tex">Diag(diag(CW^T SW))</script></span>将这个向量构成对角矩阵。</p>
 <p>现在只需要对<span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>矩阵按照上式进行若干轮迭代，当<span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>矩阵的值基本稳定后就得到了二部图的相似度矩阵，进而可以利用用户与用户的相似度度量，物品与物品的相似度度量进行有针对性的推荐。</p>
 <p>SimRank算法流程：</p>
 <blockquote>

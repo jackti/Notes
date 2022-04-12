@@ -724,8 +724,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
-        集成学习算法之GBDT
+      <a href="../23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
       </a>
     </li>
   
@@ -738,8 +738,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
-        集成学习算法之RF
+      <a href="../24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
+        集成学习算法之GBDT
       </a>
     </li>
   
@@ -1268,150 +1268,296 @@
 <h1 id="_1">支持向量机算法原理(一)<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <p>支持向量机(Support Vector Machine,SVM)是一种二元分类模型，它的基础模型是定义在特征空间上的间隔最大的线性分类器，间隔最大使它有别于感知机模型；支持向量机还包括了核技巧，使得它能够处理非线性问题；支持向量机的学习策略就是间隔最大化，转化为一个求解凸二次规划的问题。经过改进和扩展，现在的支持向量机算法也可支持多分类问题和回归问题。</p>
 <h2 id="_2">函数间隔和几何间隔<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>在分离超平面固定<span class="arithmatex"><span class="MathJax_Preview">w^Tx+b=0</span><script type="math/tex">w^Tx+b=0</script></span>时候，<span class="arithmatex"><span class="MathJax_Preview">|w^Tx+b|</span><script type="math/tex">|w^Tx+b|</script></span>表示点<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>到超平面的距离。通过观察<span class="arithmatex"><span class="MathJax_Preview">w^Tx+b</span><script type="math/tex">w^Tx+b</script></span>与<span class="arithmatex"><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>是否同号来判断分类是否正确。定义函数间隔<span class="arithmatex"><span class="MathJax_Preview">\gamma^{'}</span><script type="math/tex">\gamma^{'}</script></span>：
-$$
-\gamma<sup>{’}=y(w</sup>T x+b)
-$$
-可以看到，它就是感知机模型里面的误分类点到超平面距离的分子。函数间隔并不能反映点到超平面的距离。定义几何间隔：
-$$
-\gamma =\frac{y(w<sup>Tx+b)}{||w||_2}=\frac{\gamma</sup>{'}}{||w||_2}
-$$
-几何间隔才是点到超平面的真正距离。感知机模型用到的距离就是几何距离。</p>
+<p>在分离超平面固定<span class="arithmatex"><span class="MathJax_Preview">w^Tx+b=0</span><script type="math/tex">w^Tx+b=0</script></span>时候，<span class="arithmatex"><span class="MathJax_Preview">|w^Tx+b|</span><script type="math/tex">|w^Tx+b|</script></span>表示点<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>到超平面的距离。通过观察<span class="arithmatex"><span class="MathJax_Preview">w^Tx+b</span><script type="math/tex">w^Tx+b</script></span>与<span class="arithmatex"><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>是否同号来判断分类是否正确。定义函数间隔<span class="arithmatex"><span class="MathJax_Preview">\gamma^{'}</span><script type="math/tex">\gamma^{'}</script></span>：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\gamma^{’}=y(w^T x+b)
+</div>
+<script type="math/tex; mode=display">
+\gamma^{’}=y(w^T x+b)
+</script>
+</div>
+<p>可以看到，它就是感知机模型里面的误分类点到超平面距离的分子。函数间隔并不能反映点到超平面的距离。定义几何间隔：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\gamma =\frac{y(w^Tx+b)}{||w||_2}=\frac{\gamma^{'}}{||w||_2}
+</div>
+<script type="math/tex; mode=display">
+\gamma =\frac{y(w^Tx+b)}{||w||_2}=\frac{\gamma^{'}}{||w||_2}
+</script>
+</div>
+<p>几何间隔才是点到超平面的真正距离。感知机模型用到的距离就是几何距离。</p>
 <h2 id="_3">感知机模型<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p>在二维平面中，感知机模型尝试找到一条直线，能够把二元数据隔离开。在三维或者更高的空间中，感知机模型能够找到一个超平面，将这个数据集中的二元类别数据隔离开。定义超平面为<span class="arithmatex"><span class="MathJax_Preview">w^T x+b=0</span><script type="math/tex">w^T x+b=0</script></span>，在超平面<span class="arithmatex"><span class="MathJax_Preview">w^T x+b=0</span><script type="math/tex">w^T x+b=0</script></span>上方的样例定义<span class="arithmatex"><span class="MathJax_Preview">y=1</span><script type="math/tex">y=1</script></span>，在超平面<span class="arithmatex"><span class="MathJax_Preview">w^Tx+b=0</span><script type="math/tex">w^Tx+b=0</script></span>下方的样例定义为<span class="arithmatex"><span class="MathJax_Preview">y=-1</span><script type="math/tex">y=-1</script></span>，满足这个条件的超平面存在多个，我们的目标是从这多个分离超平面中选择一个泛化能力最强的超平面。</p>
-<p>感知机模型思想是让所有误分类点(定义为集合<span class="arithmatex"><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>)到超平面的距离和最小，其损失函数表达式如下：
-$$
-\sum_{x_{i}\in M} \frac{-y<sup>{(i)}(w</sup>T x^{(i)}+b)}{||w||<em>2}
-$$
-分子和分母有固定的倍数关系，于是可以固定分子或者分母为1，然后求另一个即分子自己或者分母的导数的最小化损失函数。在感知机模型中采用保留分子，固定分子<span class="arithmatex"><span class="MathJax_Preview">||w||=1</span><script type="math/tex">||w||=1</script></span>，于是感知机模型的损失函数为：
-$$
-\sum</em>{x^{(i)\in M}}-y<sup>{(i)}(w</sup>T x^{(i)}+b)
-$$
-在感知机模型中可以找到多个分类的超平面将数据分开，对于那些离超平面很远的点，让其离超平面更远没有意义，需要关注那些距离超平面很近的点，这些点是很容易被误分类的，要让这些比较近的点尽可能远离超平面，这样的分类效果会更好一些。</p>
+<p>感知机模型思想是让所有误分类点(定义为集合<span class="arithmatex"><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>)到超平面的距离和最小，其损失函数表达式如下：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\sum_{x_{i}\in M} \frac{-y^{(i)}(w^T x^{(i)}+b)}{||w||_2}
+</div>
+<script type="math/tex; mode=display">
+\sum_{x_{i}\in M} \frac{-y^{(i)}(w^T x^{(i)}+b)}{||w||_2}
+</script>
+</div>
+<p>分子和分母有固定的倍数关系，于是可以固定分子或者分母为1，然后求另一个即分子自己或者分母的导数的最小化损失函数。在感知机模型中采用保留分子，固定分子<span class="arithmatex"><span class="MathJax_Preview">||w||=1</span><script type="math/tex">||w||=1</script></span>，于是感知机模型的损失函数为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\sum_{x^{(i)\in M}}-y^{(i)}(w^T x^{(i)}+b)
+</div>
+<script type="math/tex; mode=display">
+\sum_{x^{(i)\in M}}-y^{(i)}(w^T x^{(i)}+b)
+</script>
+</div>
+<p>在感知机模型中可以找到多个分类的超平面将数据分开，对于那些离超平面很远的点，让其离超平面更远没有意义，需要关注那些距离超平面很近的点，这些点是很容易被误分类的，要让这些比较近的点尽可能远离超平面，这样的分类效果会更好一些。</p>
 <h2 id="_4">支持向量机模型<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<p>假设超平面<span class="arithmatex"><span class="MathJax_Preview">(w,b)</span><script type="math/tex">(w,b)</script></span>能将训练样本正确分类，对<span class="arithmatex"><span class="MathJax_Preview">(x^{(i)},y^{(i)})\in D</span><script type="math/tex">(x^{(i)},y^{(i)})\in D</script></span>，如<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}=+1</span><script type="math/tex">y^{(i)}=+1</script></span>，则有<span class="arithmatex"><span class="MathJax_Preview">w^Tx^{(i)}+b&gt;0</span><script type="math/tex">w^Tx^{(i)}+b>0</script></span>；若<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}=-1</span><script type="math/tex">y^{(i)}=-1</script></span>，则有<span class="arithmatex"><span class="MathJax_Preview">w^Tx^{(i)}+b&lt;0</span><script type="math/tex">w^Tx^{(i)}+b<0</script></span>，令
-$$
-\left {
+<p>假设超平面<span class="arithmatex"><span class="MathJax_Preview">(w,b)</span><script type="math/tex">(w,b)</script></span>能将训练样本正确分类，对<span class="arithmatex"><span class="MathJax_Preview">(x^{(i)},y^{(i)})\in D</span><script type="math/tex">(x^{(i)},y^{(i)})\in D</script></span>，如<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}=+1</span><script type="math/tex">y^{(i)}=+1</script></span>，则有<span class="arithmatex"><span class="MathJax_Preview">w^Tx^{(i)}+b&gt;0</span><script type="math/tex">w^Tx^{(i)}+b>0</script></span>；若<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}=-1</span><script type="math/tex">y^{(i)}=-1</script></span>，则有<span class="arithmatex"><span class="MathJax_Preview">w^Tx^{(i)}+b&lt;0</span><script type="math/tex">w^Tx^{(i)}+b<0</script></span>，令</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\left \{
 \begin{aligned}
-    w^T x^{(i)}+b \ge +1,\qquad y^{(i)}=+1\
-    w^T x^{(i)}+b \lt -1,\qquad y^{(i)}=-1\
+    w^T x^{(i)}+b \ge +1,\qquad y^{(i)}=+1\\
+    w^T x^{(i)}+b \lt -1,\qquad y^{(i)}=-1\\
 \end{aligned}
 \right.
-$$
-距离超平面最近的几个训练样本点是上面的等号成立，他们被称为"支持向量"，两个异类支持向量<span class="arithmatex"><span class="MathJax_Preview">x^+,x^-</span><script type="math/tex">x^+,x^-</script></span>到超平面的距离之和<span class="arithmatex"><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span>为：
-$$
+</div>
+<script type="math/tex; mode=display">
+\left \{
+\begin{aligned}
+    w^T x^{(i)}+b \ge +1,\qquad y^{(i)}=+1\\
+    w^T x^{(i)}+b \lt -1,\qquad y^{(i)}=-1\\
+\end{aligned}
+\right.
+</script>
+</div>
+<p>距离超平面最近的几个训练样本点是上面的等号成立，他们被称为"支持向量"，两个异类支持向量<span class="arithmatex"><span class="MathJax_Preview">x^+,x^-</span><script type="math/tex">x^+,x^-</script></span>到超平面的距离之和<span class="arithmatex"><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span>为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
-d &amp;= \frac{|w^T x<sup>++b|}{||w||_2}+\frac{|w</sup>T x^-+b|}{||w||<em>2}\
-&amp;=\frac{1}{||w||_2}( |w<sup>Tx</sup>++b|+|w<sup>Tx</sup>-+b|) \
-&amp;=\frac{1}{||w||_2}|(+1)-(-1)|\
-&amp; =\frac{2}{||w||_2}\
+d &amp;= \frac{|w^T x^++b|}{||w||_2}+\frac{|w^T x^-+b|}{||w||_2}\\
+&amp;=\frac{1}{||w||_2}( |w^Tx^++b|+|w^Tx^-+b|) \\
+&amp;=\frac{1}{||w||_2}|(+1)-(-1)|\\
+&amp; =\frac{2}{||w||_2}\\
 \end{align}
-$$
-公式(5)是利用点到距离的公式，计算两个异类支持向量的距离之和；公式(6)~(7)两支持向量分别过直线<span class="arithmatex"><span class="MathJax_Preview">w^Tx+b=+1</span><script type="math/tex">w^Tx+b=+1</script></span>和<span class="arithmatex"><span class="MathJax_Preview">w^T x+b=-1</span><script type="math/tex">w^T x+b=-1</script></span> ，将<span class="arithmatex"><span class="MathJax_Preview">\pm1</span><script type="math/tex">\pm1</script></span>带入。由于<span class="arithmatex"><span class="MathJax_Preview">\frac{2}{||w||_2}</span><script type="math/tex">\frac{2}{||w||_2}</script></span>最大化等价于<span class="arithmatex"><span class="MathJax_Preview">\frac{1}{2}||w||^2_2</span><script type="math/tex">\frac{1}{2}||w||^2_2</script></span>的最小化，这样支持向量机的基本型：
-$$
+</div>
+<script type="math/tex; mode=display">
 \begin{align}
-                &amp;\min</em>{w,b}\frac{1}{2}||w||^2_2 \notag \
-                &amp; s.t. \quad y<sup>{(i)}(w</sup>T x^{i}+b)\ge 1,  \quad i=1,2,...,m
+d &= \frac{|w^T x^++b|}{||w||_2}+\frac{|w^T x^-+b|}{||w||_2}\\
+&=\frac{1}{||w||_2}( |w^Tx^++b|+|w^Tx^-+b|) \\
+&=\frac{1}{||w||_2}|(+1)-(-1)|\\
+& =\frac{2}{||w||_2}\\
 \end{align}
-$$</p>
+</script>
+</div>
+<p>公式(5)是利用点到距离的公式，计算两个异类支持向量的距离之和；公式(6)~(7)两支持向量分别过直线<span class="arithmatex"><span class="MathJax_Preview">w^Tx+b=+1</span><script type="math/tex">w^Tx+b=+1</script></span>和<span class="arithmatex"><span class="MathJax_Preview">w^T x+b=-1</span><script type="math/tex">w^T x+b=-1</script></span> ，将<span class="arithmatex"><span class="MathJax_Preview">\pm1</span><script type="math/tex">\pm1</script></span>带入。由于<span class="arithmatex"><span class="MathJax_Preview">\frac{2}{||w||_2}</span><script type="math/tex">\frac{2}{||w||_2}</script></span>最大化等价于<span class="arithmatex"><span class="MathJax_Preview">\frac{1}{2}||w||^2_2</span><script type="math/tex">\frac{1}{2}||w||^2_2</script></span>的最小化，这样支持向量机的基本型：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+                &amp;\min_{w,b}\frac{1}{2}||w||^2_2 \notag \\
+                &amp; s.t. \quad y^{(i)}(w^T x^{i}+b)\ge 1,  \quad i=1,2,...,m
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+                &\min_{w,b}\frac{1}{2}||w||^2_2 \notag \\
+                & s.t. \quad y^{(i)}(w^T x^{i}+b)\ge 1,  \quad i=1,2,...,m
+\end{align}
+</script>
+</div>
 <h2 id="_5">支持向量机求解<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
-<p>由于目标函数<span class="arithmatex"><span class="MathJax_Preview">\frac{1}{2}||w||^2_2</span><script type="math/tex">\frac{1}{2}||w||^2_2</script></span>是凸函数，约束条件不等式是仿射的，根据凸优化理论，可以通过拉格朗日函数将优化目标转化为无约束的优化问题(和最大熵模型的优化方法一样)。具体地，对每一个不等式约束引进拉格朗日乘子，<span class="arithmatex"><span class="MathJax_Preview">\alpha_i \ge 0,i=1,2,...,m</span><script type="math/tex">\alpha_i \ge 0,i=1,2,...,m</script></span>，定义拉格朗日函数：
-$$
-L(w,b,\alpha)=\frac{1}{2}||w||<sup>2_2-\sum_{i=1}</sup>{m}\alpha_i[ y<sup>{(i)}(w</sup>T x^{(i)}+b) -1 ]
-$$
-由于引入了拉格朗日乘子<span class="arithmatex"><span class="MathJax_Preview">\alpha=(\alpha_1,\alpha_1,...,\alpha_m)^T</span><script type="math/tex">\alpha=(\alpha_1,\alpha_1,...,\alpha_m)^T</script></span>，优化目标变成：
-$$
+<p>由于目标函数<span class="arithmatex"><span class="MathJax_Preview">\frac{1}{2}||w||^2_2</span><script type="math/tex">\frac{1}{2}||w||^2_2</script></span>是凸函数，约束条件不等式是仿射的，根据凸优化理论，可以通过拉格朗日函数将优化目标转化为无约束的优化问题(和最大熵模型的优化方法一样)。具体地，对每一个不等式约束引进拉格朗日乘子，<span class="arithmatex"><span class="MathJax_Preview">\alpha_i \ge 0,i=1,2,...,m</span><script type="math/tex">\alpha_i \ge 0,i=1,2,...,m</script></span>，定义拉格朗日函数：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+L(w,b,\alpha)=\frac{1}{2}||w||^2_2-\sum_{i=1}^{m}\alpha_i[ y^{(i)}(w^T x^{(i)}+b) -1 ]
+</div>
+<script type="math/tex; mode=display">
+L(w,b,\alpha)=\frac{1}{2}||w||^2_2-\sum_{i=1}^{m}\alpha_i[ y^{(i)}(w^T x^{(i)}+b) -1 ]
+</script>
+</div>
+<p>由于引入了拉格朗日乘子<span class="arithmatex"><span class="MathJax_Preview">\alpha=(\alpha_1,\alpha_1,...,\alpha_m)^T</span><script type="math/tex">\alpha=(\alpha_1,\alpha_1,...,\alpha_m)^T</script></span>，优化目标变成：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \min_{w,b} \max_{\alpha} L(w,b,\alpha)
-$$
-根据拉格朗日对偶性，原始问题的对偶问题是极大极小问题：
-$$
+</div>
+<script type="math/tex; mode=display">
+\min_{w,b} \max_{\alpha} L(w,b,\alpha)
+</script>
+</div>
+<p>根据拉格朗日对偶性，原始问题的对偶问题是极大极小问题：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \max_\alpha \min_{w,b}L(w,b,\alpha)
-$$
-可以首先优化函数对于<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>和<span class="arithmatex"><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span>的极小值，然后对拉格朗日乘子<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的极大值。</p>
+</div>
+<script type="math/tex; mode=display">
+\max_\alpha \min_{w,b}L(w,b,\alpha)
+</script>
+</div>
+<p>可以首先优化函数对于<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>和<span class="arithmatex"><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span>的极小值，然后对拉格朗日乘子<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的极大值。</p>
 <p><strong>（1）求<span class="arithmatex"><span class="MathJax_Preview">\min_{w,b}L(w,b,\alpha)</span><script type="math/tex">\min_{w,b}L(w,b,\alpha)</script></span></strong></p>
-<p>将拉格朗日函数<span class="arithmatex"><span class="MathJax_Preview">L(w,b,\alpha)</span><script type="math/tex">L(w,b,\alpha)</script></span>分别对<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>和<span class="arithmatex"><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span>求偏导数并令其等于0。
-$$
+<p>将拉格朗日函数<span class="arithmatex"><span class="MathJax_Preview">L(w,b,\alpha)</span><script type="math/tex">L(w,b,\alpha)</script></span>分别对<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>和<span class="arithmatex"><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span>求偏导数并令其等于0。</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
-&amp;\nabla_w L \overset{def}= \frac{\partial L}{\partial w}=w-\sum_{i=1}^{m}\alpha_i y<sup>{(i)}x</sup>{(i)}=0\
-&amp;\nabla_b L \overset{def}= \frac{\partial L}{\partial b}=-\sum_{i=1}^{m}\alpha_i y^{(i)}=0\
+&amp;\nabla_w L \overset{def}= \frac{\partial L}{\partial w}=w-\sum_{i=1}^{m}\alpha_i y^{(i)}x^{(i)}=0\\
+&amp;\nabla_b L \overset{def}= \frac{\partial L}{\partial b}=-\sum_{i=1}^{m}\alpha_i y^{(i)}=0\\
 \end{align}
-$$
-得到：
-$$
+</div>
+<script type="math/tex; mode=display">
 \begin{align}
-&amp; w=\sum_{i=1}^{m}\alpha_i y<sup>{(i)}x</sup>{(i)}\
+&\nabla_w L \overset{def}= \frac{\partial L}{\partial w}=w-\sum_{i=1}^{m}\alpha_i y^{(i)}x^{(i)}=0\\
+&\nabla_b L \overset{def}= \frac{\partial L}{\partial b}=-\sum_{i=1}^{m}\alpha_i y^{(i)}=0\\
+\end{align}
+</script>
+</div>
+<p>得到：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+&amp; w=\sum_{i=1}^{m}\alpha_i y^{(i)}x^{(i)}\\
 &amp; \sum_{i=1}^m \alpha_i y^{(i)}=0
 \end{align}
-$$
-从上面的式子中，可以得到<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的关系。将<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>替换为<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的表达式后的优化函数<span class="arithmatex"><span class="MathJax_Preview">\Psi(\alpha)</span><script type="math/tex">\Psi(\alpha)</script></span>的表达式：
-$$
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+& w=\sum_{i=1}^{m}\alpha_i y^{(i)}x^{(i)}\\
+& \sum_{i=1}^m \alpha_i y^{(i)}=0
+\end{align}
+</script>
+</div>
+<p>从上面的式子中，可以得到<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的关系。将<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>替换为<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的表达式后的优化函数<span class="arithmatex"><span class="MathJax_Preview">\Psi(\alpha)</span><script type="math/tex">\Psi(\alpha)</script></span>的表达式：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
 \Psi(\alpha)
-&amp;=\frac{1}{2}||w||<sup>2_2-\sum_{i=1}</sup>{m}\alpha_i[ y<sup>{(i)}(w</sup>T x^{(i)}+b) -1 ]\
-&amp;=\frac{1}{2}w^T w-\sum_{i=1}<sup>m\alpha_iy</sup>{(i)}w<sup>Tx</sup>{(i)}-\sum_{i=1}^m\alpha_i y<sup>{(i)}b+\sum_{i=1}</sup>{m}\alpha_i\
-&amp;=\frac{1}{2}w^T  ( \sum_{i=1}^{m}\alpha_i y<sup>{(i)}x</sup>{(i)})-w^T \sum_{i=1}<sup>m\alpha_iy</sup>{(i)}x<sup>{(i)}-\sum_{i=1}</sup>m\alpha_i y<sup>{(i)}b+\sum_{i=1}</sup>{m}\alpha_i\
-&amp;=-\frac{1}{2}w^T  ( \sum_{i=1}^{m}\alpha_i y<sup>{(i)}x</sup>{(i)})-\sum_{i=1}^m\alpha_i y<sup>{(i)}b+\sum_{i=1}</sup>{m}\alpha_i\
-&amp;=-\frac{1}{2}(\sum_{i=1}^{m}\alpha_i y<sup>{(i)}x</sup>{(i)})^T  ( \sum_{i=1}^{m}\alpha_i y<sup>{(i)}x</sup>{(i)})-b\sum_{i=1}^m\alpha_i y<sup>{(i)}+\sum_{i=1}</sup>{m}\alpha_i\
-&amp;=-\frac{1}{2} \lgroup \sum_{i=1}^{m}\alpha_i y<sup>{(i)}(x</sup>{(i)})^T  \rgroup  \lgroup \sum_{i=1}^{m}\alpha_i y<sup>{(i)}x</sup>{(i)}\rgroup -b\sum_{i=1}^m\alpha_i y<sup>{(i)}+\sum_{i=1}</sup>{m}\alpha_i\
-&amp;=-\frac{1}{2}\lgroup \sum_{i=1}^{m}\alpha_i y<sup>{(i)}(x</sup>{(i)})^T \rgroup  \lgroup \sum_{i=1}^{m}\alpha_i y<sup>{(i)}x</sup>{(i)} \rgroup +\sum_{i=1}^{m}\alpha_i\
-&amp;=-\frac{1}{2}\sum_{i=1}<sup>{m}\sum_{j=1}</sup>m\lgroup \alpha_iy<sup>{(i)}(x</sup>{(i)})^T \alpha_jy<sup>{(j)}x</sup>{(j)}  \rgroup+\sum_{i=1}^m \alpha_i\
-&amp;=\sum_{i=1}^m \alpha_i-\frac{1}{2}\sum_{i=1,j=1}^m \alpha_i\alpha_jy<sup>{(i)}y</sup>{(j)}(x<sup>{(i)})</sup>T x^{(j)}
+&amp;=\frac{1}{2}||w||^2_2-\sum_{i=1}^{m}\alpha_i[ y^{(i)}(w^T x^{(i)}+b) -1 ]\\
+&amp;=\frac{1}{2}w^T w-\sum_{i=1}^m\alpha_iy^{(i)}w^Tx^{(i)}-\sum_{i=1}^m\alpha_i y^{(i)}b+\sum_{i=1}^{m}\alpha_i\\
+&amp;=\frac{1}{2}w^T  ( \sum_{i=1}^{m}\alpha_i y^{(i)}x^{(i)})-w^T \sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}-\sum_{i=1}^m\alpha_i y^{(i)}b+\sum_{i=1}^{m}\alpha_i\\
+&amp;=-\frac{1}{2}w^T  ( \sum_{i=1}^{m}\alpha_i y^{(i)}x^{(i)})-\sum_{i=1}^m\alpha_i y^{(i)}b+\sum_{i=1}^{m}\alpha_i\\
+&amp;=-\frac{1}{2}(\sum_{i=1}^{m}\alpha_i y^{(i)}x^{(i)})^T  ( \sum_{i=1}^{m}\alpha_i y^{(i)}x^{(i)})-b\sum_{i=1}^m\alpha_i y^{(i)}+\sum_{i=1}^{m}\alpha_i\\
+&amp;=-\frac{1}{2} \lgroup \sum_{i=1}^{m}\alpha_i y^{(i)}(x^{(i)})^T  \rgroup  \lgroup \sum_{i=1}^{m}\alpha_i y^{(i)}x^{(i)}\rgroup -b\sum_{i=1}^m\alpha_i y^{(i)}+\sum_{i=1}^{m}\alpha_i\\
+&amp;=-\frac{1}{2}\lgroup \sum_{i=1}^{m}\alpha_i y^{(i)}(x^{(i)})^T \rgroup  \lgroup \sum_{i=1}^{m}\alpha_i y^{(i)}x^{(i)} \rgroup +\sum_{i=1}^{m}\alpha_i\\
+&amp;=-\frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^m\lgroup \alpha_iy^{(i)}(x^{(i)})^T \alpha_jy^{(j)}x^{(j)}  \rgroup+\sum_{i=1}^m \alpha_i\\
+&amp;=\sum_{i=1}^m \alpha_i-\frac{1}{2}\sum_{i=1,j=1}^m \alpha_i\alpha_jy^{(i)}y^{(j)}(x^{(i)})^T x^{(j)}
 \end{align}
-$$
-公式(17)<sub>(18)利用了范数的定义<span class="arithmatex"><span class="MathJax_Preview">||w||^2_2=w^T w</span><script type="math/tex">||w||^2_2=w^T w</script></span>；公式(18)-(22)使用了<span class="arithmatex"><span class="MathJax_Preview">w=\sum_{i=1}^m \alpha_iy^{(i)}x^{(i)}</span><script type="math/tex">w=\sum_{i=1}^m \alpha_iy^{(i)}x^{(i)}</script></span>合并同类项进行化简，由于常量的转置就是其本身，所以只有只有向量<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>被转置；公式(22)</sub>(23)利用了<span class="arithmatex"><span class="MathJax_Preview">\sum_{i=1}^m \alpha_i y^{(i)}=0</span><script type="math/tex">\sum_{i=1}^m \alpha_i y^{(i)}=0</script></span>；公式(23)~(24)利用：
-$$
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\Psi(\alpha)
+&=\frac{1}{2}||w||^2_2-\sum_{i=1}^{m}\alpha_i[ y^{(i)}(w^T x^{(i)}+b) -1 ]\\
+&=\frac{1}{2}w^T w-\sum_{i=1}^m\alpha_iy^{(i)}w^Tx^{(i)}-\sum_{i=1}^m\alpha_i y^{(i)}b+\sum_{i=1}^{m}\alpha_i\\
+&=\frac{1}{2}w^T  ( \sum_{i=1}^{m}\alpha_i y^{(i)}x^{(i)})-w^T \sum_{i=1}^m\alpha_iy^{(i)}x^{(i)}-\sum_{i=1}^m\alpha_i y^{(i)}b+\sum_{i=1}^{m}\alpha_i\\
+&=-\frac{1}{2}w^T  ( \sum_{i=1}^{m}\alpha_i y^{(i)}x^{(i)})-\sum_{i=1}^m\alpha_i y^{(i)}b+\sum_{i=1}^{m}\alpha_i\\
+&=-\frac{1}{2}(\sum_{i=1}^{m}\alpha_i y^{(i)}x^{(i)})^T  ( \sum_{i=1}^{m}\alpha_i y^{(i)}x^{(i)})-b\sum_{i=1}^m\alpha_i y^{(i)}+\sum_{i=1}^{m}\alpha_i\\
+&=-\frac{1}{2} \lgroup \sum_{i=1}^{m}\alpha_i y^{(i)}(x^{(i)})^T  \rgroup  \lgroup \sum_{i=1}^{m}\alpha_i y^{(i)}x^{(i)}\rgroup -b\sum_{i=1}^m\alpha_i y^{(i)}+\sum_{i=1}^{m}\alpha_i\\
+&=-\frac{1}{2}\lgroup \sum_{i=1}^{m}\alpha_i y^{(i)}(x^{(i)})^T \rgroup  \lgroup \sum_{i=1}^{m}\alpha_i y^{(i)}x^{(i)} \rgroup +\sum_{i=1}^{m}\alpha_i\\
+&=-\frac{1}{2}\sum_{i=1}^{m}\sum_{j=1}^m\lgroup \alpha_iy^{(i)}(x^{(i)})^T \alpha_jy^{(j)}x^{(j)}  \rgroup+\sum_{i=1}^m \alpha_i\\
+&=\sum_{i=1}^m \alpha_i-\frac{1}{2}\sum_{i=1,j=1}^m \alpha_i\alpha_jy^{(i)}y^{(j)}(x^{(i)})^T x^{(j)}
+\end{align}
+</script>
+</div>
+<p>公式(17)<sub>(18)利用了范数的定义<span class="arithmatex"><span class="MathJax_Preview">||w||^2_2=w^T w</span><script type="math/tex">||w||^2_2=w^T w</script></span>；公式(18)-(22)使用了<span class="arithmatex"><span class="MathJax_Preview">w=\sum_{i=1}^m \alpha_iy^{(i)}x^{(i)}</span><script type="math/tex">w=\sum_{i=1}^m \alpha_iy^{(i)}x^{(i)}</script></span>合并同类项进行化简，由于常量的转置就是其本身，所以只有只有向量<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>被转置；公式(22)</sub>(23)利用了<span class="arithmatex"><span class="MathJax_Preview">\sum_{i=1}^m \alpha_i y^{(i)}=0</span><script type="math/tex">\sum_{i=1}^m \alpha_i y^{(i)}=0</script></span>；公式(23)~(24)利用：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{aligned}
 \sum_{i=1}^n x_i \cdot \sum_{i=1}^my_i
-&amp;=(x_1+x_2+...+x_n)(y_1+y_2+...+y_n)\
-&amp;=(x_1y_1+x_1y_2+...x_1y_n)+(x_2y_1+x_2y_2+...+x_2y_n)+...+(x_ny_1+x_ny_2+...+x_ny_n)\
-&amp;=x_1y_1+x_1y_2+...x_1y_n+x_2y_1+x_2y_2+...+x_2y_n+...+x_ny_1+x_ny_2+...+x_ny_n\
+&amp;=(x_1+x_2+...+x_n)(y_1+y_2+...+y_n)\\
+&amp;=(x_1y_1+x_1y_2+...x_1y_n)+(x_2y_1+x_2y_2+...+x_2y_n)+...+(x_ny_1+x_ny_2+...+x_ny_n)\\
+&amp;=x_1y_1+x_1y_2+...x_1y_n+x_2y_1+x_2y_2+...+x_2y_n+...+x_ny_1+x_ny_2+...+x_ny_n\\
 &amp;=\sum_{i=1,j=1}^m x_i y_j
 \end{aligned}
-$$
-<strong>（2）求<span class="arithmatex"><span class="MathJax_Preview">\max_\limits{\alpha}\Psi(\alpha)</span><script type="math/tex">\max_\limits{\alpha}\Psi(\alpha)</script></span></strong> </p>
-<p>从上面的推导，通过对<span class="arithmatex"><span class="MathJax_Preview">w,b</span><script type="math/tex">w,b</script></span>极小化以后，优化函数<span class="arithmatex"><span class="MathJax_Preview">\Psi(\alpha)</span><script type="math/tex">\Psi(\alpha)</script></span>仅仅只有向量<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>为参数，此时对<span class="arithmatex"><span class="MathJax_Preview">\Psi(\alpha)</span><script type="math/tex">\Psi(\alpha)</script></span>求极大化的数学表达式为：
-$$
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\sum_{i=1}^n x_i \cdot \sum_{i=1}^my_i
+&=(x_1+x_2+...+x_n)(y_1+y_2+...+y_n)\\
+&=(x_1y_1+x_1y_2+...x_1y_n)+(x_2y_1+x_2y_2+...+x_2y_n)+...+(x_ny_1+x_ny_2+...+x_ny_n)\\
+&=x_1y_1+x_1y_2+...x_1y_n+x_2y_1+x_2y_2+...+x_2y_n+...+x_ny_1+x_ny_2+...+x_ny_n\\
+&=\sum_{i=1,j=1}^m x_i y_j
+\end{aligned}
+</script>
+</div>
+<p><strong>（2）求<span class="arithmatex"><span class="MathJax_Preview">\max_\limits{\alpha}\Psi(\alpha)</span><script type="math/tex">\max_\limits{\alpha}\Psi(\alpha)</script></span></strong> </p>
+<p>从上面的推导，通过对<span class="arithmatex"><span class="MathJax_Preview">w,b</span><script type="math/tex">w,b</script></span>极小化以后，优化函数<span class="arithmatex"><span class="MathJax_Preview">\Psi(\alpha)</span><script type="math/tex">\Psi(\alpha)</script></span>仅仅只有向量<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>为参数，此时对<span class="arithmatex"><span class="MathJax_Preview">\Psi(\alpha)</span><script type="math/tex">\Psi(\alpha)</script></span>求极大化的数学表达式为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
-&amp;\max_\alpha -\frac{1}{2}\sum_{i=1}<sup>m\sum_{j=1}</sup>m\alpha_i \alpha_jy<sup>{(i)}y</sup>{(j)}\left ( x^{(i)} \cdot x^{(j)} \right ) +\sum_{i=1}^m\alpha_i \
-&amp;s.t. \quad \sum_{i=1}^m \alpha_i y^{(i)}=0 \notag \
+&amp;\max_\alpha -\frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m\alpha_i \alpha_jy^{(i)}y^{(j)}\left ( x^{(i)} \cdot x^{(j)} \right ) +\sum_{i=1}^m\alpha_i \\
+&amp;s.t. \quad \sum_{i=1}^m \alpha_i y^{(i)}=0 \notag \\
 &amp;\alpha_i \ge 0  ,\quad i =1,2,...,m  \notag
 \end{align}
-$$
-等价的极小化问题如下：
-$$
+</div>
+<script type="math/tex; mode=display">
 \begin{align}
-&amp;\min_\alpha \frac{1}{2}\sum_{i=1}<sup>m\sum_{j=1}</sup>m\alpha_i \alpha_jy<sup>{(i)}y</sup>{(j)}\left ( x^{(i)} \cdot x^{(j)} \right ) -\sum_{i=1}^m\alpha_i \
-&amp;s.t. \quad \sum_{i=1}^m \alpha_i y^{(i)}=0 \notag \
+&\max_\alpha -\frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m\alpha_i \alpha_jy^{(i)}y^{(j)}\left ( x^{(i)} \cdot x^{(j)} \right ) +\sum_{i=1}^m\alpha_i \\
+&s.t. \quad \sum_{i=1}^m \alpha_i y^{(i)}=0 \notag \\
+&\alpha_i \ge 0  ,\quad i =1,2,...,m  \notag
+\end{align}
+</script>
+</div>
+<p>等价的极小化问题如下：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+&amp;\min_\alpha \frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m\alpha_i \alpha_jy^{(i)}y^{(j)}\left ( x^{(i)} \cdot x^{(j)} \right ) -\sum_{i=1}^m\alpha_i \\
+&amp;s.t. \quad \sum_{i=1}^m \alpha_i y^{(i)}=0 \notag \\
 &amp;\alpha_i \ge 0  ,\quad i =1,2,...,m  \notag
 \end{align}
-$$
-这是一个关于<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>向量的二次规划问题，可以使用通用的的二次规划算法来求解。然而，该问题的规模正比于训练样本数，在求解过程中开销很大。因此利用问题本身的特征，提出了很多高效算法如SMO算法。</p>
-<p>假设通过SMO算法，得到了<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的最优解为<span class="arithmatex"><span class="MathJax_Preview">\alpha^*=(\alpha_1^*,\alpha_2^*,...,\alpha_m^*)</span><script type="math/tex">\alpha^*=(\alpha_1^*,\alpha_2^*,...,\alpha_m^*)</script></span>，根据<span class="arithmatex"><span class="MathJax_Preview">w=\sum_{i=1}^m \alpha_i y^{(i)}x^{(i)}</span><script type="math/tex">w=\sum_{i=1}^m \alpha_i y^{(i)}x^{(i)}</script></span>，可得到对应的<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>的值：
-$$
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+&\min_\alpha \frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m\alpha_i \alpha_jy^{(i)}y^{(j)}\left ( x^{(i)} \cdot x^{(j)} \right ) -\sum_{i=1}^m\alpha_i \\
+&s.t. \quad \sum_{i=1}^m \alpha_i y^{(i)}=0 \notag \\
+&\alpha_i \ge 0  ,\quad i =1,2,...,m  \notag
+\end{align}
+</script>
+</div>
+<p>这是一个关于<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>向量的二次规划问题，可以使用通用的的二次规划算法来求解。然而，该问题的规模正比于训练样本数，在求解过程中开销很大。因此利用问题本身的特征，提出了很多高效算法如SMO算法。</p>
+<p>假设通过SMO算法，得到了<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的最优解为<span class="arithmatex"><span class="MathJax_Preview">\alpha^*=(\alpha_1^*,\alpha_2^*,...,\alpha_m^*)</span><script type="math/tex">\alpha^*=(\alpha_1^*,\alpha_2^*,...,\alpha_m^*)</script></span>，根据<span class="arithmatex"><span class="MathJax_Preview">w=\sum_{i=1}^m \alpha_i y^{(i)}x^{(i)}</span><script type="math/tex">w=\sum_{i=1}^m \alpha_i y^{(i)}x^{(i)}</script></span>，可得到对应的<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>的值：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 w^* = \sum_{i=1}^m \alpha_i^* y^{(i)} x^{(i)}
-$$
-对于**任意的支持向量**<span class="arithmatex"><span class="MathJax_Preview">(x^{s},y^{s})</span><script type="math/tex">(x^{s},y^{s})</script></span>，都有
-$$
+</div>
+<script type="math/tex; mode=display">
+w^* = \sum_{i=1}^m \alpha_i^* y^{(i)} x^{(i)}
+</script>
+</div>
+<p>对于**任意的支持向量**<span class="arithmatex"><span class="MathJax_Preview">(x^{s},y^{s})</span><script type="math/tex">(x^{s},y^{s})</script></span>，都有</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
-&amp; y<sup>s(w</sup>T x^s + b)=y^s( \sum_{i=1}^m \alpha_i y^{(i)}( x<sup>{(i)})</sup>T x^s+b)=1\
-\Rightarrow &amp;b = y<sup>s-\sum_{i=1}</sup>m \alpha_i y^{(i)}( x<sup>{(i)})</sup>T x^s
+&amp; y^s(w^T x^s + b)=y^s( \sum_{i=1}^m \alpha_i y^{(i)}( x^{(i)})^T x^s+b)=1\\
+\Rightarrow &amp;b = y^s-\sum_{i=1}^m \alpha_i y^{(i)}( x^{(i)})^T x^s
 \end{align}
-$$
-如果有<span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>个支持向量，则对应的可以求出<span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>个<span class="arithmatex"><span class="MathJax_Preview">b^*</span><script type="math/tex">b^*</script></span>，理论上这<span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>个<span class="arithmatex"><span class="MathJax_Preview">b^*</span><script type="math/tex">b^*</script></span>都可以作为最终的结果。这里采用一种更加健壮的办法，求出所有<span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>个支持向量所对应的<span class="arithmatex"><span class="MathJax_Preview">b^*</span><script type="math/tex">b^*</script></span>，然后将其平均值作为最终的结果。(注：对于严格线性可分的SVM，<span class="arithmatex"><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span>的值是有唯一解的，所有支持向量对应的<span class="arithmatex"><span class="MathJax_Preview">b^*</span><script type="math/tex">b^*</script></span>都是一样的，这里这么写是为了和后面加入软间隔SVM算法描述一致)</p>
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+& y^s(w^T x^s + b)=y^s( \sum_{i=1}^m \alpha_i y^{(i)}( x^{(i)})^T x^s+b)=1\\
+\Rightarrow &b = y^s-\sum_{i=1}^m \alpha_i y^{(i)}( x^{(i)})^T x^s
+\end{align}
+</script>
+</div>
+<p>如果有<span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>个支持向量，则对应的可以求出<span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>个<span class="arithmatex"><span class="MathJax_Preview">b^*</span><script type="math/tex">b^*</script></span>，理论上这<span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>个<span class="arithmatex"><span class="MathJax_Preview">b^*</span><script type="math/tex">b^*</script></span>都可以作为最终的结果。这里采用一种更加健壮的办法，求出所有<span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>个支持向量所对应的<span class="arithmatex"><span class="MathJax_Preview">b^*</span><script type="math/tex">b^*</script></span>，然后将其平均值作为最终的结果。(注：对于严格线性可分的SVM，<span class="arithmatex"><span class="MathJax_Preview">b</span><script type="math/tex">b</script></span>的值是有唯一解的，所有支持向量对应的<span class="arithmatex"><span class="MathJax_Preview">b^*</span><script type="math/tex">b^*</script></span>都是一样的，这里这么写是为了和后面加入软间隔SVM算法描述一致)</p>
 <p>根据KKT条件中对偶互补条件<span class="arithmatex"><span class="MathJax_Preview">\alpha^*(y^{(i)}(w^T x^{(i)}+b)-1)=0</span><script type="math/tex">\alpha^*(y^{(i)}(w^T x^{(i)}+b)-1)=0</script></span>，如果<span class="arithmatex"><span class="MathJax_Preview">a_i^*&gt;0</span><script type="math/tex">a_i^*>0</script></span>则有<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}(w^T x^{(i)}+b)=1</span><script type="math/tex">y^{(i)}(w^T x^{(i)}+b)=1</script></span>即该点是支持向量，如果<span class="arithmatex"><span class="MathJax_Preview">a_i^*=0</span><script type="math/tex">a_i^*=0</script></span>则有<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}(w^T x^{(i)}+b)\gt 1</span><script type="math/tex">y^{(i)}(w^T x^{(i)}+b)\gt 1</script></span>即该点已经被正确分类。</p>
 <h2 id="svm">线性可分SVM算法<a class="headerlink" href="#svm" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p>输入：线性可分数据集<span class="arithmatex"><span class="MathJax_Preview">D=\{(x^{(1)},y^{(i)}),(x^{(2)},y^{(2)}),...,(x^{(m)},y^{(m)})\}</span><script type="math/tex">D=\{(x^{(1)},y^{(i)}),(x^{(2)},y^{(2)}),...,(x^{(m)},y^{(m)})\}</script></span>,其中<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}\in \mathbb{R}^n,y^{(i)}\in\{+1,-1\}</span><script type="math/tex">x^{(i)}\in \mathbb{R}^n,y^{(i)}\in\{+1,-1\}</script></span></p>
 <p>输出：分离超平面和分类决策函数</p>
-<p>(1)构造约束优化问题
-$$
+<p>(1)构造约束优化问题</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{aligned}
-&amp;\min_\alpha \frac{1}{2}\sum_{i=1}<sup>m\sum_{j=1}</sup>m\alpha_i \alpha_jy<sup>{(i)}y</sup>{(j)}\left ( x^{(i)} \cdot x^{(j)} \right ) -\sum_{i=1}^m\alpha_i \
-&amp;s.t. \quad \sum_{i=1}^m \alpha_i y^{(i)}=0 \notag \
+&amp;\min_\alpha \frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m\alpha_i \alpha_jy^{(i)}y^{(j)}\left ( x^{(i)} \cdot x^{(j)} \right ) -\sum_{i=1}^m\alpha_i \\
+&amp;s.t. \quad \sum_{i=1}^m \alpha_i y^{(i)}=0 \notag \\
 &amp;\alpha_i \ge 0  ,\quad i =1,2,...,m  \notag
 \end{aligned}
-$$
-(2)利用二次规划优化算法或者SMO算法得到最优解<span class="arithmatex"><span class="MathJax_Preview">\alpha^*=(\alpha_1^*,\alpha_2^*,...,\alpha_m^*)</span><script type="math/tex">\alpha^*=(\alpha_1^*,\alpha_2^*,...,\alpha_m^*)</script></span> </p>
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&\min_\alpha \frac{1}{2}\sum_{i=1}^m\sum_{j=1}^m\alpha_i \alpha_jy^{(i)}y^{(j)}\left ( x^{(i)} \cdot x^{(j)} \right ) -\sum_{i=1}^m\alpha_i \\
+&s.t. \quad \sum_{i=1}^m \alpha_i y^{(i)}=0 \notag \\
+&\alpha_i \ge 0  ,\quad i =1,2,...,m  \notag
+\end{aligned}
+</script>
+</div>
+<p>(2)利用二次规划优化算法或者SMO算法得到最优解<span class="arithmatex"><span class="MathJax_Preview">\alpha^*=(\alpha_1^*,\alpha_2^*,...,\alpha_m^*)</span><script type="math/tex">\alpha^*=(\alpha_1^*,\alpha_2^*,...,\alpha_m^*)</script></span> </p>
 <p>(3)计算<span class="arithmatex"><span class="MathJax_Preview">w^*=\sum_{i=1}^m \alpha_i^* y^{(i)} x^{(i)}</span><script type="math/tex">w^*=\sum_{i=1}^m \alpha_i^* y^{(i)} x^{(i)}</script></span></p>
 <p>(4)找出所有的<span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>个支持向量即<span class="arithmatex"><span class="MathJax_Preview">\alpha_i \gt 0</span><script type="math/tex">\alpha_i \gt 0</script></span>所对应的点<span class="arithmatex"><span class="MathJax_Preview">(x^s,y^s)</span><script type="math/tex">(x^s,y^s)</script></span>，计算每个点对应的<span class="arithmatex"><span class="MathJax_Preview">b^s = y^s-\sum_{i=1}^m \alpha_i y^{(i)}( x^{(i)})^T x^s</span><script type="math/tex">b^s = y^s-\sum_{i=1}^m \alpha_i y^{(i)}( x^{(i)})^T x^s</script></span> ，对所有的<span class="arithmatex"><span class="MathJax_Preview">b^s</span><script type="math/tex">b^s</script></span>求和取平均值得到<span class="arithmatex"><span class="MathJax_Preview">b^*=\frac{1}{S}\sum_{i=1}^Sb^s</span><script type="math/tex">b^*=\frac{1}{S}\sum_{i=1}^Sb^s</script></span></p>
 <p>(5)求分离超平面为<span class="arithmatex"><span class="MathJax_Preview">w^*\cdot x + b^*=0</span><script type="math/tex">w^*\cdot x + b^*=0</script></span>，分类决策函数为<span class="arithmatex"><span class="MathJax_Preview">f(x)=sign(w^*\cdot x +b^*)</span><script type="math/tex">f(x)=sign(w^*\cdot x +b^*)</script></span> </p>

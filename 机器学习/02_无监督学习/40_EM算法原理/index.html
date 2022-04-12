@@ -653,8 +653,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
-        集成学习算法之GBDT
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
       </a>
     </li>
   
@@ -667,8 +667,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
-        集成学习算法之RF
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
+        集成学习算法之GBDT
       </a>
     </li>
   
@@ -1242,141 +1242,276 @@
 <p>概率模型有时既含有观测变量(observable variable)，又含有隐变量或潜在变量(latent variable)。如果概率模型的变量都是观测变量，那么给定数据，可以直接采用极大似然估计法或贝叶斯估计法估计模型参数。但是当模型含有隐变量时，就不能直接采用这些估计方法。</p>
 <p>EM算法解决这个问题的思路是使用启发式的迭代方法，既然无法直接求出模型分布参数，那么就先猜测隐含数据(EM算法的E步)，接着基于观察数据和猜测的隐含数据一起进行极大化对数似然，求解模型的参数(EM算法的M步)。由于之前的E步隐含数据是猜测的，所以此时得到的模型参数并不是最终需要的结果，但是基于当前的模型参数，可以继续猜测隐含数据，然后继续极大似然估计，... 依次类推不断迭代下去，直到算法收敛，模型分布参数基本无变化，就可以找到合适的模型参数。</p>
 <h2 id="em_1">EM算法推导<a class="headerlink" href="#em_1" title="Permanent link">&para;</a></h2>
-<p>假设有<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>个样本的观察数据<span class="arithmatex"><span class="MathJax_Preview">x=(x^{(1)},x^{(2)},...,x^{(m)})</span><script type="math/tex">x=(x^{(1)},x^{(2)},...,x^{(m)})</script></span>中，找到样本的模型参数<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>，极大化模型分布的对数似然函数如下：
-$$
+<p>假设有<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>个样本的观察数据<span class="arithmatex"><span class="MathJax_Preview">x=(x^{(1)},x^{(2)},...,x^{(m)})</span><script type="math/tex">x=(x^{(1)},x^{(2)},...,x^{(m)})</script></span>中，找到样本的模型参数<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>，极大化模型分布的对数似然函数如下：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \theta = \arg \max_{\theta}\sum_{i=1}^m logP(x^{(i)}|\theta)
-$$
-数据中含有未观察到的隐藏数据<span class="arithmatex"><span class="MathJax_Preview">z=(z^{(1)},z^{(2)},...,z^{(n)})</span><script type="math/tex">z=(z^{(1)},z^{(2)},...,z^{(n)})</script></span>，此时极大化模型分布的对数似然函数式(1)可以写成：
-$$
-\theta = \arg \max_{\theta}\sum_{i=1}^mlog P(x^{(i)}|\theta)=\arg \max_{\theta}\sum_{i=1}^m log \sum_{z<sup>{(i)}}P(x</sup>{(i)},z^{(i)}|\theta)
-$$
-式(2)是无法直接求出参数<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的。现在对式(2)进行缩放如下：
-$$
+</div>
+<script type="math/tex; mode=display">
+\theta = \arg \max_{\theta}\sum_{i=1}^m logP(x^{(i)}|\theta)
+</script>
+</div>
+<p>数据中含有未观察到的隐藏数据<span class="arithmatex"><span class="MathJax_Preview">z=(z^{(1)},z^{(2)},...,z^{(n)})</span><script type="math/tex">z=(z^{(1)},z^{(2)},...,z^{(n)})</script></span>，此时极大化模型分布的对数似然函数式(1)可以写成：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\theta = \arg \max_{\theta}\sum_{i=1}^mlog P(x^{(i)}|\theta)=\arg \max_{\theta}\sum_{i=1}^m log \sum_{z^{(i)}}P(x^{(i)},z^{(i)}|\theta)
+</div>
+<script type="math/tex; mode=display">
+\theta = \arg \max_{\theta}\sum_{i=1}^mlog P(x^{(i)}|\theta)=\arg \max_{\theta}\sum_{i=1}^m log \sum_{z^{(i)}}P(x^{(i)},z^{(i)}|\theta)
+</script>
+</div>
+<p>式(2)是无法直接求出参数<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的。现在对式(2)进行缩放如下：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
-&amp;\sum_{i=1}^m \log \sum_{z<sup>{(i)}}P(x</sup>{(i)},z^{(i)}|\theta)\
-=&amp;\sum_{i=1}^m \log \sum_{z<sup>{(i)}}Q_i(z</sup>{(i)})\frac{P(x<sup>{(i)},z</sup>{(i)}|\theta)}{Q_i(z^{(i)})}\
-\ge &amp;  \sum_{i=1}^m  \sum_{z<sup>{(i)}}Q_i(z</sup>{(i)}) \log \frac{P(x<sup>{(i)},z</sup>{(i)}|\theta)}{Q_i(z^{(i)})}\
+&amp;\sum_{i=1}^m \log \sum_{z^{(i)}}P(x^{(i)},z^{(i)}|\theta)\\
+=&amp;\sum_{i=1}^m \log \sum_{z^{(i)}}Q_i(z^{(i)})\frac{P(x^{(i)},z^{(i)}|\theta)}{Q_i(z^{(i)})}\\
+\ge &amp;  \sum_{i=1}^m  \sum_{z^{(i)}}Q_i(z^{(i)}) \log \frac{P(x^{(i)},z^{(i)}|\theta)}{Q_i(z^{(i)})}\\
 \end{align}
-$$
-式(3)(4)在分子和分母同时引入一个新的分布<span class="arithmatex"><span class="MathJax_Preview">Q_i(z^{i})</span><script type="math/tex">Q_i(z^{i})</script></span>，等号成立；式(4)~(5)利用Jensen不等式：
-$$
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+&\sum_{i=1}^m \log \sum_{z^{(i)}}P(x^{(i)},z^{(i)}|\theta)\\
+=&\sum_{i=1}^m \log \sum_{z^{(i)}}Q_i(z^{(i)})\frac{P(x^{(i)},z^{(i)}|\theta)}{Q_i(z^{(i)})}\\
+\ge &  \sum_{i=1}^m  \sum_{z^{(i)}}Q_i(z^{(i)}) \log \frac{P(x^{(i)},z^{(i)}|\theta)}{Q_i(z^{(i)})}\\
+\end{align}
+</script>
+</div>
+<p>式(3)(4)在分子和分母同时引入一个新的分布<span class="arithmatex"><span class="MathJax_Preview">Q_i(z^{i})</span><script type="math/tex">Q_i(z^{i})</script></span>，等号成立；式(4)~(5)利用Jensen不等式：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \log\sum_j \lambda_j  y_j \ge \sum_{j}\lambda_j\log y_j \quad ( \lambda_j \ge 0  \quad and \quad \sum_j \lambda_j=1 )
-$$</p>
+</div>
+<script type="math/tex; mode=display">
+\log\sum_j \lambda_j  y_j \ge \sum_{j}\lambda_j\log y_j \quad ( \lambda_j \ge 0  \quad and \quad \sum_j \lambda_j=1 )
+</script>
+</div>
 <p>不等式(6)所表达是几何含义如图</p>
 <p><img alt="em" src="../assets/em.png" /></p>
-<p>要满足不等式中的等号，当且仅当
-$$
-\frac{P(x<sup>{(i)},z</sup>{(i)}|\theta)}{Q_i(z^{(i)})}=C   \quad  （C 为常数）
-$$</p>
-<p>由于<span class="arithmatex"><span class="MathJax_Preview">Q_i(z^{(i)})</span><script type="math/tex">Q_i(z^{(i)})</script></span>是一个分布，所以满足概率和为1，即
-$$
-\sum_{z<sup>{(i)}}Q_i(z</sup>{(i)})=1
-$$
-根据式(7)和(8)，对式(7)左边分子分母分别求和有：
-$$
+<p>要满足不等式中的等号，当且仅当</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\frac{P(x^{(i)},z^{(i)}|\theta)}{Q_i(z^{(i)})}=C   \quad  （C 为常数）
+</div>
+<script type="math/tex; mode=display">
+\frac{P(x^{(i)},z^{(i)}|\theta)}{Q_i(z^{(i)})}=C   \quad  （C 为常数）
+</script>
+</div>
+<p>由于<span class="arithmatex"><span class="MathJax_Preview">Q_i(z^{(i)})</span><script type="math/tex">Q_i(z^{(i)})</script></span>是一个分布，所以满足概率和为1，即</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\sum_{z^{(i)}}Q_i(z^{(i)})=1
+</div>
+<script type="math/tex; mode=display">
+\sum_{z^{(i)}}Q_i(z^{(i)})=1
+</script>
+</div>
+<p>根据式(7)和(8)，对式(7)左边分子分母分别求和有：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
-&amp;\frac{P(x<sup>{(i)},z</sup>{(i)}|\theta)}{Q_i(z<sup>{(i)})}=\frac{\sum_{z</sup>{(i)}}P(x<sup>{(i)},z</sup>{(i)}|\theta)}{\sum_{z<sup>{(i)}}Q_i(z</sup>{(i)})}=\frac{\sum_{z<sup>{(i)}}P(x</sup>{(i)},z^{(i)}|\theta)}{1}=C\
-\notag \ 
-\Rightarrow &amp;\quad C= \sum_{z<sup>{(i)}}P(x</sup>{(i)},z^{(i)}|\theta) =P(x^{(i)}|\theta)
+&amp;\frac{P(x^{(i)},z^{(i)}|\theta)}{Q_i(z^{(i)})}=\frac{\sum_{z^{(i)}}P(x^{(i)},z^{(i)}|\theta)}{\sum_{z^{(i)}}Q_i(z^{(i)})}=\frac{\sum_{z^{(i)}}P(x^{(i)},z^{(i)}|\theta)}{1}=C\\
+\notag \\ 
+\Rightarrow &amp;\quad C= \sum_{z^{(i)}}P(x^{(i)},z^{(i)}|\theta) =P(x^{(i)}|\theta)
 \end{align}
-$$
-根据式(7)和(10)可以得到<span class="arithmatex"><span class="MathJax_Preview">Q_i(z^{(i)})</span><script type="math/tex">Q_i(z^{(i)})</script></span>的表达式如下：
-$$
-Q_i(z<sup>{(i)})=\frac{P(x</sup>{(i)},z<sup>{(i)}|\theta)}{C}=\frac{P(x</sup>{(i)},z<sup>{(i)}|\theta)}{P(x</sup>{(i)}|\theta)}=P(z<sup>{(i)}|x</sup>{(i)},\theta)
-$$
-可以看到这里的**<span class="arithmatex"><span class="MathJax_Preview">Q(\cdot)</span><script type="math/tex">Q(\cdot)</script></span>函数实际上就是根据参数<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>求每个样本<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>属于<span class="arithmatex"><span class="MathJax_Preview">z^{(i)}</span><script type="math/tex">z^{(i)}</script></span>的概率**。</p>
-<p>如果<span class="arithmatex"><span class="MathJax_Preview">Q_i(z^{(i)})=P(z^{(i)}|x^{(i)},\theta)</span><script type="math/tex">Q_i(z^{(i)})=P(z^{(i)}|x^{(i)},\theta)</script></span>则式(5)是包含隐藏数据的对数似然的一个下界。那么极大化这个下界，也是极大化对数似然式(2)，即：
-$$
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+&\frac{P(x^{(i)},z^{(i)}|\theta)}{Q_i(z^{(i)})}=\frac{\sum_{z^{(i)}}P(x^{(i)},z^{(i)}|\theta)}{\sum_{z^{(i)}}Q_i(z^{(i)})}=\frac{\sum_{z^{(i)}}P(x^{(i)},z^{(i)}|\theta)}{1}=C\\
+\notag \\ 
+\Rightarrow &\quad C= \sum_{z^{(i)}}P(x^{(i)},z^{(i)}|\theta) =P(x^{(i)}|\theta)
+\end{align}
+</script>
+</div>
+<p>根据式(7)和(10)可以得到<span class="arithmatex"><span class="MathJax_Preview">Q_i(z^{(i)})</span><script type="math/tex">Q_i(z^{(i)})</script></span>的表达式如下：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+Q_i(z^{(i)})=\frac{P(x^{(i)},z^{(i)}|\theta)}{C}=\frac{P(x^{(i)},z^{(i)}|\theta)}{P(x^{(i)}|\theta)}=P(z^{(i)}|x^{(i)},\theta)
+</div>
+<script type="math/tex; mode=display">
+Q_i(z^{(i)})=\frac{P(x^{(i)},z^{(i)}|\theta)}{C}=\frac{P(x^{(i)},z^{(i)}|\theta)}{P(x^{(i)}|\theta)}=P(z^{(i)}|x^{(i)},\theta)
+</script>
+</div>
+<p>可以看到这里的**<span class="arithmatex"><span class="MathJax_Preview">Q(\cdot)</span><script type="math/tex">Q(\cdot)</script></span>函数实际上就是根据参数<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>求每个样本<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>属于<span class="arithmatex"><span class="MathJax_Preview">z^{(i)}</span><script type="math/tex">z^{(i)}</script></span>的概率**。</p>
+<p>如果<span class="arithmatex"><span class="MathJax_Preview">Q_i(z^{(i)})=P(z^{(i)}|x^{(i)},\theta)</span><script type="math/tex">Q_i(z^{(i)})=P(z^{(i)}|x^{(i)},\theta)</script></span>则式(5)是包含隐藏数据的对数似然的一个下界。那么极大化这个下界，也是极大化对数似然式(2)，即：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
 \theta 
-&amp;= \arg \max_{\theta}\sum_{i=1}^mlog P(x^{(i)}|\theta)\
-&amp;=\arg \max_{\theta}\sum_{i=1}^m log \sum_{z<sup>{(i)}}P(x</sup>{(i)},z^{(i)}|\theta)\
-&amp;=\arg \max_{\theta} \sum_{i=1}^m  \sum_{z<sup>{(i)}}Q_i(z</sup>{(i)}) \log \frac{P(x<sup>{(i)},z</sup>{(i)}|\theta)}{Q_i(z^{(i)})}\
-&amp;=\arg \max_{\theta}\sum_{i=1}^m  \sum_{z<sup>{(i)}}Q_i(z</sup>{(i)}) \log P(x<sup>{(i)},z</sup>{(i)}|\theta)\
-&amp;=\arg \max_{\theta}\sum_{i=1}^m  \sum_{z<sup>{(i)}}P(z</sup>{(i)}|x^{(i)},\theta) \log P(x<sup>{(i)},z</sup>{(i)}|\theta)\
+&amp;= \arg \max_{\theta}\sum_{i=1}^mlog P(x^{(i)}|\theta)\\
+&amp;=\arg \max_{\theta}\sum_{i=1}^m log \sum_{z^{(i)}}P(x^{(i)},z^{(i)}|\theta)\\
+&amp;=\arg \max_{\theta} \sum_{i=1}^m  \sum_{z^{(i)}}Q_i(z^{(i)}) \log \frac{P(x^{(i)},z^{(i)}|\theta)}{Q_i(z^{(i)})}\\
+&amp;=\arg \max_{\theta}\sum_{i=1}^m  \sum_{z^{(i)}}Q_i(z^{(i)}) \log P(x^{(i)},z^{(i)}|\theta)\\
+&amp;=\arg \max_{\theta}\sum_{i=1}^m  \sum_{z^{(i)}}P(z^{(i)}|x^{(i)},\theta) \log P(x^{(i)},z^{(i)}|\theta)\\
 \end{align}
-$$
-式(12)-(13)引入隐变量；式(13)-(14)引入<span class="arithmatex"><span class="MathJax_Preview">Q(\cdot)</span><script type="math/tex">Q(\cdot)</script></span>函数；式(14)-(16)去掉常量部分，<span class="arithmatex"><span class="MathJax_Preview">Q_i(z^{(i)})\log Q_i(z^{(i)})</span><script type="math/tex">Q_i(z^{(i)})\log Q_i(z^{(i)})</script></span>是与<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>无关的常量；由于上式中<span class="arithmatex"><span class="MathJax_Preview">Q_i(z^{(i)})</span><script type="math/tex">Q_i(z^{(i)})</script></span>是一个分布，那么可以理解为——<strong>最大化<span class="arithmatex"><span class="MathJax_Preview">\log P(x^{(i)},z^{(i)}|\theta)</span><script type="math/tex">\log P(x^{(i)},z^{(i)}|\theta)</script></span>基于条件概率分布<span class="arithmatex"><span class="MathJax_Preview">Q_i(z^{(i)})=P(x^{(i)}|x^{(i)},\theta)</span><script type="math/tex">Q_i(z^{(i)})=P(x^{(i)}|x^{(i)},\theta)</script></span>的期望。</strong></p>
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\theta 
+&= \arg \max_{\theta}\sum_{i=1}^mlog P(x^{(i)}|\theta)\\
+&=\arg \max_{\theta}\sum_{i=1}^m log \sum_{z^{(i)}}P(x^{(i)},z^{(i)}|\theta)\\
+&=\arg \max_{\theta} \sum_{i=1}^m  \sum_{z^{(i)}}Q_i(z^{(i)}) \log \frac{P(x^{(i)},z^{(i)}|\theta)}{Q_i(z^{(i)})}\\
+&=\arg \max_{\theta}\sum_{i=1}^m  \sum_{z^{(i)}}Q_i(z^{(i)}) \log P(x^{(i)},z^{(i)}|\theta)\\
+&=\arg \max_{\theta}\sum_{i=1}^m  \sum_{z^{(i)}}P(z^{(i)}|x^{(i)},\theta) \log P(x^{(i)},z^{(i)}|\theta)\\
+\end{align}
+</script>
+</div>
+<p>式(12)-(13)引入隐变量；式(13)-(14)引入<span class="arithmatex"><span class="MathJax_Preview">Q(\cdot)</span><script type="math/tex">Q(\cdot)</script></span>函数；式(14)-(16)去掉常量部分，<span class="arithmatex"><span class="MathJax_Preview">Q_i(z^{(i)})\log Q_i(z^{(i)})</span><script type="math/tex">Q_i(z^{(i)})\log Q_i(z^{(i)})</script></span>是与<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>无关的常量；由于上式中<span class="arithmatex"><span class="MathJax_Preview">Q_i(z^{(i)})</span><script type="math/tex">Q_i(z^{(i)})</script></span>是一个分布，那么可以理解为——<strong>最大化<span class="arithmatex"><span class="MathJax_Preview">\log P(x^{(i)},z^{(i)}|\theta)</span><script type="math/tex">\log P(x^{(i)},z^{(i)}|\theta)</script></span>基于条件概率分布<span class="arithmatex"><span class="MathJax_Preview">Q_i(z^{(i)})=P(x^{(i)}|x^{(i)},\theta)</span><script type="math/tex">Q_i(z^{(i)})=P(x^{(i)}|x^{(i)},\theta)</script></span>的期望。</strong></p>
 <p>现在可以总结EM算法的流程如下：</p>
 <blockquote>
 <p>输入：训练数据<span class="arithmatex"><span class="MathJax_Preview">D=\{ x^{(1)},x^{(2)},...,x^{(m)} \}</span><script type="math/tex">D=\{ x^{(1)},x^{(2)},...,x^{(m)} \}</script></span>，联合分布<span class="arithmatex"><span class="MathJax_Preview">p(x,z|\theta)</span><script type="math/tex">p(x,z|\theta)</script></span>，条件分布<span class="arithmatex"><span class="MathJax_Preview">p(z|x,\theta)</span><script type="math/tex">p(z|x,\theta)</script></span>和最大迭代次数<span class="arithmatex"><span class="MathJax_Preview">J</span><script type="math/tex">J</script></span></p>
 <p>输出：模型参数<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span></p>
 <p>(1)初始化随机模型参数<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的初值<span class="arithmatex"><span class="MathJax_Preview">\theta^0</span><script type="math/tex">\theta^0</script></span></p>
 <p>(2)对于<span class="arithmatex"><span class="MathJax_Preview">j=1,2,...,J</span><script type="math/tex">j=1,2,...,J</script></span>有EM算法迭代：</p>
-<p>​ ①E步：计算联合分布的条件概率期望：
-$$
+<p>​ ①E步：计算联合分布的条件概率期望：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{aligned}
-Q_i(z^{(i)}) &amp;= P(z<sup>{(i)}|x</sup>{(i)},\theta^j)   \
-L(\theta,\theta^j) &amp;= \sum_{i=1}^m \sum_{z<sup>{(i)}}Q_i(z</sup>{(i)})\log P(x<sup>{(i)},z</sup>{(i)}|\theta)
+Q_i(z^{(i)}) &amp;= P(z^{(i)}|x^{(i)},\theta^j)   \\
+L(\theta,\theta^j) &amp;= \sum_{i=1}^m \sum_{z^{(i)}}Q_i(z^{(i)})\log P(x^{(i)},z^{(i)}|\theta)
 \end{aligned}
-$$
-​ ②M步：极大化<span class="arithmatex"><span class="MathJax_Preview">L(\theta, \theta^j)</span><script type="math/tex">L(\theta, \theta^j)</script></span>，得到<span class="arithmatex"><span class="MathJax_Preview">\theta^{j+1}</span><script type="math/tex">\theta^{j+1}</script></span>：
-$$
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}
+Q_i(z^{(i)}) &= P(z^{(i)}|x^{(i)},\theta^j)   \\
+L(\theta,\theta^j) &= \sum_{i=1}^m \sum_{z^{(i)}}Q_i(z^{(i)})\log P(x^{(i)},z^{(i)}|\theta)
+\end{aligned}
+</script>
+</div>
+<p>​ ②M步：极大化<span class="arithmatex"><span class="MathJax_Preview">L(\theta, \theta^j)</span><script type="math/tex">L(\theta, \theta^j)</script></span>，得到<span class="arithmatex"><span class="MathJax_Preview">\theta^{j+1}</span><script type="math/tex">\theta^{j+1}</script></span>：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \theta^{j+1}=\arg \max_\theta L(\theta, \theta^j)
-$$
-​ ③如果<span class="arithmatex"><span class="MathJax_Preview">\theta^{j+1}</span><script type="math/tex">\theta^{j+1}</script></span>已手链，则算法结束；否则继续回到步骤①进行迭代</p>
+</div>
+<script type="math/tex; mode=display">
+\theta^{j+1}=\arg \max_\theta L(\theta, \theta^j)
+</script>
+</div>
+<p>​ ③如果<span class="arithmatex"><span class="MathJax_Preview">\theta^{j+1}</span><script type="math/tex">\theta^{j+1}</script></span>已手链，则算法结束；否则继续回到步骤①进行迭代</p>
 <p>(3)输出模型参数<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span></p>
 </blockquote>
 <h2 id="em_2">EM算法收敛性<a class="headerlink" href="#em_2" title="Permanent link">&para;</a></h2>
 <p>EM算法提供了一种近似计算含有因变量概率模型的极大似然估计的方法，EM算法的最大优点是简单性和适普性。但还有两个问题需要解决：</p>
 <p>（1）EM算法是否能够保证收敛？</p>
 <p>（2）EM算法如果收敛，那么是否能保证收敛到全局最大值？</p>
-<p>针对第一个问题，要证明EM算法收敛，则需要证明对数似然函数的值在迭代过程中一直咋增长，即
-$$
-\sum_{i=1}^m \log P(x<sup>{(i)}|\theta</sup>{j+1}) \ge \sum_{j=1}^m \log P(x<sup>{(i)}|\theta</sup>j)
-$$
-证明： 由于有
-$$
-L(\theta,\theta^j) = \sum_{i=1}^m \sum_{z<sup>{(i)}}P(z</sup>{(i)}|x<sup>{(i)},\theta</sup>j)\log P(z<sup>{(i)}|x</sup>{(i)},\theta)
-$$
-令:
-$$
-H(\theta, \theta<sup>j)=\sum_{i=1}</sup>m \sum_{z<sup>{(i)}}P(z</sup>{(i)}|x<sup>{(i)},\theta</sup>j)\log P(z<sup>{(i)},x</sup>{(i)}|\theta^j)
-$$
-那么式(19)-(20)可以得到：
-$$
+<p>针对第一个问题，要证明EM算法收敛，则需要证明对数似然函数的值在迭代过程中一直咋增长，即</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\sum_{i=1}^m \log P(x^{(i)}|\theta^{j+1}) \ge \sum_{j=1}^m \log P(x^{(i)}|\theta^j)
+</div>
+<script type="math/tex; mode=display">
+\sum_{i=1}^m \log P(x^{(i)}|\theta^{j+1}) \ge \sum_{j=1}^m \log P(x^{(i)}|\theta^j)
+</script>
+</div>
+<p>证明： 由于有</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+L(\theta,\theta^j) = \sum_{i=1}^m \sum_{z^{(i)}}P(z^{(i)}|x^{(i)},\theta^j)\log P(z^{(i)}|x^{(i)},\theta)
+</div>
+<script type="math/tex; mode=display">
+L(\theta,\theta^j) = \sum_{i=1}^m \sum_{z^{(i)}}P(z^{(i)}|x^{(i)},\theta^j)\log P(z^{(i)}|x^{(i)},\theta)
+</script>
+</div>
+<p>令:</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+H(\theta, \theta^j)=\sum_{i=1}^m \sum_{z^{(i)}}P(z^{(i)}|x^{(i)},\theta^j)\log P(z^{(i)},x^{(i)}|\theta^j)
+</div>
+<script type="math/tex; mode=display">
+H(\theta, \theta^j)=\sum_{i=1}^m \sum_{z^{(i)}}P(z^{(i)}|x^{(i)},\theta^j)\log P(z^{(i)},x^{(i)}|\theta^j)
+</script>
+</div>
+<p>那么式(19)-(20)可以得到：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
-L(\theta,\theta<sup>j)-H(\theta,\theta</sup>j)
-&amp;=\sum_{i=1}^m \sum_{z<sup>{(i)}}P(z</sup>{(i)}|x<sup>{(i)},\theta</sup>j)\log P(z<sup>{(i)}|x</sup>{(i)},\theta)\
-&amp;\quad -\sum_{i=1}^m \sum_{z<sup>{(i)}}P(z</sup>{(i)}|x<sup>{(i)},\theta</sup>j)\log P(z<sup>{(i)},x</sup>{(i)}|\theta^j)  \notag \
-&amp;=\sum_{i=1}^m \sum_{z^{(i)}} P(z<sup>{(i)}|x</sup>{(i)},\theta) \log \frac{P(z<sup>{(i)}|x</sup>{(i)},\theta)}{P(z<sup>{(i)},x</sup>{(i)}|\theta)}\
-&amp;=\sum_{i=1}^m \sum_{z^{(i)}} P(z<sup>{(i)}|x</sup>{(i)},\theta) \log P(x^{(i)}|\theta)\
+L(\theta,\theta^j)-H(\theta,\theta^j)
+&amp;=\sum_{i=1}^m \sum_{z^{(i)}}P(z^{(i)}|x^{(i)},\theta^j)\log P(z^{(i)}|x^{(i)},\theta)\\
+&amp;\quad -\sum_{i=1}^m \sum_{z^{(i)}}P(z^{(i)}|x^{(i)},\theta^j)\log P(z^{(i)},x^{(i)}|\theta^j)  \notag \\
+&amp;=\sum_{i=1}^m \sum_{z^{(i)}} P(z^{(i)}|x^{(i)},\theta) \log \frac{P(z^{(i)}|x^{(i)},\theta)}{P(z^{(i)},x^{(i)}|\theta)}\\
+&amp;=\sum_{i=1}^m \sum_{z^{(i)}} P(z^{(i)}|x^{(i)},\theta) \log P(x^{(i)}|\theta)\\
 &amp;=\sum_{i=1}^m  \log P(x^{(i)}|\theta)
 \end{align}
-$$
-式(21)-(22)利用<span class="arithmatex"><span class="MathJax_Preview">\log(\cdot)</span><script type="math/tex">\log(\cdot)</script></span>函数的定义，式(22)-(23)利用条件概率定义，式(23)-(24)利用<span class="arithmatex"><span class="MathJax_Preview">\sum_{z^{(i)}}P(z^{(i)}|x^{(i)},\theta)=1</span><script type="math/tex">\sum_{z^{(i)}}P(z^{(i)}|x^{(i)},\theta)=1</script></span></p>
-<p>得到了
-$$
-\sum_{i=1}^m  \log P(x<sup>{(i)}|\theta)=L(\theta,\theta</sup>j)-H(\theta,\theta^j)
-$$
-令式(25)中的<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>分别取值<span class="arithmatex"><span class="MathJax_Preview">\theta^{j+1}</span><script type="math/tex">\theta^{j+1}</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\theta^j</span><script type="math/tex">\theta^j</script></span>得到：
-$$
+</div>
+<script type="math/tex; mode=display">
 \begin{align}
-&amp;\sum_{i=1}^m  \log P(x<sup>{(i)}|\theta</sup>{j+1})-\sum_{i=1}^m  \log P(x<sup>{(i)}|\theta</sup>j)\
-=&amp;{ L(\theta<sup>{j+1},\theta</sup>{j})-H(\theta<sup>{j+1},\theta</sup>j)  } - { L(\theta<sup>j,\theta</sup>j)-H(\theta<sup>j,\theta</sup>j) }\
-=&amp;{ L(\theta<sup>{j+1},\theta</sup>{j})-L(\theta<sup>{j},\theta</sup>j)  } - { H(\theta<sup>{j+1},\theta</sup>j)-H(\theta<sup>j,\theta</sup>j) }\
+L(\theta,\theta^j)-H(\theta,\theta^j)
+&=\sum_{i=1}^m \sum_{z^{(i)}}P(z^{(i)}|x^{(i)},\theta^j)\log P(z^{(i)}|x^{(i)},\theta)\\
+&\quad -\sum_{i=1}^m \sum_{z^{(i)}}P(z^{(i)}|x^{(i)},\theta^j)\log P(z^{(i)},x^{(i)}|\theta^j)  \notag \\
+&=\sum_{i=1}^m \sum_{z^{(i)}} P(z^{(i)}|x^{(i)},\theta) \log \frac{P(z^{(i)}|x^{(i)},\theta)}{P(z^{(i)},x^{(i)}|\theta)}\\
+&=\sum_{i=1}^m \sum_{z^{(i)}} P(z^{(i)}|x^{(i)},\theta) \log P(x^{(i)}|\theta)\\
+&=\sum_{i=1}^m  \log P(x^{(i)}|\theta)
 \end{align}
-$$
-对于<span class="arithmatex"><span class="MathJax_Preview">L(\theta^{j+1},\theta^{j})-L(\theta^{j},\theta^j)</span><script type="math/tex">L(\theta^{j+1},\theta^{j})-L(\theta^{j},\theta^j)</script></span>，由于在EM算法中M步有<span class="arithmatex"><span class="MathJax_Preview">\theta^{j+1}=\arg \max_\limits\theta L(\theta, \theta^j)</span><script type="math/tex">\theta^{j+1}=\arg \max_\limits\theta L(\theta, \theta^j)</script></span>，因此有：
-$$
-L(\theta<sup>{j+1},\theta</sup>{j})   \ge  L(\theta<sup>{j},\theta</sup>j)
-$$
-对于<span class="arithmatex"><span class="MathJax_Preview">H(\theta^{j+1},\theta^j)-H(\theta^j,\theta^j)</span><script type="math/tex">H(\theta^{j+1},\theta^j)-H(\theta^j,\theta^j)</script></span>，有：
-$$
+</script>
+</div>
+<p>式(21)-(22)利用<span class="arithmatex"><span class="MathJax_Preview">\log(\cdot)</span><script type="math/tex">\log(\cdot)</script></span>函数的定义，式(22)-(23)利用条件概率定义，式(23)-(24)利用<span class="arithmatex"><span class="MathJax_Preview">\sum_{z^{(i)}}P(z^{(i)}|x^{(i)},\theta)=1</span><script type="math/tex">\sum_{z^{(i)}}P(z^{(i)}|x^{(i)},\theta)=1</script></span></p>
+<p>得到了</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\sum_{i=1}^m  \log P(x^{(i)}|\theta)=L(\theta,\theta^j)-H(\theta,\theta^j)
+</div>
+<script type="math/tex; mode=display">
+\sum_{i=1}^m  \log P(x^{(i)}|\theta)=L(\theta,\theta^j)-H(\theta,\theta^j)
+</script>
+</div>
+<p>令式(25)中的<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>分别取值<span class="arithmatex"><span class="MathJax_Preview">\theta^{j+1}</span><script type="math/tex">\theta^{j+1}</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\theta^j</span><script type="math/tex">\theta^j</script></span>得到：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
-&amp;H(\theta<sup>{j+1},\theta</sup>j)-H(\theta<sup>j,\theta</sup>j)\
-=&amp;\sum_{i=1}^m \sum_{z^{(i)}} P(z<sup>{(i)}|x</sup>{(i)},\theta^j)\log \frac{P(z<sup>{(i)}|x</sup>{(i)},\theta<sup>{j+1})}{P(z</sup>{(i)}|x<sup>{(i)},\theta</sup>{j})}\
-\le &amp;  \sum_{i=1}^m \log \sum_{z^{(i)}} P(z<sup>{(i)}|x</sup>{(i)},\theta<sup>j)\frac{P(z</sup>{(i)}|x<sup>{(i)},\theta</sup>{j+1})}{P(z<sup>{(i)}|x</sup>{(i)},\theta^{j})}\
-=&amp;\sum_{i=1}^m \log  ( \sum_{z<sup>{(i)}}P(z</sup>{(i)}| x<sup>{(i)},\theta</sup>{j+1}))\
+&amp;\sum_{i=1}^m  \log P(x^{(i)}|\theta^{j+1})-\sum_{i=1}^m  \log P(x^{(i)}|\theta^j)\\
+=&amp;\{ L(\theta^{j+1},\theta^{j})-H(\theta^{j+1},\theta^j)  \} - \{ L(\theta^j,\theta^j)-H(\theta^j,\theta^j) \}\\
+=&amp;\{ L(\theta^{j+1},\theta^{j})-L(\theta^{j},\theta^j)  \} - \{ H(\theta^{j+1},\theta^j)-H(\theta^j,\theta^j) \}\\
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+&\sum_{i=1}^m  \log P(x^{(i)}|\theta^{j+1})-\sum_{i=1}^m  \log P(x^{(i)}|\theta^j)\\
+=&\{ L(\theta^{j+1},\theta^{j})-H(\theta^{j+1},\theta^j)  \} - \{ L(\theta^j,\theta^j)-H(\theta^j,\theta^j) \}\\
+=&\{ L(\theta^{j+1},\theta^{j})-L(\theta^{j},\theta^j)  \} - \{ H(\theta^{j+1},\theta^j)-H(\theta^j,\theta^j) \}\\
+\end{align}
+</script>
+</div>
+<p>对于<span class="arithmatex"><span class="MathJax_Preview">L(\theta^{j+1},\theta^{j})-L(\theta^{j},\theta^j)</span><script type="math/tex">L(\theta^{j+1},\theta^{j})-L(\theta^{j},\theta^j)</script></span>，由于在EM算法中M步有<span class="arithmatex"><span class="MathJax_Preview">\theta^{j+1}=\arg \max_\limits\theta L(\theta, \theta^j)</span><script type="math/tex">\theta^{j+1}=\arg \max_\limits\theta L(\theta, \theta^j)</script></span>，因此有：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+L(\theta^{j+1},\theta^{j})   \ge  L(\theta^{j},\theta^j)
+</div>
+<script type="math/tex; mode=display">
+L(\theta^{j+1},\theta^{j})   \ge  L(\theta^{j},\theta^j)
+</script>
+</div>
+<p>对于<span class="arithmatex"><span class="MathJax_Preview">H(\theta^{j+1},\theta^j)-H(\theta^j,\theta^j)</span><script type="math/tex">H(\theta^{j+1},\theta^j)-H(\theta^j,\theta^j)</script></span>，有：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+&amp;H(\theta^{j+1},\theta^j)-H(\theta^j,\theta^j)\\
+=&amp;\sum_{i=1}^m \sum_{z^{(i)}} P(z^{(i)}|x^{(i)},\theta^j)\log \frac{P(z^{(i)}|x^{(i)},\theta^{j+1})}{P(z^{(i)}|x^{(i)},\theta^{j})}\\
+\le &amp;  \sum_{i=1}^m \log \sum_{z^{(i)}} P(z^{(i)}|x^{(i)},\theta^j)\frac{P(z^{(i)}|x^{(i)},\theta^{j+1})}{P(z^{(i)}|x^{(i)},\theta^{j})}\\
+=&amp;\sum_{i=1}^m \log  ( \sum_{z^{(i)}}P(z^{(i)}| x^{(i)},\theta^{j+1}))\\
 =&amp; 0
 \end{align}
-$$
-式(30)-(31)利用<span class="arithmatex"><span class="MathJax_Preview">\log(\cdot)</span><script type="math/tex">\log(\cdot)</script></span>函数定义；式(31)-(32)利用Jensen不等式；式(32)-(34)利用概率和为1。</p>
-<p>由式(29)和式(34)可以判断式(26)的正负，有：
-$$
-\sum_{i=1}^m  \log P(x<sup>{(i)}|\theta</sup>{j+1})  \ge  \sum_{i=1}^m  \log P(x<sup>{(i)}|\theta</sup>j)
-$$
-从而证明了EM算法的递增的，可以保证收敛到一个稳定点，但是却不能保证收敛到全局的极大值点。因此，EM是一个局部最优算法，当然如果优化目标<span class="arithmatex"><span class="MathJax_Preview">L(\theta,\theta^j)</span><script type="math/tex">L(\theta,\theta^j)</script></span>是凸的，则EM算法可以保证收敛到全局最大值。</p>
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+&H(\theta^{j+1},\theta^j)-H(\theta^j,\theta^j)\\
+=&\sum_{i=1}^m \sum_{z^{(i)}} P(z^{(i)}|x^{(i)},\theta^j)\log \frac{P(z^{(i)}|x^{(i)},\theta^{j+1})}{P(z^{(i)}|x^{(i)},\theta^{j})}\\
+\le &  \sum_{i=1}^m \log \sum_{z^{(i)}} P(z^{(i)}|x^{(i)},\theta^j)\frac{P(z^{(i)}|x^{(i)},\theta^{j+1})}{P(z^{(i)}|x^{(i)},\theta^{j})}\\
+=&\sum_{i=1}^m \log  ( \sum_{z^{(i)}}P(z^{(i)}| x^{(i)},\theta^{j+1}))\\
+=& 0
+\end{align}
+</script>
+</div>
+<p>式(30)-(31)利用<span class="arithmatex"><span class="MathJax_Preview">\log(\cdot)</span><script type="math/tex">\log(\cdot)</script></span>函数定义；式(31)-(32)利用Jensen不等式；式(32)-(34)利用概率和为1。</p>
+<p>由式(29)和式(34)可以判断式(26)的正负，有：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\sum_{i=1}^m  \log P(x^{(i)}|\theta^{j+1})  \ge  \sum_{i=1}^m  \log P(x^{(i)}|\theta^j)
+</div>
+<script type="math/tex; mode=display">
+\sum_{i=1}^m  \log P(x^{(i)}|\theta^{j+1})  \ge  \sum_{i=1}^m  \log P(x^{(i)}|\theta^j)
+</script>
+</div>
+<p>从而证明了EM算法的递增的，可以保证收敛到一个稳定点，但是却不能保证收敛到全局的极大值点。因此，EM是一个局部最优算法，当然如果优化目标<span class="arithmatex"><span class="MathJax_Preview">L(\theta,\theta^j)</span><script type="math/tex">L(\theta,\theta^j)</script></span>是凸的，则EM算法可以保证收敛到全局最大值。</p>
 <h2 id="em_3">EM算法小结<a class="headerlink" href="#em_3" title="Permanent link">&para;</a></h2>
 <p>EM算法中已知的是观察数据，未知的是隐含数据和模型参数，在E步中固定模型参数的值，优化隐含数据的分布，而在M步固定隐含数据分布，优化模型参数的值。这和很多算法类似，如SMO算法、坐标下降法等等都是用了类似的思想来求解问题。</p>
 

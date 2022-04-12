@@ -653,8 +653,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
-        集成学习算法之GBDT
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
       </a>
     </li>
   
@@ -667,8 +667,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
-        集成学习算法之RF
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
+        集成学习算法之GBDT
       </a>
     </li>
   
@@ -1338,45 +1338,84 @@ $$
 $$
 J(p,q)=\sum_{i,j}(m_{ij}-q_j^T p_i)
 $$
-在实际应用中，为了防止过拟合，往往会加入一个<span class="arithmatex"><span class="MathJax_Preview">L_2</span><script type="math/tex">L_2</script></span>的正则化项，因此最终FunkSVD的优化目标变为：
-$$
-\mathop {\arg\min}<em>{p_i,q_j}\sum</em>{i,j}(m_{ij}-q^T_j p_i)<sup>2+\lambda(||p_i||_2</sup>2+||q_j||<em>2^2)
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">\lambda</span><script type="math/tex">\lambda</script></span>为正则化系数，需要调参。对于式(4)的优化问题，一般通过梯度下降法来进行优化。
-$$
+在实际应用中，为了防止过拟合，往往会加入一个<span class="arithmatex"><span class="MathJax_Preview">L_2</span><script type="math/tex">L_2</script></span>的正则化项，因此最终FunkSVD的优化目标变为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\mathop {\arg\min}_{p_i,q_j}\sum_{i,j}(m_{ij}-q^T_j p_i)^2+\lambda(||p_i||_2^2+||q_j||_2^2)
+</div>
+<script type="math/tex; mode=display">
+\mathop {\arg\min}_{p_i,q_j}\sum_{i,j}(m_{ij}-q^T_j p_i)^2+\lambda(||p_i||_2^2+||q_j||_2^2)
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">\lambda</span><script type="math/tex">\lambda</script></span>为正则化系数，需要调参。对于式(4)的优化问题，一般通过梯度下降法来进行优化。</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
-\frac{\partial J}{\partial p_i}=-2(m</em>{ij}-q^T_j p_i)q_j+2\lambda p_i\
-\frac{\partial J}{\partial q_j}=-2(m_{ij}-q^T_j p_i)p_i+2\lambda q_j\
+\frac{\partial J}{\partial p_i}=-2(m_{ij}-q^T_j p_i)q_j+2\lambda p_i\\
+\frac{\partial J}{\partial q_j}=-2(m_{ij}-q^T_j p_i)p_i+2\lambda q_j\\
 \end{align}
-$$
-则在梯度下降迭代法中，<span class="arithmatex"><span class="MathJax_Preview">p_i,q_j</span><script type="math/tex">p_i,q_j</script></span>的迭代公式为：
-$$
+</div>
+<script type="math/tex; mode=display">
 \begin{align}
-p_i = p_i + \alpha((m_{ij}-q_j^T p_i)q_j-\lambda p_i)\
+\frac{\partial J}{\partial p_i}=-2(m_{ij}-q^T_j p_i)q_j+2\lambda p_i\\
+\frac{\partial J}{\partial q_j}=-2(m_{ij}-q^T_j p_i)p_i+2\lambda q_j\\
+\end{align}
+</script>
+</div>
+<p>则在梯度下降迭代法中，<span class="arithmatex"><span class="MathJax_Preview">p_i,q_j</span><script type="math/tex">p_i,q_j</script></span>的迭代公式为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+p_i = p_i + \alpha((m_{ij}-q_j^T p_i)q_j-\lambda p_i)\\
 q_j = q_j + \alpha((m_{ij}-q_j^T p_i)p_i-\lambda q_j)
 \end{align}
-$$
-通过迭代最终可以得到<span class="arithmatex"><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>和<span class="arithmatex"><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span>，进而用于推荐。</p>
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+p_i = p_i + \alpha((m_{ij}-q_j^T p_i)q_j-\lambda p_i)\\
+q_j = q_j + \alpha((m_{ij}-q_j^T p_i)p_i-\lambda q_j)
+\end{align}
+</script>
+</div>
+<p>通过迭代最终可以得到<span class="arithmatex"><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>和<span class="arithmatex"><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span>，进而用于推荐。</p>
 <h2 id="biassvd">BiasSVD算法用于推荐<a class="headerlink" href="#biassvd" title="Permanent link">&para;</a></h2>
 <p>在FunkSVD算法之后出现了很多FunkSVD的改进算法，其中BiasSVD算法就是其中较为成功的一种。BiasSVD算法假设评分系统包括三部分的偏置因素：①一些和用户物品的评分因素；②用户有一些和物品无关的评分因素，称为用户偏置项；③物品有一些和用户无关的评分因素，称为物品偏置项。</p>
-<p>假设评分系统平均分为<span class="arithmatex"><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>，第<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>个用户的用户偏置项为<span class="arithmatex"><span class="MathJax_Preview">b_i</span><script type="math/tex">b_i</script></span>，第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>个物品的物品偏置项为<span class="arithmatex"><span class="MathJax_Preview">b_j</span><script type="math/tex">b_j</script></span>，则加入偏置项以后的优化目标<span class="arithmatex"><span class="MathJax_Preview">J(p,q)</span><script type="math/tex">J(p,q)</script></span>为：
-$$
-\mathop {\arg\min}<em>{p_i,q_j}\sum</em>{i,j}(m_{ij}-\mu-b_i -b_j -q_j^T p_i)+\lambda(||p_i||<em>2<sup>2+||q_j||_2</sup>2+||b_i||_2<sup>2+||b_j||_2</sup>2)
-$$
-式(9)也可采用梯度下降法求解。不同的是此时我们多增加了两个偏置项<span class="arithmatex"><span class="MathJax_Preview">b_i,b_j</span><script type="math/tex">b_i,b_j</script></span>，<span class="arithmatex"><span class="MathJax_Preview">p_i,q_j</span><script type="math/tex">p_i,q_j</script></span>的迭代公式和FunkSVD类似，只是每一步的梯度导数稍有不同而已。
-$$
+<p>假设评分系统平均分为<span class="arithmatex"><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span>，第<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>个用户的用户偏置项为<span class="arithmatex"><span class="MathJax_Preview">b_i</span><script type="math/tex">b_i</script></span>，第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>个物品的物品偏置项为<span class="arithmatex"><span class="MathJax_Preview">b_j</span><script type="math/tex">b_j</script></span>，则加入偏置项以后的优化目标<span class="arithmatex"><span class="MathJax_Preview">J(p,q)</span><script type="math/tex">J(p,q)</script></span>为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\mathop {\arg\min}_{p_i,q_j}\sum_{i,j}(m_{ij}-\mu-b_i -b_j -q_j^T p_i)+\lambda(||p_i||_2^2+||q_j||_2^2+||b_i||_2^2+||b_j||_2^2)
+</div>
+<script type="math/tex; mode=display">
+\mathop {\arg\min}_{p_i,q_j}\sum_{i,j}(m_{ij}-\mu-b_i -b_j -q_j^T p_i)+\lambda(||p_i||_2^2+||q_j||_2^2+||b_i||_2^2+||b_j||_2^2)
+</script>
+</div>
+<p>式(9)也可采用梯度下降法求解。不同的是此时我们多增加了两个偏置项<span class="arithmatex"><span class="MathJax_Preview">b_i,b_j</span><script type="math/tex">b_i,b_j</script></span>，<span class="arithmatex"><span class="MathJax_Preview">p_i,q_j</span><script type="math/tex">p_i,q_j</script></span>的迭代公式和FunkSVD类似，只是每一步的梯度导数稍有不同而已。</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
-b_i = b_i +\alpha(m</em>{ij}-\mu - b_i - b_j -q_j^T p_i -\lambda b_i)\
-b_j = b_j +\alpha(m_{ij}-\mu - b_i - b_j -q_j^T p_i -\lambda b_j)\
+b_i = b_i +\alpha(m_{ij}-\mu - b_i - b_j -q_j^T p_i -\lambda b_i)\\
+b_j = b_j +\alpha(m_{ij}-\mu - b_i - b_j -q_j^T p_i -\lambda b_j)\\
 \end{align}
-$$
-通过迭代最终可以得到<span class="arithmatex"><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>和<span class="arithmatex"><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span>，进而用于推荐。BiasSVD增加了一些额外的因素考虑，在某些场合会比FunkSVD表现更好。</p>
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+b_i = b_i +\alpha(m_{ij}-\mu - b_i - b_j -q_j^T p_i -\lambda b_i)\\
+b_j = b_j +\alpha(m_{ij}-\mu - b_i - b_j -q_j^T p_i -\lambda b_j)\\
+\end{align}
+</script>
+</div>
+<p>通过迭代最终可以得到<span class="arithmatex"><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>和<span class="arithmatex"><span class="MathJax_Preview">Q</span><script type="math/tex">Q</script></span>，进而用于推荐。BiasSVD增加了一些额外的因素考虑，在某些场合会比FunkSVD表现更好。</p>
 <h2 id="svd_1">SVD++算法用户推荐<a class="headerlink" href="#svd_1" title="Permanent link">&para;</a></h2>
-<p>SVD++算法在BiasSVD的基础上进一步做了增强。对于一个用户<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>，它提供了隐式反馈的物品集合定位为<span class="arithmatex"><span class="MathJax_Preview">N(i)</span><script type="math/tex">N(i)</script></span>，这个用户对某个物品<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>对应的隐式反馈修正的评分值为<span class="arithmatex"><span class="MathJax_Preview">c_{ij}</span><script type="math/tex">c_{ij}</script></span>，那么该用户所有的评分修正值为<span class="arithmatex"><span class="MathJax_Preview">\sum_{s\in N(i)}c_{sj}</span><script type="math/tex">\sum_{s\in N(i)}c_{sj}</script></span>。一般将它表示为用<span class="arithmatex"><span class="MathJax_Preview">q_j^T y_s</span><script type="math/tex">q_j^T y_s</script></span>形式，则加入隐式反馈项后的优化目标函数<span class="arithmatex"><span class="MathJax_Preview">J(p,q)</span><script type="math/tex">J(p,q)</script></span>是：
-$$
-\mathop {arg\;min}<em>{p_i,q_j}\;\sum\limits</em>{i,j}(m_{ij}-\mu-b_i-b_j-q_j^Tp_i - q_j<sup>T|N(i)|</sup>{-&frac12;}\sum\limits_{s \in N(i)}y_{s})^2\+ \lambda(||p_i||<em>2^2 + ||q_j||_2^2 + ||b_i||_2^2 + ||b_j||_2^2 + \sum\limits</em>{s \in N(i)}||y_{s}||_2^2)
-$$
-其中引入<span class="arithmatex"><span class="MathJax_Preview">|N(i)|^{-1/2}</span><script type="math/tex">|N(i)|^{-1/2}</script></span>是为了消除不同<span class="arithmatex"><span class="MathJax_Preview">|N(i)|</span><script type="math/tex">|N(i)|</script></span>个数引起的差异。</p>
+<p>SVD++算法在BiasSVD的基础上进一步做了增强。对于一个用户<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>，它提供了隐式反馈的物品集合定位为<span class="arithmatex"><span class="MathJax_Preview">N(i)</span><script type="math/tex">N(i)</script></span>，这个用户对某个物品<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>对应的隐式反馈修正的评分值为<span class="arithmatex"><span class="MathJax_Preview">c_{ij}</span><script type="math/tex">c_{ij}</script></span>，那么该用户所有的评分修正值为<span class="arithmatex"><span class="MathJax_Preview">\sum_{s\in N(i)}c_{sj}</span><script type="math/tex">\sum_{s\in N(i)}c_{sj}</script></span>。一般将它表示为用<span class="arithmatex"><span class="MathJax_Preview">q_j^T y_s</span><script type="math/tex">q_j^T y_s</script></span>形式，则加入隐式反馈项后的优化目标函数<span class="arithmatex"><span class="MathJax_Preview">J(p,q)</span><script type="math/tex">J(p,q)</script></span>是：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\mathop {arg\;min}_{p_i,q_j}\;\sum\limits_{i,j}(m_{ij}-\mu-b_i-b_j-q_j^Tp_i - q_j^T|N(i)|^{-1/2}\sum\limits_{s \in N(i)}y_{s})^2\\+ \lambda(||p_i||_2^2 + ||q_j||_2^2 + ||b_i||_2^2 + ||b_j||_2^2 + \sum\limits_{s \in N(i)}||y_{s}||_2^2)
+</div>
+<script type="math/tex; mode=display">
+\mathop {arg\;min}_{p_i,q_j}\;\sum\limits_{i,j}(m_{ij}-\mu-b_i-b_j-q_j^Tp_i - q_j^T|N(i)|^{-1/2}\sum\limits_{s \in N(i)}y_{s})^2\\+ \lambda(||p_i||_2^2 + ||q_j||_2^2 + ||b_i||_2^2 + ||b_j||_2^2 + \sum\limits_{s \in N(i)}||y_{s}||_2^2)
+</script>
+</div>
+<p>其中引入<span class="arithmatex"><span class="MathJax_Preview">|N(i)|^{-1/2}</span><script type="math/tex">|N(i)|^{-1/2}</script></span>是为了消除不同<span class="arithmatex"><span class="MathJax_Preview">|N(i)|</span><script type="math/tex">|N(i)|</script></span>个数引起的差异。</p>
 <h2 id="_2">矩阵分解算法总结<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>FunkSVD将矩阵分解用于推荐方法推到了新的高度，在实际应用中使用也是非常广泛。</p>
 <p>对于矩阵分解用于推荐方法本身来说，它容易编程实现，实现复杂度低，预测效果也好，同时还能保持扩展性。</p>

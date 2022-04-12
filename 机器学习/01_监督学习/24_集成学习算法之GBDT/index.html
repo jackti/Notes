@@ -15,7 +15,7 @@
     
     
       
-        <title>集成学习算法之RF - 我的知识笔记</title>
+        <title>集成学习算法之GBDT - 我的知识笔记</title>
       
     
     
@@ -65,7 +65,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#rf" class="md-skip">
+        <a href="#gbdt" class="md-skip">
           跳转至
         </a>
       
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              集成学习算法之RF
+              集成学习算法之GBDT
             
           </span>
         </div>
@@ -655,8 +655,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
-        集成学习算法之GBDT
+      <a href="../23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
       </a>
     </li>
   
@@ -679,12 +679,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          集成学习算法之RF
+          集成学习算法之GBDT
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        集成学习算法之RF
+        集成学习算法之GBDT
       </a>
       
         
@@ -703,56 +703,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#bagging" class="md-nav__link">
-    Bagging算法原理
+  <a href="#gbdt_1" class="md-nav__link">
+    GBDT算法模型
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    随机森林算法原理
+  <a href="#gbdt_2" class="md-nav__link">
+    GBDT回归算法
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    随机森林的推广
+  <a href="#gbdt_3" class="md-nav__link">
+    GBDT分类算法
   </a>
-  
-    <nav class="md-nav" aria-label="随机森林的推广">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extremely-randomized-tree" class="md-nav__link">
-    Extremely Randomized Tree
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#totally-random-trees-embedding" class="md-nav__link">
-    Totally Random Trees Embedding
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#isolation-forest" class="md-nav__link">
-    Isolation Forest
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    随机森林小结
+  <a href="#gbdt_4" class="md-nav__link">
+    GBDT总结
   </a>
   
 </li>
@@ -1237,56 +1210,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#bagging" class="md-nav__link">
-    Bagging算法原理
+  <a href="#gbdt_1" class="md-nav__link">
+    GBDT算法模型
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    随机森林算法原理
+  <a href="#gbdt_2" class="md-nav__link">
+    GBDT回归算法
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    随机森林的推广
+  <a href="#gbdt_3" class="md-nav__link">
+    GBDT分类算法
   </a>
-  
-    <nav class="md-nav" aria-label="随机森林的推广">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extremely-randomized-tree" class="md-nav__link">
-    Extremely Randomized Tree
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#totally-random-trees-embedding" class="md-nav__link">
-    Totally Random Trees Embedding
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#isolation-forest" class="md-nav__link">
-    Isolation Forest
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    随机森林小结
+  <a href="#gbdt_4" class="md-nav__link">
+    GBDT总结
   </a>
   
 </li>
@@ -1305,72 +1251,102 @@
                 
 
 
-<h1 id="rf">集成学习算法之RF<a class="headerlink" href="#rf" title="Permanent link">&para;</a></h1>
-<p>在集成学习中，主要有两大类流派，一个是Boosting流派，它的特点是各个弱学习器之间有依赖关系；另一个是Bagging流派，它的特点是各个弱学习器之间没有依赖关系，可以并行拟合。</p>
-<p>随机森林是Bagging中的重要代表，可以很方便的并行训练。</p>
-<h2 id="bagging">Bagging算法原理<a class="headerlink" href="#bagging" title="Permanent link">&para;</a></h2>
-<p>Bagging的弱学习器之间没有Boosting那样的联系。它的特点在于"随机采样"。</p>
-<p>自助采样法(boostrap sampling)给定包含<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>个样本的数据集<span class="arithmatex"><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span>，对它进行采样产生数据集<span class="arithmatex"><span class="MathJax_Preview">D^*</span><script type="math/tex">D^*</script></span>：每次随机从<span class="arithmatex"><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span>中挑选一个样本，将其拷贝放入<span class="arithmatex"><span class="MathJax_Preview">D^*</span><script type="math/tex">D^*</script></span>，然后再将该样本放回初始数据集<span class="arithmatex"><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span>中，使得该样本在下次采样时仍有可能被采到；这个过程重复执行<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>次后，就可以得到包含<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>个样本的数据集<span class="arithmatex"><span class="MathJax_Preview">D^*</span><script type="math/tex">D^*</script></span> 。显然，<span class="arithmatex"><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span>中有一部分样本会在<span class="arithmatex"><span class="MathJax_Preview">D^*</span><script type="math/tex">D^*</script></span>中多次出现，而另一部分样本不出现。样本在<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>次采样中始终不被采样到的概率是<span class="arithmatex"><span class="MathJax_Preview">(1-\frac{1}{m})^m</span><script type="math/tex">(1-\frac{1}{m})^m</script></span>，取极限得到
-$$
-\lim_{m \rightarrow\infin}(1-\frac{1}{m})^m \rightarrow\frac{1}{e}\approx0.368
-$$
-即通过自助采样，初始数据集<span class="arithmatex"><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span>中有<span class="arithmatex"><span class="MathJax_Preview">36.8\%</span><script type="math/tex">36.8\%</script></span>的样本未出现在才采样数据集<span class="arithmatex"><span class="MathJax_Preview">D^*</span><script type="math/tex">D^*</script></span>中。于是可以将<span class="arithmatex"><span class="MathJax_Preview">D^*</span><script type="math/tex">D^*</script></span>用作训练集，<span class="arithmatex"><span class="MathJax_Preview">D-D^*</span><script type="math/tex">D-D^*</script></span>用作测试集。这样实际评估的模型与期望评估的模型都使用<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>个训练样本，而仍有约<span class="arithmatex"><span class="MathJax_Preview">1/3</span><script type="math/tex">1/3</script></span>的、没在训练集中出现的样本用于测试。</p>
-<p>Bagging对于弱学习器没有限制，这点和Adaboost 是一样的，但是最常用的一般也是决策树和神经网络。</p>
-<p>Bagging对于分类问题，通常使用简单投票法，得到最多的类别或类别之一为最终的模型输出。对于回归问题，通常使用简单平均法，对多个弱学习器的回归结果进行算术平均得到最终的模型输出。</p>
+<h1 id="gbdt">集成学习算法之GBDT<a class="headerlink" href="#gbdt" title="Permanent link">&para;</a></h1>
+<p>提升树(Boosting tree)是以分类树或回归树为基本分类器的提升方法。提升树被认为是统计学习中性能最好的方法之一。GBDT(Gradient Boosting Decision Tree)是Boosting家族中的一类重要算法，GBDT有很多简称，如GBT(Gradient Boosting Tree)，GTB(Gradient Tree Boosting)，GBRT(Gradient Boosting Regression Tree)，MART(Multiple Additive Regression Tree)这些都是指的同一种算法。</p>
+<h2 id="gbdt_1">GBDT算法模型<a class="headerlink" href="#gbdt_1" title="Permanent link">&para;</a></h2>
+<p>GBDT是Boosting集成学习算法的一种，但是和Adaboost有所差异。在Adaboost模型中利用前一轮弱迭代学习器的误差率来更新训练集的权重，一轮轮的反复迭代。GBDT也是迭代，使用前向分步算法，但是弱学习器限定了只是用CART模型，同时迭代思路也和Adaboost不同。</p>
+<p>在GBDT的迭代中，假设前一轮迭代得到的强学习器是<span class="arithmatex"><span class="MathJax_Preview">f_{t-1}(x)</span><script type="math/tex">f_{t-1}(x)</script></span>，损失函数是<span class="arithmatex"><span class="MathJax_Preview">L(y,f_{t-1}(x))</span><script type="math/tex">L(y,f_{t-1}(x))</script></span>。本轮迭代的目标是找一个CART回归树模型的弱学习器<span class="arithmatex"><span class="MathJax_Preview">h_t(x)</span><script type="math/tex">h_t(x)</script></span>，让本轮的损失函数<span class="arithmatex"><span class="MathJax_Preview">L(y,f_t(x))=L(y,f_{t-1}(x)+h_t(x))</span><script type="math/tex">L(y,f_t(x))=L(y,f_{t-1}(x)+h_t(x))</script></span>最小。即本轮迭代找到决策树，要让样本的损失尽量变得更小。</p>
+<p>GBDT的思想有一个通俗的例子：假如某人年龄30岁，首先用20岁取拟合，发现有10岁的损失。这时用6岁取拟合剩下的损失，发现差距还有4岁，第三轮用3岁拟合剩下的差距。那么最终的差距就只有1岁了。如果继续迭代下去，每一轮迭代拟合误差都会减小。</p>
+<p>最终模型可以描述为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+f_m(x)=\sum_{m=1}^M T(x;\theta_m)
+</div>
+<script type="math/tex; mode=display">
+f_m(x)=\sum_{m=1}^M T(x;\theta_m)
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">T(x;\theta)</span><script type="math/tex">T(x;\theta)</script></span>表示决策树，<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>为决策树参数，<span class="arithmatex"><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>为树的个数。采用前向分步算法，第<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>步的模型为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+f_m(x)=f_{m-1}(x)+T(x;\theta)
+</div>
+<script type="math/tex; mode=display">
+f_m(x)=f_{m-1}(x)+T(x;\theta)
+</script>
+</div>
+<p>通过经验风险极小化确定下一颗树的参数<span class="arithmatex"><span class="MathJax_Preview">\theta_m</span><script type="math/tex">\theta_m</script></span></p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\theta_m^*=\arg \min_{\theta_m}\sum_{i=1}^N L(y^{(i)},f_{m-1}(x^{(i)})+T(x^{(i)};\theta_m))
+</div>
+<script type="math/tex; mode=display">
+\theta_m^*=\arg \min_{\theta_m}\sum_{i=1}^N L(y^{(i)},f_{m-1}(x^{(i)})+T(x^{(i)};\theta_m))
+</script>
+</div>
+<p>当损失函数是平方损失和指数损失函数时，每一步优化是很简单的。但对一般损失函数而言，往往每一步优化并不那么容易。我们正真关注点：①损失函数能够不断减小；②损失函数尽可能快地减小。针对这一问题，可以利用损失函数的负梯度在当前模型的值</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+-\left[\frac{\partial L(y,f(x^{(i)}))}{\partial f(x^{(i)})}      \right]_{f(x)=f_{m-1}(x)}
+</div>
+<script type="math/tex; mode=display">
+-\left[\frac{\partial L(y,f(x^{(i)}))}{\partial f(x^{(i)})}      \right]_{f(x)=f_{m-1}(x)}
+</script>
+</div>
+<h2 id="gbdt_2">GBDT回归算法<a class="headerlink" href="#gbdt_2" title="Permanent link">&para;</a></h2>
+<p>梯度提升算法：</p>
 <blockquote>
-<p>输入：样本数据集<span class="arithmatex"><span class="MathJax_Preview">D=\{(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(m)},y^{(m)}) \}</span><script type="math/tex">D=\{(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(m)},y^{(m)}) \}</script></span>，弱学习器算法<span class="arithmatex"><span class="MathJax_Preview">G(x)</span><script type="math/tex">G(x)</script></span>，迭代次数<span class="arithmatex"><span class="MathJax_Preview">T</span><script type="math/tex">T</script></span></p>
-<p>输出：最终的分类器<span class="arithmatex"><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span></p>
-<p>(1)对于<span class="arithmatex"><span class="MathJax_Preview">t=1,2,...,T</span><script type="math/tex">t=1,2,...,T</script></span></p>
-<p>​ ①对训练集进行自助采样，得到包含<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>个样本的采样集<span class="arithmatex"><span class="MathJax_Preview">D_t</span><script type="math/tex">D_t</script></span></p>
-<p>​ ②用采样集<span class="arithmatex"><span class="MathJax_Preview">D_t</span><script type="math/tex">D_t</script></span>训练第<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>个弱学习器<span class="arithmatex"><span class="MathJax_Preview">G_t(x)</span><script type="math/tex">G_t(x)</script></span></p>
-<p>(2)若是分类算法，则进行投票；若是回归算法，则算术平均得到最终的模型输出</p>
+<p>输入：训练数据集<span class="arithmatex"><span class="MathJax_Preview">\{ (x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}) ,...,(x^{(N)},y^{(N)})  \}, x^{(i)}\in \mathbb{R}^n,y^{(i)}\in \mathbb{R}</span><script type="math/tex">\{ (x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}) ,...,(x^{(N)},y^{(N)})  \}, x^{(i)}\in \mathbb{R}^n,y^{(i)}\in \mathbb{R}</script></span></p>
+<p>输出：回归树<span class="arithmatex"><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span></p>
+<p>(1)初始化</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+f_0(x)=\arg \min\limits{c}\sum{i=1}^N L(y^{(i)},c) \notag
+</div>
+<script type="math/tex; mode=display">
+f_0(x)=\arg \min\limits{c}\sum{i=1}^N L(y^{(i)},c) \notag
+</script>
+</div>
+<p>(2)对<span class="arithmatex"><span class="MathJax_Preview">m=1,2,...,M</span><script type="math/tex">m=1,2,...,M</script></span></p>
+<p>​ ①对<span class="arithmatex"><span class="MathJax_Preview">i=1,2,...,N</span><script type="math/tex">i=1,2,...,N</script></span>，计算</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+r_{mi}=-\left[ \frac{\partial L(y^{(i)},f(x^{(i)}))}{\partial f(x^{(i)})}\right]_{f(x)=f_{m-1}(x)}  \notag
+</div>
+<script type="math/tex; mode=display">
+r_{mi}=-\left[ \frac{\partial L(y^{(i)},f(x^{(i)}))}{\partial f(x^{(i)})}\right]_{f(x)=f_{m-1}(x)}  \notag
+</script>
+</div>
+<p>​ ②使用<span class="arithmatex"><span class="MathJax_Preview">(x^{(i)},r_{mi})</span><script type="math/tex">(x^{(i)},r_{mi})</script></span>拟合一个回归树，得到第<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>课树的叶节点区域<span class="arithmatex"><span class="MathJax_Preview">R_{mj},j=1,2,...,J</span><script type="math/tex">R_{mj},j=1,2,...,J</script></span></p>
+<p>​ ③对叶子区域<span class="arithmatex"><span class="MathJax_Preview">j=1,2,..,J</span><script type="math/tex">j=1,2,..,J</script></span>计算最佳拟合值</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+c_{mj}=\arg \min_{c}\sum_{x^{(i)}\in R_{mj}}L(y^{(i)},f_{m-1}(x^{(i)})+c)\notag
+</div>
+<script type="math/tex; mode=display">
+c_{mj}=\arg \min_{c}\sum_{x^{(i)}\in R_{mj}}L(y^{(i)},f_{m-1}(x^{(i)})+c)\notag
+</script>
+</div>
+<p>​ ④更新<span class="arithmatex"><span class="MathJax_Preview">f_m(x)=f_{m-1}(x)+\sum_{j=1}^J c_{mj}I(x\in R_{mj})</span><script type="math/tex">f_m(x)=f_{m-1}(x)+\sum_{j=1}^J c_{mj}I(x\in R_{mj})</script></span></p>
+<p>(3)得到回归树</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+f_M(x)=\sum_{m=1}^M \sum_{j=1}^Jc_{mj}I(x\in R_{mj})\notag
+</div>
+<script type="math/tex; mode=display">
+f_M(x)=\sum_{m=1}^M \sum_{j=1}^Jc_{mj}I(x\in R_{mj})\notag
+</script>
+</div>
 </blockquote>
-<h2 id="_1">随机森林算法原理<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>随机森林(Random Forest)是Bagging算法的进化版，它的思想仍然是Bagging，但是进行了独有的改进。</p>
-<p>RF使用了CART决策树作为弱学习器。在使用决策树的基础上，RF对决策树的建立做了改进，对于普通的决策树一般在**所有的<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>个特征中选择一个最优特征来做决策树的左右子树划分**，但是在RF中只是随机选择节点上的一部分样本特征，特征数量<span class="arithmatex"><span class="MathJax_Preview">n_{sub}&lt;n</span><script type="math/tex">n_{sub}<n</script></span> ，在这<span class="arithmatex"><span class="MathJax_Preview">n_{sub}</span><script type="math/tex">n_{sub}</script></span>中选择一个最优的特征来做决策树的左右子树划分。这样可以进一步增强模型的泛化能力。在实际应用中，一般会通过交叉验证调参来选择一个合适的<span class="arithmatex"><span class="MathJax_Preview">n_{sub}</span><script type="math/tex">n_{sub}</script></span>值。</p>
-<blockquote>
-<p>输入：样本数据集<span class="arithmatex"><span class="MathJax_Preview">D=\{(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(m)},y^{(m)}) \}</span><script type="math/tex">D=\{(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(m)},y^{(m)}) \}</script></span>，弱学习器算法<span class="arithmatex"><span class="MathJax_Preview">G(x)</span><script type="math/tex">G(x)</script></span>，迭代次数<span class="arithmatex"><span class="MathJax_Preview">T</span><script type="math/tex">T</script></span></p>
-<p>输出：最终的分类器<span class="arithmatex"><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span></p>
-<p>(1)对于<span class="arithmatex"><span class="MathJax_Preview">t=1,2,...,T</span><script type="math/tex">t=1,2,...,T</script></span></p>
-<p>​ ①对训练集进行自助采样，得到包含<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>个样本的采样集<span class="arithmatex"><span class="MathJax_Preview">D_t</span><script type="math/tex">D_t</script></span></p>
-<p>​ ②用采样集<span class="arithmatex"><span class="MathJax_Preview">D_t</span><script type="math/tex">D_t</script></span>训练第<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>个弱学习器<span class="arithmatex"><span class="MathJax_Preview">G_t(x)</span><script type="math/tex">G_t(x)</script></span>，在训练决策树模型的节点时，在节点的所有样本特征中选择一部分样本特征，在这些随机选择的部分样本特征中选择一个最优的特征来做决策树的左右子树划分</p>
-<p>(2)若是分类算法，则进行投票；若是回归算法，则算术平均得到最终的模型输出</p>
-</blockquote>
-<h2 id="_2">随机森林的推广<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>由于RF在实际应用中有良好特征，于是基于RF，出现了很多改进变种算法，应用也很广泛。不光可以用于分类回归，还可以用于特征转换、异常点检测等等。</p>
-<h3 id="extremely-randomized-tree">Extremely Randomized Tree<a class="headerlink" href="#extremely-randomized-tree" title="Permanent link">&para;</a></h3>
-<p>Extremely Randomized Tree(简称Extra Tree)是RF的一个变种，原理和RF几乎一模一样，仅有区别为：</p>
-<p>(1)对于每个决策树的训练集，RF采用的是随机采样boostrap来选择采样集作为每个决策树的训练集，而extra trees一般不采用随机采样，而是每个决策树都使用原始训练集</p>
-<p>(2)在选定划分特征后，RF的决策树和传统的决策树相同，会基于信息增益、基尼系数、均方差等原则选择一个最优的特征值划分点。但是extra trees则比较激进，会随机的选择一个特征值来划分决策树。</p>
-<p>从上面可以看出，由于随机选择了特征值的划分点为，而不是最优点位，这样导致生成的决策树规模一般会大于RF所生成的决策树。这样地话，模型的方差相对于RF进一步减小，但是偏差进一步增大。在某些时候，extra trees的泛化能力比RF更好。</p>
-<h3 id="totally-random-trees-embedding">Totally Random Trees Embedding<a class="headerlink" href="#totally-random-trees-embedding" title="Permanent link">&para;</a></h3>
-<p>Totally Random Trees Embedding(简称TRTE)是一种非监督学习的数据转化方法，能够将低维的数据集映射到高维，从而让映射到高维的数据更好的运用于分类回归问题。在支持向量机中运用了核函数的方法将数据集映射到高维，此处的TRTE提供了另外一种方法。</p>
-<p>TRTE在数据转化的过程中也使用了类似RF的方法，建立<span class="arithmatex"><span class="MathJax_Preview">T</span><script type="math/tex">T</script></span>个决策树来拟合数据。当决策树建立完成以后，数据集里的每个数据在<span class="arithmatex"><span class="MathJax_Preview">T</span><script type="math/tex">T</script></span>个决策树中叶子节点的位置也定下来了。</p>
-<p>现有3棵决策树，每棵决策树有5个叶子节点，某个数据<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>划分到了第一棵决策树的第二个叶子节点，第二棵树的第三个叶子节点，第三棵决策树的第五个叶子节点。则<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>映射后的特征编码为<span class="arithmatex"><span class="MathJax_Preview">(0,1,0,0,0, \quad 0,0,1,0,0 \quad 0,0,0,0,1)</span><script type="math/tex">(0,1,0,0,0, \quad 0,0,1,0,0 \quad 0,0,0,0,1)</script></span>共有15个维度的高维特征。映射到高维特征后，就可以继续使用监督学习的各种分类回归算法。</p>
-<h3 id="isolation-forest">Isolation Forest<a class="headerlink" href="#isolation-forest" title="Permanent link">&para;</a></h3>
-<p>Isolation Forest(简称IForest)是一种异常点检测的方法，使用了类似RF的方法来检测异常点。</p>
-<p>IForest对训练数据进行随机采样，但是采样个数不需要和RF一样（对于RF采样的样本数等于数据集个数）IForest不需要采样那么多，一般其采样个数远远小于训练集个数。因为现在的目的是异常点检测，只需要部分的样本，一般就可以将异常点区别出来。</p>
-<p>IForest在建立每一个决策树的时候，和RF不同的是，采用随机选择一个划分特征，对划分特征随机选择一个划分阈值。</p>
-<p>另外IForest一般会选择一个比较小的最大决策树深度<code>max_depth</code>，原因是同样本采集，对于少量的异常点检测问题一般不需要大规模的决策树。</p>
-<p>对异常点的判别，则是将测试样本点<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>拟合到<span class="arithmatex"><span class="MathJax_Preview">T</span><script type="math/tex">T</script></span>课决策树。计算在每课决策树上该样本点的叶子节点深度<span class="arithmatex"><span class="MathJax_Preview">h_t(x)</span><script type="math/tex">h_t(x)</script></span>，从而可以计算出平均高度<span class="arithmatex"><span class="MathJax_Preview">h(x)=\frac{1}{T}\sum_{t=1}^Th_t(x)</span><script type="math/tex">h(x)=\frac{1}{T}\sum_{t=1}^Th_t(x)</script></span>。此时用下面公式计算样本点<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>的异常概率：
-$$
-s(x,m)=2^{-\frac{h(x)}{c(m)}}
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>为样本个数。<span class="arithmatex"><span class="MathJax_Preview">c(m)</span><script type="math/tex">c(m)</script></span>的表达式为：
-$$
-c(m)=2\ln(m-1)+\xi-2\cdot\frac{m-1}{m} \qquad \xi为欧拉常数
-$$
-<span class="arithmatex"><span class="MathJax_Preview">s(x,m)</span><script type="math/tex">s(x,m)</script></span>的取值范围是[0,1]，取值越接近1，则异常点的概率也越大。</p>
-<h2 id="_3">随机森林小结<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p>RF的主要优点：</p>
-<p>（1）训练可以高度并行化，对于大样本训练速度有优势</p>
-<p>（2）由于可以随机选择决策树节点划分特征，这样在特征维度很高的时候仍能高校训练模型</p>
-<p>（3）在训练后可以给出各个特征的对于输出的重要性</p>
-<p>（4）采用随机采样，训练得到的模型方差小，泛化能力强</p>
-<p>（5）对部分特征缺失不敏感</p>
-<p>RF的主要缺点：</p>
-<p>（1）在某些噪音比较大的样本集上，RF模型容易陷入过拟合</p>
-<p>（2）取值划分比较多的特征容易对RF的决策产生较大影响，从而影响拟合效果</p>
+<h2 id="gbdt_3">GBDT分类算法<a class="headerlink" href="#gbdt_3" title="Permanent link">&para;</a></h2>
+<p>GBDT的分类算法思想和GBDT回归算法是一样的，但是由于样本输出不是连续值，而是离散的类别，导致无法直接从输出类别去拟合类别输出的误差。</p>
+<p>为了解决这个问题，采用的方法有两个：①使用指数损失函数，此时GBDT退化为Adaboost算法；②使用类似于逻辑回归的对数似然函数的方法，即用类别的预测概率值和真实概率值来拟合损失。</p>
+<h2 id="gbdt_4">GBDT总结<a class="headerlink" href="#gbdt_4" title="Permanent link">&para;</a></h2>
+<p>GBDT主要的优点有：</p>
+<p>（1） 可以灵活处理各种类型的数据，包括连续值和离散值；</p>
+<p>（2） 在相对少的调参时间情况下，预测的准备率也可以比较高。这个是相对SVM来说的。</p>
+<p>（3）使用一些健壮的损失函数，对异常值的鲁棒性非常强。比如 Huber损失函数和Quantile损失函数。</p>
+<p>GBDT的主要缺点有：由于弱学习器之间存在依赖关系，难以并行训练数据。不过可以通过自采样的SGBT来达到部分并行。</p>
 
               
             </article>
@@ -1384,7 +1360,7 @@ $$
     <nav class="md-footer__inner md-grid" aria-label="页脚">
       
         
-        <a href="../23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 集成学习算法之GBDT" rel="prev">
+        <a href="../23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 集成学习算法之RF" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -1393,7 +1369,7 @@ $$
               <span class="md-footer__direction">
                 上一页
               </span>
-              集成学习算法之GBDT
+              集成学习算法之RF
             </div>
           </div>
         </a>
