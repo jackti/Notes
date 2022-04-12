@@ -1160,7 +1160,7 @@
   
     <li class="md-nav__item">
       <a href="../05_%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%281%29/" class="md-nav__link">
-        神经网络优化概述
+        神经网络优化概述(一)
       </a>
     </li>
   
@@ -1174,7 +1174,7 @@
   
     <li class="md-nav__item">
       <a href="../05_%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%282%29/" class="md-nav__link">
-        数据预处理
+        神经网络优化概述(二)
       </a>
     </li>
   
@@ -1202,7 +1202,7 @@
   
     <li class="md-nav__item">
       <a href="../07_%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" class="md-nav__link">
-        07 注意力机制
+        注意力机制
       </a>
     </li>
   
@@ -1321,178 +1321,350 @@
 <p>在DNN和CNN模型中，训练样本的输入和输出是比较确定的，信息的传递是单向的，这种限制虽然使得网络更加容易学习，但在一定程度上也减弱了神经网络模型的能力。在很多现实任务中，网络的输出不仅和当前时刻的输入有关，也和其过去一段时间的输入相关，此外前馈神经网络的训练样本输入是连续的序列，且序列的长短不一，难以处理时序数据。比如视频、文本、语音等等，时序数据的长度一般是不固定的，而前馈神经网络要求输入和输出的维度都是固定的，不能任意改变。因此，当处理这一类和时序数据相关的问题时，就需要一种能力更强的模型。
 循环神经网络(Recurrent Neural Network,RNN)是一类具有短期记忆能力的神经网络，在循环神经网络中，神经元不但可以接收其他神经元的信息，也可以接收自身的信息，形成具有环路的网络结构。</p>
 <h2 id="rnn_1">RNN前向传播算法<a class="headerlink" href="#rnn_1" title="Permanent link">&para;</a></h2>
-<p>RNN的训练样本是基于序列的，对于其中的任意序列索引号<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>，它对应的输入是样本序列中的<span class="arithmatex"><span class="MathJax_Preview">x^{(t)}</span><script type="math/tex">x^{(t)}</script></span>，模型在序列索引号<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>位置的隐藏状态<span class="arithmatex"><span class="MathJax_Preview">h^{(t)}</span><script type="math/tex">h^{(t)}</script></span>，则由<span class="arithmatex"><span class="MathJax_Preview">x^{(t)}</span><script type="math/tex">x^{(t)}</script></span>和在<span class="arithmatex"><span class="MathJax_Preview">t-1</span><script type="math/tex">t-1</script></span>位置的隐藏状态<span class="arithmatex"><span class="MathJax_Preview">h^{(t-1)}</span><script type="math/tex">h^{(t-1)}</script></span>共同决定。在任意索引号<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>，对应的模型预测输出为<span class="arithmatex"><span class="MathJax_Preview">o^{(t)}</span><script type="math/tex">o^{(t)}</script></span>，通过预测输出<span class="arithmatex"><span class="MathJax_Preview">o^{(t)}</span><script type="math/tex">o^{(t)}</script></span>和训练序列真实输出<span class="arithmatex"><span class="MathJax_Preview">y^{(t)}</span><script type="math/tex">y^{(t)}</script></span>，以及损失函数<span class="arithmatex"><span class="MathJax_Preview">L^{(t)}</span><script type="math/tex">L^{(t)}</script></span>。那么就可以使用DNN类似的方法训练模型。如下图所示
-<img src="assets/RNN2.png" alt="RNN2.jpg" />
-其中的相关符号表示含义为
-| 记号                                                | 含义                                               |
-| --------------------------------------------------- | -------------------------------------------------- |
-| <span class="arithmatex"><span class="MathJax_Preview">x^{(t)}</span><script type="math/tex">x^{(t)}</script></span>                                                 | 代表序列索引号<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>时训练样本的输入。                                     |
-| <span class="arithmatex"><span class="MathJax_Preview">h^{(t)}</span><script type="math/tex">h^{(t)}</script></span>                                               | 代表序列索引号<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>时的隐藏状态，<span class="arithmatex"><span class="MathJax_Preview">h^{(t)}</span><script type="math/tex">h^{(t)}</script></span>由<span class="arithmatex"><span class="MathJax_Preview">x^{(t)}</span><script type="math/tex">x^{(t)}</script></span>和<span class="arithmatex"><span class="MathJax_Preview">h^{(t-1)}</span><script type="math/tex">h^{(t-1)}</script></span>共同决定                               |
-|<span class="arithmatex"><span class="MathJax_Preview">o^{(t)}</span><script type="math/tex">o^{(t)}</script></span>|代表序列索引号<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>时模型的输出，<span class="arithmatex"><span class="MathJax_Preview">o^{(t)}</span><script type="math/tex">o^{(t)}</script></span>只由当前的隐藏状态<span class="arithmatex"><span class="MathJax_Preview">h^{(t)}</span><script type="math/tex">h^{(t)}</script></span>决定|
-|<span class="arithmatex"><span class="MathJax_Preview">y^{(t)}</span><script type="math/tex">y^{(t)}</script></span>|代表在序列索引号<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>时训练样本序列的真实输出|
-|<span class="arithmatex"><span class="MathJax_Preview">L^{(t)}</span><script type="math/tex">L^{(t)}</script></span>|代表在序列索引号<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>时模型的损失函数|
-<span class="arithmatex"><span class="MathJax_Preview">U,W,V</span><script type="math/tex">U,W,V</script></span>这三个矩阵是模型的线性关系参数，在整个RNN中是共享的，这点和DNN是很不同的，也正是由于共享，才体现除了RNN模型的"循环反馈"的思想。循环神经网络的的前向传播算法公式如下
-$$
+<p>RNN的训练样本是基于序列的，对于其中的任意序列索引号<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>，它对应的输入是样本序列中的<span class="arithmatex"><span class="MathJax_Preview">x^{(t)}</span><script type="math/tex">x^{(t)}</script></span>，模型在序列索引号<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>位置的隐藏状态<span class="arithmatex"><span class="MathJax_Preview">h^{(t)}</span><script type="math/tex">h^{(t)}</script></span>，则由<span class="arithmatex"><span class="MathJax_Preview">x^{(t)}</span><script type="math/tex">x^{(t)}</script></span>和在<span class="arithmatex"><span class="MathJax_Preview">t-1</span><script type="math/tex">t-1</script></span>位置的隐藏状态<span class="arithmatex"><span class="MathJax_Preview">h^{(t-1)}</span><script type="math/tex">h^{(t-1)}</script></span>共同决定。在任意索引号<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>，对应的模型预测输出为<span class="arithmatex"><span class="MathJax_Preview">o^{(t)}</span><script type="math/tex">o^{(t)}</script></span>，通过预测输出<span class="arithmatex"><span class="MathJax_Preview">o^{(t)}</span><script type="math/tex">o^{(t)}</script></span>和训练序列真实输出<span class="arithmatex"><span class="MathJax_Preview">y^{(t)}</span><script type="math/tex">y^{(t)}</script></span>，以及损失函数<span class="arithmatex"><span class="MathJax_Preview">L^{(t)}</span><script type="math/tex">L^{(t)}</script></span>。那么就可以使用DNN类似的方法训练模型。如下图所示</p>
+<p><img _height="80%" alt="CNN" src="../assets/RNN2.png" width="80%" /></p>
+<p>其中的相关符号表示含义为</p>
+<table>
+<thead>
+<tr>
+<th>记号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex"><span class="MathJax_Preview">x^{(t)}</span><script type="math/tex">x^{(t)}</script></span></td>
+<td>代表序列索引号<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>时训练样本的输入。</td>
+</tr>
+<tr>
+<td><span class="arithmatex"><span class="MathJax_Preview">h^{(t)}</span><script type="math/tex">h^{(t)}</script></span></td>
+<td>代表序列索引号<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>时的隐藏状态，<span class="arithmatex"><span class="MathJax_Preview">h^{(t)}</span><script type="math/tex">h^{(t)}</script></span>由<span class="arithmatex"><span class="MathJax_Preview">x^{(t)}</span><script type="math/tex">x^{(t)}</script></span>和<span class="arithmatex"><span class="MathJax_Preview">h^{(t-1)}</span><script type="math/tex">h^{(t-1)}</script></span>共同决定</td>
+</tr>
+<tr>
+<td><span class="arithmatex"><span class="MathJax_Preview">o^{(t)}</span><script type="math/tex">o^{(t)}</script></span></td>
+<td>代表序列索引号<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>时模型的输出，<span class="arithmatex"><span class="MathJax_Preview">o^{(t)}</span><script type="math/tex">o^{(t)}</script></span>只由当前的隐藏状态<span class="arithmatex"><span class="MathJax_Preview">h^{(t)}</span><script type="math/tex">h^{(t)}</script></span>决定</td>
+</tr>
+<tr>
+<td><span class="arithmatex"><span class="MathJax_Preview">y^{(t)}</span><script type="math/tex">y^{(t)}</script></span></td>
+<td>代表在序列索引号<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>时训练样本序列的真实输出</td>
+</tr>
+<tr>
+<td><span class="arithmatex"><span class="MathJax_Preview">L^{(t)}</span><script type="math/tex">L^{(t)}</script></span></td>
+<td>代表在序列索引号<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>时模型的损失函数</td>
+</tr>
+</tbody>
+</table>
+<p><span class="arithmatex"><span class="MathJax_Preview">U,W,V</span><script type="math/tex">U,W,V</script></span>这三个矩阵是模型的线性关系参数，在整个RNN中是共享的，这点和DNN是很不同的，也正是由于共享，才体现除了RNN模型的"循环反馈"的思想。循环神经网络的的前向传播算法公式如下</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+z_{j}^{(t)}&amp;=\sum_{i} U_{j i} x_{i}^{(t)}+\sum_{i} W_{j i} h_{i}^{(t-1)}+b_{j} \\
+h_{j}^{(t)}&amp;=\tanh \left(z_{j}^{(t)}\right) \\
+o_{j}^{(t)}&amp;=\sum_{i} V_{j i} h_{i}^{(t)}+c_{j} \\
+\hat{y}_{j}^{(t)}&amp;=\operatorname{softmax}\left(o_{j}^{(t)}\right)
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+z_{j}^{(t)}&=\sum_{i} U_{j i} x_{i}^{(t)}+\sum_{i} W_{j i} h_{i}^{(t-1)}+b_{j} \\
+h_{j}^{(t)}&=\tanh \left(z_{j}^{(t)}\right) \\
+o_{j}^{(t)}&=\sum_{i} V_{j i} h_{i}^{(t)}+c_{j} \\
+\hat{y}_{j}^{(t)}&=\operatorname{softmax}\left(o_{j}^{(t)}\right)
+\end{align}
+</script>
+</div>
+<p>可以将上面的公式写成矩阵的形式为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{aligned}
-z_{j}^{(t)}&amp;=\sum_{i} U_{j i} x_{i}^{(t)}+\sum_{i} W_{j i} h_{i}^{(t-1)}+b_{j} \
-h_{j}^{(t)}&amp;=\tanh \left(z_{j}^{(t)}\right) \
-o_{j}^{(t)}&amp;=\sum_{i} V_{j i} h_{i}^{(t)}+c_{j} \
-\hat{y}_{j}<sup>{(t)}&amp;=\operatorname{softmax}\left(o_{j}</sup>{(t)}\right)
+z^{(t)}&amp;=U x^{(t)}+W h^{(t-1)}+b \\
+h^{(t)}&amp;=\tanh \left(z^{(t)}\right) \\
+o^{(t)}&amp;=V h^{(t)}+c \\
+\hat{y}^{(t)}&amp;=\operatorname{softmax}\left(o^{(t)}\right)
 \end{aligned}
-$$
-可以将上面的公式写成矩阵的形式为
-$$
+</div>
+<script type="math/tex; mode=display">
 \begin{aligned}
-z^{(t)}&amp;=U x^{(t)}+W h^{(t-1)}+b \
-h^{(t)}&amp;=\tanh \left(z^{(t)}\right) \
-o^{(t)}&amp;=V h^{(t)}+c \
-\hat{y}<sup>{(t)}&amp;=\operatorname{softmax}\left(o</sup>{(t)}\right)
+z^{(t)}&=U x^{(t)}+W h^{(t-1)}+b \\
+h^{(t)}&=\tanh \left(z^{(t)}\right) \\
+o^{(t)}&=V h^{(t)}+c \\
+\hat{y}^{(t)}&=\operatorname{softmax}\left(o^{(t)}\right)
 \end{aligned}
-$$
-序列中每个时间节点的损失定义为：
-$$
-L<sup>{(t)}(y</sup>{(t)},\hat{y}^{(t)}) = -y<sup>{(t)}\operatorname{log}\hat{y}</sup>{(t)}
-$$
-循环神经网络中总损失定义为序列中每个时间节点的损失之和，即
-$$
-\begin{aligned}
+</script>
+</div>
+<p>序列中每个时间节点的损失定义为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+L^{(t)}(y^{(t)},\hat{y}^{(t)}) = -y^{(t)}\operatorname{log}\hat{y}^{(t)}
+</div>
+<script type="math/tex; mode=display">
+L^{(t)}(y^{(t)},\hat{y}^{(t)}) = -y^{(t)}\operatorname{log}\hat{y}^{(t)}
+</script>
+</div>
+<p>循环神经网络中总损失定义为序列中每个时间节点的损失之和，即</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
    L
-&amp;=\sum_t L<sup>{(t)}(y</sup>{(t)},\hat{y}^{(t)})\
-&amp;=-\sum_t y<sup>{(t)}\operatorname{log}\hat{y}</sup>{(t)}
-\end{aligned}
-$$</p>
+&amp;=\sum_t L^{(t)}(y^{(t)},\hat{y}^{(t)})\\
+&amp;=-\sum_t y^{(t)}\operatorname{log}\hat{y}^{(t)}
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+   L
+&=\sum_t L^{(t)}(y^{(t)},\hat{y}^{(t)})\\
+&=-\sum_t y^{(t)}\operatorname{log}\hat{y}^{(t)}
+\end{align}
+</script>
+</div>
 <h2 id="_1">误差反向传播算法<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>RNN的误差反向传播算法称为BPTT(Back-Propagation Through Time, BPTT)算法.BPTT算法也主要应用了链式求导法则，但与DNN和CNN的误差反向传播算法略有不同，其还要计算来自隐含结点的梯度，即所有时间节点的梯度。在RNN中总共需要学习5类参数，分别为<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial L}{\partial V},\frac{\partial L}{\partial W},\frac{\partial L}{\partial U},\frac{\partial L}{\partial b},\frac{\partial L}{\partial c}</span><script type="math/tex">\frac{\partial L}{\partial V},\frac{\partial L}{\partial W},\frac{\partial L}{\partial U},\frac{\partial L}{\partial b},\frac{\partial L}{\partial c}</script></span>.</p>
 <h3 id="1fracpartial-lpartial-vfracpartial-lpartial-v">(1)求<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial L}{\partial V}</span><script type="math/tex">\frac{\partial L}{\partial V}</script></span><a class="headerlink" href="#1fracpartial-lpartial-vfracpartial-lpartial-v" title="Permanent link">&para;</a></h3>
-<p>$$
-\begin{aligned}
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
 \frac{\partial L^{(t)}}{\partial V_{j i}} 
-&amp;=\frac{\partial L^{(t)}}{\partial o_{j}^{(t)}} \frac{\partial o_{j}^{(t)}}{\partial V_{j i}} \
-&amp;=\frac{\partial\left(-\sum_{j} y_{j}^{(t)} \log \operatorname{softmax}\left(o_{j}^{(t)}\right)\right)}{\partial o_{j}^{(t)}} \frac{\partial o_{j}^{(t)}}{\partial V_{j i}} \
-&amp;=\frac{\partial\left(-\sum_{j} y_{j}^{(t)} \log \left(e^{(t)} / \sum_{k} e^{(t)}\right)\right)}{\partial o_{j}^{(t)}} h_{i}^{(t)} \
-&amp;=\frac{\partial\left(-\sum_{j} y_{j}<sup>{(t)}\left(o_{j}</sup>{(t)}-\log \sum_{k} e^{(t)}\right)\right)}{\partial o_{j}^{(t)}} h_{i}^{(t)} \
-&amp;=\left(\hat{y}<em>{j}<sup>{(t)}-y_{j}</sup>{(t)}\right) h</em>{i}^{(t)} 
-\end{aligned}
-$$
-矩阵的形式为
-$$
-\begin{aligned}
+&amp;=\frac{\partial L^{(t)}}{\partial o_{j}^{(t)}} \frac{\partial o_{j}^{(t)}}{\partial V_{j i}} \\
+&amp;=\frac{\partial\left(-\sum_{j} y_{j}^{(t)} \log \operatorname{softmax}\left(o_{j}^{(t)}\right)\right)}{\partial o_{j}^{(t)}} \frac{\partial o_{j}^{(t)}}{\partial V_{j i}} \\
+&amp;=\frac{\partial\left(-\sum_{j} y_{j}^{(t)} \log \left(e^{(t)} / \sum_{k} e^{(t)}\right)\right)}{\partial o_{j}^{(t)}} h_{i}^{(t)} \\
+&amp;=\frac{\partial\left(-\sum_{j} y_{j}^{(t)}\left(o_{j}^{(t)}-\log \sum_{k} e^{(t)}\right)\right)}{\partial o_{j}^{(t)}} h_{i}^{(t)} \\
+&amp;=\left(\hat{y}_{j}^{(t)}-y_{j}^{(t)}\right) h_{i}^{(t)} 
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial L^{(t)}}{\partial V_{j i}} 
+&=\frac{\partial L^{(t)}}{\partial o_{j}^{(t)}} \frac{\partial o_{j}^{(t)}}{\partial V_{j i}} \\
+&=\frac{\partial\left(-\sum_{j} y_{j}^{(t)} \log \operatorname{softmax}\left(o_{j}^{(t)}\right)\right)}{\partial o_{j}^{(t)}} \frac{\partial o_{j}^{(t)}}{\partial V_{j i}} \\
+&=\frac{\partial\left(-\sum_{j} y_{j}^{(t)} \log \left(e^{(t)} / \sum_{k} e^{(t)}\right)\right)}{\partial o_{j}^{(t)}} h_{i}^{(t)} \\
+&=\frac{\partial\left(-\sum_{j} y_{j}^{(t)}\left(o_{j}^{(t)}-\log \sum_{k} e^{(t)}\right)\right)}{\partial o_{j}^{(t)}} h_{i}^{(t)} \\
+&=\left(\hat{y}_{j}^{(t)}-y_{j}^{(t)}\right) h_{i}^{(t)} 
+\end{align}
+</script>
+</div>
+<p>矩阵的形式为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
 \frac{\partial L^{(t)}}{\partial V}
-&amp;=\left(\hat{y}<sup>{(t)}-y</sup>{(t)}\right)\left(h<sup>{(t)}\right)</sup>{\top}\
-&amp;=\left(\hat{y}<sup>{(t)}-y</sup>{(t)}\right) \otimes h^{(t)}\
-\end{aligned}
-$$
-所以<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial L}{\partial V}</span><script type="math/tex">\frac{\partial L}{\partial V}</script></span> 的反向传播公式为
-$$
+&amp;=\left(\hat{y}^{(t)}-y^{(t)}\right)\left(h^{(t)}\right)^{\top}\\
+&amp;=\left(\hat{y}^{(t)}-y^{(t)}\right) \otimes h^{(t)}\\
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial L^{(t)}}{\partial V}
+&=\left(\hat{y}^{(t)}-y^{(t)}\right)\left(h^{(t)}\right)^{\top}\\
+&=\left(\hat{y}^{(t)}-y^{(t)}\right) \otimes h^{(t)}\\
+\end{align}
+</script>
+</div>
+<p>所以<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial L}{\partial V}</span><script type="math/tex">\frac{\partial L}{\partial V}</script></span> 的反向传播公式为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \frac{\partial L}{\partial V} 
 = \sum_t \frac{\partial L^{(t)}}{\partial V}
-=\sum_t \left(\hat{y}<sup>{(t)}-y</sup>{(t)}\right)\left(h<sup>{(t)}\right)</sup>{\top}
-$$
-这个是最基本的<span class="arithmatex"><span class="MathJax_Preview">\operatorname{softmax}</span><script type="math/tex">\operatorname{softmax}</script></span>损失函数的反向传播公式。</p>
+=\sum_t \left(\hat{y}^{(t)}-y^{(t)}\right)\left(h^{(t)}\right)^{\top}
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial V} 
+= \sum_t \frac{\partial L^{(t)}}{\partial V}
+=\sum_t \left(\hat{y}^{(t)}-y^{(t)}\right)\left(h^{(t)}\right)^{\top}
+</script>
+</div>
+<p>这个是最基本的<span class="arithmatex"><span class="MathJax_Preview">\operatorname{softmax}</span><script type="math/tex">\operatorname{softmax}</script></span>损失函数的反向传播公式。</p>
 <h3 id="2fracpartial-lpartial-cfracpartial-lpartial-c">(2)求<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial L}{\partial c}</span><script type="math/tex">\frac{\partial L}{\partial c}</script></span><a class="headerlink" href="#2fracpartial-lpartial-cfracpartial-lpartial-c" title="Permanent link">&para;</a></h3>
 <div class="arithmatex">
 <div class="MathJax_Preview">
 \frac{\partial L^{(t)}}{\partial c_j} =
 \frac{\partial L^{(t)}}{\partial o^{(t)}_j}\frac{\partial o^{(t)}_j}{\partial c_j}
 =\hat{y}^{(t)}_j-y^{(t)}_j
-$$
-矩阵的形式为
-$$
-\frac{\partial L^{(t)}}{\partial c} = \hat{y}^{(t)}-y^{(t)}
-$$
-所以$\frac{\partial L}{\partial c}$的反向传播公式为
-$$
-\frac{\partial L}{\partial c} =\sum_t \frac{\partial L^{(t)}}{\partial c}=\sum_t \left( \hat{y}^{(t)}-y^{(t)} \right)  
 </div>
 <script type="math/tex; mode=display">
 \frac{\partial L^{(t)}}{\partial c_j} =
 \frac{\partial L^{(t)}}{\partial o^{(t)}_j}\frac{\partial o^{(t)}_j}{\partial c_j}
 =\hat{y}^{(t)}_j-y^{(t)}_j
-$$
-矩阵的形式为
-$$
+</script>
+</div>
+<p>矩阵的形式为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \frac{\partial L^{(t)}}{\partial c} = \hat{y}^{(t)}-y^{(t)}
-$$
-所以$\frac{\partial L}{\partial c}$的反向传播公式为
-$$
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial L^{(t)}}{\partial c} = \hat{y}^{(t)}-y^{(t)}
+</script>
+</div>
+<p>所以<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial L}{\partial c}</span><script type="math/tex">\frac{\partial L}{\partial c}</script></span>的反向传播公式为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\frac{\partial L}{\partial c} =\sum_t \frac{\partial L^{(t)}}{\partial c}=\sum_t \left( \hat{y}^{(t)}-y^{(t)} \right)  
+</div>
+<script type="math/tex; mode=display">
 \frac{\partial L}{\partial c} =\sum_t \frac{\partial L^{(t)}}{\partial c}=\sum_t \left( \hat{y}^{(t)}-y^{(t)} \right)  
 </script>
 </div>
 <h3 id="3fracpartial-lpartial-wfracpartial-lpartial-w">(3)求<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial L}{\partial W}</span><script type="math/tex">\frac{\partial L}{\partial W}</script></span><a class="headerlink" href="#3fracpartial-lpartial-wfracpartial-lpartial-w" title="Permanent link">&para;</a></h3>
-<p>$$
-\begin{aligned}
-\frac{\partial L^{(t)}}{\partial W} &amp;=\frac{\partial L^{(t)}}{\partial h^{(t)}} \frac{\partial h^{(t)}}{\partial W} \
-&amp;=\frac{\partial L^{(t)}}{\partial h^{(t)}}\left(\frac{\partial h^{(t)}}{\partial W}+\frac{\partial h^{(t)}}{\partial h^{(t-1)}} \frac{\partial h^{(t-1)}}{\partial W}\right) \
-&amp;=\frac{\partial L^{(t)}}{\partial h^{(t)}} \frac{\partial h^{(t)}}{\partial W}+\frac{\partial L^{(t)}}{\partial h^{(t)}} \frac{\partial h^{(t)}}{\partial h^{(t-1)}} \frac{\partial h^{(t-1)}}{\partial W}+\cdots \
-&amp;+\frac{\partial L^{(t)}}{\partial h^{(t)}} \frac{\partial h^{(t)}}{\partial h^{(t-1)}} \frac{\partial h^{(t-1)}}{\partial h^{(t-2)}} \cdots \frac{\partial h^{(0)}}{\partial W} \
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+\frac{\partial L^{(t)}}{\partial W} &amp;=\frac{\partial L^{(t)}}{\partial h^{(t)}} \frac{\partial h^{(t)}}{\partial W} \\
+&amp;=\frac{\partial L^{(t)}}{\partial h^{(t)}}\left(\frac{\partial h^{(t)}}{\partial W}+\frac{\partial h^{(t)}}{\partial h^{(t-1)}} \frac{\partial h^{(t-1)}}{\partial W}\right) \\
+&amp;=\frac{\partial L^{(t)}}{\partial h^{(t)}} \frac{\partial h^{(t)}}{\partial W}+\frac{\partial L^{(t)}}{\partial h^{(t)}} \frac{\partial h^{(t)}}{\partial h^{(t-1)}} \frac{\partial h^{(t-1)}}{\partial W}+\cdots \\
+&amp;+\frac{\partial L^{(t)}}{\partial h^{(t)}} \frac{\partial h^{(t)}}{\partial h^{(t-1)}} \frac{\partial h^{(t-1)}}{\partial h^{(t-2)}} \cdots \frac{\partial h^{(0)}}{\partial W} \\
 &amp;=\sum_{k=0}^{t} \frac{\partial L^{(t)}}{\partial h^{(t)}} \frac{\partial h^{(t)}}{\partial h^{(k)}} \frac{\partial h^{(k)}}{\partial W}
-\end{aligned}
-$$
-从上面的公式可以看出，由于循环神经网络的循环体共享参数<span class="arithmatex"><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>，因此某一个时刻损失函数关于<span class="arithmatex"><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>的梯度等于该时刻之前所有的<span class="arithmatex"><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>的梯度之和。</p>
-<p>令误差<span class="arithmatex"><span class="MathJax_Preview">\delta^{(t)}_k=\frac{\partial L^{(t)}}{\partial h^{(k)}}</span><script type="math/tex">\delta^{(t)}_k=\frac{\partial L^{(t)}}{\partial h^{(k)}}</script></span>则
-$$
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial L^{(t)}}{\partial W} &=\frac{\partial L^{(t)}}{\partial h^{(t)}} \frac{\partial h^{(t)}}{\partial W} \\
+&=\frac{\partial L^{(t)}}{\partial h^{(t)}}\left(\frac{\partial h^{(t)}}{\partial W}+\frac{\partial h^{(t)}}{\partial h^{(t-1)}} \frac{\partial h^{(t-1)}}{\partial W}\right) \\
+&=\frac{\partial L^{(t)}}{\partial h^{(t)}} \frac{\partial h^{(t)}}{\partial W}+\frac{\partial L^{(t)}}{\partial h^{(t)}} \frac{\partial h^{(t)}}{\partial h^{(t-1)}} \frac{\partial h^{(t-1)}}{\partial W}+\cdots \\
+&+\frac{\partial L^{(t)}}{\partial h^{(t)}} \frac{\partial h^{(t)}}{\partial h^{(t-1)}} \frac{\partial h^{(t-1)}}{\partial h^{(t-2)}} \cdots \frac{\partial h^{(0)}}{\partial W} \\
+&=\sum_{k=0}^{t} \frac{\partial L^{(t)}}{\partial h^{(t)}} \frac{\partial h^{(t)}}{\partial h^{(k)}} \frac{\partial h^{(k)}}{\partial W}
+\end{align}
+</script>
+</div>
+<p>从上面的公式可以看出，由于循环神经网络的循环体共享参数<span class="arithmatex"><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>，因此某一个时刻损失函数关于<span class="arithmatex"><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>的梯度等于该时刻之前所有的<span class="arithmatex"><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>的梯度之和。</p>
+<p>令误差<span class="arithmatex"><span class="MathJax_Preview">\delta^{(t)}_k=\frac{\partial L^{(t)}}{\partial h^{(k)}}</span><script type="math/tex">\delta^{(t)}_k=\frac{\partial L^{(t)}}{\partial h^{(k)}}</script></span>则</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \frac{\partial L^{(t)}}{\partial W}=\delta_{t}^{(t)} \frac{\partial h^{(t)}}{\partial W}+\delta_{t-1}^{(t)} \frac{\partial h^{(t-1)}}{\partial W}+\cdots+\delta_{0}^{(t)} \frac{\partial h^{(0)}}{\partial W}=\sum_{k=0}^{t} \delta_{k}^{(t)} \frac{\partial h^{(k)}}{\partial W}
-$$
-而
-$$
-\frac{\partial h^{(k)}}{\partial W}=\frac{\partial h_{j}^{(k)}}{\partial W}=\frac{\partial h_{j}^{(k)}}{\partial o_{j}^{(k)}} \frac{\partial o_{j}^{(k)}}{\partial W_{j i}}=\left(1-\left(h_{j}<sup>{(k)}\right)</sup>{2}\right) h_{i}<sup>{(k-1)}=\left(1-h</sup>{(k)} \odot h<sup>{(k)}\right)\left(h</sup>{(k-1)}\right)^{\top}
-$$</p>
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial L^{(t)}}{\partial W}=\delta_{t}^{(t)} \frac{\partial h^{(t)}}{\partial W}+\delta_{t-1}^{(t)} \frac{\partial h^{(t-1)}}{\partial W}+\cdots+\delta_{0}^{(t)} \frac{\partial h^{(0)}}{\partial W}=\sum_{k=0}^{t} \delta_{k}^{(t)} \frac{\partial h^{(k)}}{\partial W}
+</script>
+</div>
+<p>而</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\frac{\partial h^{(k)}}{\partial W}=\frac{\partial h_{j}^{(k)}}{\partial W}=\frac{\partial h_{j}^{(k)}}{\partial o_{j}^{(k)}} \frac{\partial o_{j}^{(k)}}{\partial W_{j i}}=\left(1-\left(h_{j}^{(k)}\right)^{2}\right) h_{i}^{(k-1)}=\left(1-h^{(k)} \odot h^{(k)}\right)\left(h^{(k-1)}\right)^{\top}
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial h^{(k)}}{\partial W}=\frac{\partial h_{j}^{(k)}}{\partial W}=\frac{\partial h_{j}^{(k)}}{\partial o_{j}^{(k)}} \frac{\partial o_{j}^{(k)}}{\partial W_{j i}}=\left(1-\left(h_{j}^{(k)}\right)^{2}\right) h_{i}^{(k-1)}=\left(1-h^{(k)} \odot h^{(k)}\right)\left(h^{(k-1)}\right)^{\top}
+</script>
+</div>
 <p>因此，下面推导误差的反向传播计算公式。
-当<span class="arithmatex"><span class="MathJax_Preview">k=t</span><script type="math/tex">k=t</script></span>时，有
-$$
-\delta_{k, i}^{(t)}=\frac{\partial L^{(t)}}{\partial h_{i}^{(t)}}=\sum_{k} \frac{\partial L^{(t)}}{\partial o_{k}^{(t)}} \frac{\partial o_{k}^{(t)}}{\partial h_{i}<sup>{(t)}}=\sum_{k}\left(\hat{y}_{k}</sup>{(t)}-y_{k}^{(t)}\right) V_{k i}=V<sup>{\top}\left(\hat{y}</sup>{(t)}-y^{(t)}\right)
-$$
-所以有
-$$
-\delta_{t}^{(t)}=\frac{\partial L^{(t)}}{\partial h^{(t)}}=\frac{\partial L^{(t)}}{\partial o^{(t)}} \frac{\partial o^{(t)}}{\partial h<sup>{(t)}}=V</sup>{\top}\left(\hat{y}<sup>{(t)}-y</sup>{(t)}\right)
-$$
-接下来，当已知<span class="arithmatex"><span class="MathJax_Preview">\delta_k^{(t)}</span><script type="math/tex">\delta_k^{(t)}</script></span>时，求<span class="arithmatex"><span class="MathJax_Preview">\delta^{(t)}_{k-1}</span><script type="math/tex">\delta^{(t)}_{k-1}</script></span>。因为
-$$
-\begin{aligned}
-\delta_{k-1, i}^{(t)} &amp;=\frac{\partial L^{(t)}}{\partial h_{i}^{(k-1)}} \
-&amp;=\sum_{j} \frac{\partial L^{(t)}}{\partial h_{j}^{(k)}} \frac{\partial h_{j}^{(k)}}{\partial h_{i}^{(k-1)}} \
-&amp;=\sum_{j} \delta_{k, j}^{(t)} \frac{\partial h_{j}^{(k)}}{\partial z_{j}^{(k)}} \frac{\partial z_{j}^{(k)}}{\partial h_{i}^{(k-1)}} \
-&amp;=\sum_{j} \delta_{k, j}<sup>{(t)}\left(1-\left(h_{j}</sup>{(k)}\right)^{2}\right) W_{j i} \
+当<span class="arithmatex"><span class="MathJax_Preview">k=t</span><script type="math/tex">k=t</script></span>时，有</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\delta_{k, i}^{(t)}=\frac{\partial L^{(t)}}{\partial h_{i}^{(t)}}=\sum_{k} \frac{\partial L^{(t)}}{\partial o_{k}^{(t)}} \frac{\partial o_{k}^{(t)}}{\partial h_{i}^{(t)}}=\sum_{k}\left(\hat{y}_{k}^{(t)}-y_{k}^{(t)}\right) V_{k i}=V^{\top}\left(\hat{y}^{(t)}-y^{(t)}\right)
+</div>
+<script type="math/tex; mode=display">
+\delta_{k, i}^{(t)}=\frac{\partial L^{(t)}}{\partial h_{i}^{(t)}}=\sum_{k} \frac{\partial L^{(t)}}{\partial o_{k}^{(t)}} \frac{\partial o_{k}^{(t)}}{\partial h_{i}^{(t)}}=\sum_{k}\left(\hat{y}_{k}^{(t)}-y_{k}^{(t)}\right) V_{k i}=V^{\top}\left(\hat{y}^{(t)}-y^{(t)}\right)
+</script>
+</div>
+<p>所以有</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\delta_{t}^{(t)}=\frac{\partial L^{(t)}}{\partial h^{(t)}}=\frac{\partial L^{(t)}}{\partial o^{(t)}} \frac{\partial o^{(t)}}{\partial h^{(t)}}=V^{\top}\left(\hat{y}^{(t)}-y^{(t)}\right)
+</div>
+<script type="math/tex; mode=display">
+\delta_{t}^{(t)}=\frac{\partial L^{(t)}}{\partial h^{(t)}}=\frac{\partial L^{(t)}}{\partial o^{(t)}} \frac{\partial o^{(t)}}{\partial h^{(t)}}=V^{\top}\left(\hat{y}^{(t)}-y^{(t)}\right)
+</script>
+</div>
+<p>接下来，当已知<span class="arithmatex"><span class="MathJax_Preview">\delta_k^{(t)}</span><script type="math/tex">\delta_k^{(t)}</script></span>时，求<span class="arithmatex"><span class="MathJax_Preview">\delta^{(t)}_{k-1}</span><script type="math/tex">\delta^{(t)}_{k-1}</script></span>。因为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+\delta_{k-1, i}^{(t)} &amp;=\frac{\partial L^{(t)}}{\partial h_{i}^{(k-1)}} \\
+&amp;=\sum_{j} \frac{\partial L^{(t)}}{\partial h_{j}^{(k)}} \frac{\partial h_{j}^{(k)}}{\partial h_{i}^{(k-1)}} \\
+&amp;=\sum_{j} \delta_{k, j}^{(t)} \frac{\partial h_{j}^{(k)}}{\partial z_{j}^{(k)}} \frac{\partial z_{j}^{(k)}}{\partial h_{i}^{(k-1)}} \\
+&amp;=\sum_{j} \delta_{k, j}^{(t)}\left(1-\left(h_{j}^{(k)}\right)^{2}\right) W_{j i} \\
 &amp;=W^{\top} \delta_{k}^{(t)} \odot\left(1-h^{(k)} \odot h^{(k)}\right)
-\end{aligned}
-$$</p>
-<p>所以
-$$
-\delta_{k-1}^{(t)}=\frac{\partial L^{(t)}}{\partial h^{(k-1)}}=\frac{\partial L^{(t)}}{\partial h^{(k)}} \frac{\partial h^{(k)}}{\partial h<sup>{(k-1)}}=W</sup>{\top} \delta_{k}^{(t)} \odot\left(1-h^{(k)} \odot h^{(k)}\right)
-$$</p>
-<p>将上面的式子带入即可得到
-$$
-\frac{\partial L^{(t)}}{\partial W}=\sum_{k=0}^{t} \frac{\partial L^{(t)}}{\partial h^{(k)}} \frac{\partial h^{(k)}}{\partial W}=\sum_{k=0}^{t} \delta_{k}<sup>{(t)}\left(1-h</sup>{(k)} \odot h<sup>{(k)}\right)\left(h</sup>{(k-1)}\right)^{\top}
-$$
-最终，<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial L}{\partial W}</span><script type="math/tex">\frac{\partial L}{\partial W}</script></span>的反向传播公式为
-$$
-\frac{\partial L}{\partial W}=\sum_{t} \frac{\partial L^{(t)}}{\partial W}=\sum_{t} \sum_{k=0}^{t} \delta_{k}<sup>{(t)}\left(1-h</sup>{(k)} \odot h<sup>{(k)}\right)\left(h</sup>{(k-1)}\right)^{\top}
-$$</p>
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\delta_{k-1, i}^{(t)} &=\frac{\partial L^{(t)}}{\partial h_{i}^{(k-1)}} \\
+&=\sum_{j} \frac{\partial L^{(t)}}{\partial h_{j}^{(k)}} \frac{\partial h_{j}^{(k)}}{\partial h_{i}^{(k-1)}} \\
+&=\sum_{j} \delta_{k, j}^{(t)} \frac{\partial h_{j}^{(k)}}{\partial z_{j}^{(k)}} \frac{\partial z_{j}^{(k)}}{\partial h_{i}^{(k-1)}} \\
+&=\sum_{j} \delta_{k, j}^{(t)}\left(1-\left(h_{j}^{(k)}\right)^{2}\right) W_{j i} \\
+&=W^{\top} \delta_{k}^{(t)} \odot\left(1-h^{(k)} \odot h^{(k)}\right)
+\end{align}
+</script>
+</div>
+<p>所以</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\delta_{k-1}^{(t)}=\frac{\partial L^{(t)}}{\partial h^{(k-1)}}=\frac{\partial L^{(t)}}{\partial h^{(k)}} \frac{\partial h^{(k)}}{\partial h^{(k-1)}}=W^{\top} \delta_{k}^{(t)} \odot\left(1-h^{(k)} \odot h^{(k)}\right)
+</div>
+<script type="math/tex; mode=display">
+\delta_{k-1}^{(t)}=\frac{\partial L^{(t)}}{\partial h^{(k-1)}}=\frac{\partial L^{(t)}}{\partial h^{(k)}} \frac{\partial h^{(k)}}{\partial h^{(k-1)}}=W^{\top} \delta_{k}^{(t)} \odot\left(1-h^{(k)} \odot h^{(k)}\right)
+</script>
+</div>
+<p>将上面的式子带入即可得到</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\frac{\partial L^{(t)}}{\partial W}=\sum_{k=0}^{t} \frac{\partial L^{(t)}}{\partial h^{(k)}} \frac{\partial h^{(k)}}{\partial W}=\sum_{k=0}^{t} \delta_{k}^{(t)}\left(1-h^{(k)} \odot h^{(k)}\right)\left(h^{(k-1)}\right)^{\top}
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial L^{(t)}}{\partial W}=\sum_{k=0}^{t} \frac{\partial L^{(t)}}{\partial h^{(k)}} \frac{\partial h^{(k)}}{\partial W}=\sum_{k=0}^{t} \delta_{k}^{(t)}\left(1-h^{(k)} \odot h^{(k)}\right)\left(h^{(k-1)}\right)^{\top}
+</script>
+</div>
+<p>最终，<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial L}{\partial W}</span><script type="math/tex">\frac{\partial L}{\partial W}</script></span>的反向传播公式为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\frac{\partial L}{\partial W}=\sum_{t} \frac{\partial L^{(t)}}{\partial W}=\sum_{t} \sum_{k=0}^{t} \delta_{k}^{(t)}\left(1-h^{(k)} \odot h^{(k)}\right)\left(h^{(k-1)}\right)^{\top}
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial W}=\sum_{t} \frac{\partial L^{(t)}}{\partial W}=\sum_{t} \sum_{k=0}^{t} \delta_{k}^{(t)}\left(1-h^{(k)} \odot h^{(k)}\right)\left(h^{(k-1)}\right)^{\top}
+</script>
+</div>
 <h3 id="4fracpartial-lpartial-ufracpartial-lpartial-u">(4)求<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial L}{\partial U}</span><script type="math/tex">\frac{\partial L}{\partial U}</script></span><a class="headerlink" href="#4fracpartial-lpartial-ufracpartial-lpartial-u" title="Permanent link">&para;</a></h3>
-<p>同理，由于循环神经网络的循环体共享<span class="arithmatex"><span class="MathJax_Preview">U</span><script type="math/tex">U</script></span>参数，因此某一时刻损失函数关于<span class="arithmatex"><span class="MathJax_Preview">U</span><script type="math/tex">U</script></span>的梯度等于该时刻之前所有的<span class="arithmatex"><span class="MathJax_Preview">U</span><script type="math/tex">U</script></span>的梯度之和。
-$$
-\frac{\partial L^{(t)}}{\partial U}=\sum_{k=0}^{t} \frac{\partial L^{(t)}}{\partial h^{(k)}} \frac{\partial h^{(k)}}{\partial U}=\sum_{k=0}^{t} \delta_{k}<sup>{(t)}\left(1-h</sup>{(k)} \odot h<sup>{(k)}\right)\left(x</sup>{(k)}\right)^{\top}
-$$
-所以<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial L}{\partial U}</span><script type="math/tex">\frac{\partial L}{\partial U}</script></span>的反向传播计算公式为
-$$
-\frac{\partial L}{\partial U}=\sum_{t} \frac{\partial L^{(t)}}{\partial U}=\sum_{t} \sum_{k=0}^{t} \delta_{k}<sup>{(t)}\left(1-h</sup>{(k)} \odot h<sup>{(k)}\right)\left(x</sup>{(k)}\right)^{\top}
-$$</p>
+<p>同理，由于循环神经网络的循环体共享<span class="arithmatex"><span class="MathJax_Preview">U</span><script type="math/tex">U</script></span>参数，因此某一时刻损失函数关于<span class="arithmatex"><span class="MathJax_Preview">U</span><script type="math/tex">U</script></span>的梯度等于该时刻之前所有的<span class="arithmatex"><span class="MathJax_Preview">U</span><script type="math/tex">U</script></span>的梯度之和。</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\frac{\partial L^{(t)}}{\partial U}=\sum_{k=0}^{t} \frac{\partial L^{(t)}}{\partial h^{(k)}} \frac{\partial h^{(k)}}{\partial U}=\sum_{k=0}^{t} \delta_{k}^{(t)}\left(1-h^{(k)} \odot h^{(k)}\right)\left(x^{(k)}\right)^{\top}
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial L^{(t)}}{\partial U}=\sum_{k=0}^{t} \frac{\partial L^{(t)}}{\partial h^{(k)}} \frac{\partial h^{(k)}}{\partial U}=\sum_{k=0}^{t} \delta_{k}^{(t)}\left(1-h^{(k)} \odot h^{(k)}\right)\left(x^{(k)}\right)^{\top}
+</script>
+</div>
+<p>所以<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial L}{\partial U}</span><script type="math/tex">\frac{\partial L}{\partial U}</script></span>的反向传播计算公式为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\frac{\partial L}{\partial U}=\sum_{t} \frac{\partial L^{(t)}}{\partial U}=\sum_{t} \sum_{k=0}^{t} \delta_{k}^{(t)}\left(1-h^{(k)} \odot h^{(k)}\right)\left(x^{(k)}\right)^{\top}
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial U}=\sum_{t} \frac{\partial L^{(t)}}{\partial U}=\sum_{t} \sum_{k=0}^{t} \delta_{k}^{(t)}\left(1-h^{(k)} \odot h^{(k)}\right)\left(x^{(k)}\right)^{\top}
+</script>
+</div>
 <h3 id="5fracpartial-lpartial-bfracpartial-lpartial-b">(5)求<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial L}{\partial b}</span><script type="math/tex">\frac{\partial L}{\partial b}</script></span><a class="headerlink" href="#5fracpartial-lpartial-bfracpartial-lpartial-b" title="Permanent link">&para;</a></h3>
-<p>对于<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial L}{\partial b}</span><script type="math/tex">\frac{\partial L}{\partial b}</script></span>，同理可以得到
-$$
-\begin{aligned}
-\frac{\partial L^{(t)}}{\partial b_{j}} &amp;=\sum_{k=0}^{t} \frac{\partial L^{(t)}}{\partial h_{j}^{(k)}} \frac{\partial h_{j}^{(k)}}{\partial b_{j}} \
-&amp;=\sum_{k=0}^{t} \delta_{k, j}<sup>{(t)}\left(1-\left(h_{j}</sup>{(k)}\right)^{2}\right)
-\end{aligned}
-$$
-即
-$$
-\frac{\partial L}{\partial b}=\sum_{t} \delta_{k}<sup>{(t)}\left(1-h</sup>{(k)} \odot h^{(k)}\right)
-$$</p>
-<p>所以<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial L}{\partial b}</span><script type="math/tex">\frac{\partial L}{\partial b}</script></span>的反向传播计算公式为
-$$
-\frac{\partial L}{\partial b}=\sum_{t} \sum_{k=0}^{t} \delta_{k}<sup>{(t)}\left(1-h</sup>{(k)} \odot h^{(k)}\right)
-$$</p>
+<p>对于<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial L}{\partial b}</span><script type="math/tex">\frac{\partial L}{\partial b}</script></span>，同理可以得到</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+\frac{\partial L^{(t)}}{\partial b_{j}} &amp;=\sum_{k=0}^{t} \frac{\partial L^{(t)}}{\partial h_{j}^{(k)}} \frac{\partial h_{j}^{(k)}}{\partial b_{j}} \\
+&amp;=\sum_{k=0}^{t} \delta_{k, j}^{(t)}\left(1-\left(h_{j}^{(k)}\right)^{2}\right)
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{\partial L^{(t)}}{\partial b_{j}} &=\sum_{k=0}^{t} \frac{\partial L^{(t)}}{\partial h_{j}^{(k)}} \frac{\partial h_{j}^{(k)}}{\partial b_{j}} \\
+&=\sum_{k=0}^{t} \delta_{k, j}^{(t)}\left(1-\left(h_{j}^{(k)}\right)^{2}\right)
+\end{align}
+</script>
+</div>
+<p>即</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\frac{\partial L}{\partial b}=\sum_{t} \delta_{k}^{(t)}\left(1-h^{(k)} \odot h^{(k)}\right)
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial b}=\sum_{t} \delta_{k}^{(t)}\left(1-h^{(k)} \odot h^{(k)}\right)
+</script>
+</div>
+<p>所以<span class="arithmatex"><span class="MathJax_Preview">\frac{\partial L}{\partial b}</span><script type="math/tex">\frac{\partial L}{\partial b}</script></span>的反向传播计算公式为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\frac{\partial L}{\partial b}=\sum_{t} \sum_{k=0}^{t} \delta_{k}^{(t)}\left(1-h^{(k)} \odot h^{(k)}\right)
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial b}=\sum_{t} \sum_{k=0}^{t} \delta_{k}^{(t)}\left(1-h^{(k)} \odot h^{(k)}\right)
+</script>
+</div>
 <h2 id="rnn_2">RNN存在的问题<a class="headerlink" href="#rnn_2" title="Permanent link">&para;</a></h2>
 <p>从上面的推导可以到看到，每次误差反向传播都会乘以<span class="arithmatex"><span class="MathJax_Preview">W^{\top} \odot\left(1-h^{(k)} \odot h^{(k)}\right)</span><script type="math/tex">W^{\top} \odot\left(1-h^{(k)} \odot h^{(k)}\right)</script></span>,由于多个<span class="arithmatex"><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>矩阵连续相乘，RNN很容易出现梯度爆炸问题，或梯度消失问题。在RNN中，由于多个<span class="arithmatex"><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>矩阵连续相乘，当深层的梯度消失时，深层的输入不再对输出产生影响，导致RNN无法学习到远距离的信息，即远距离的信息不会影响当前的输出，这被称为循环神经网络的长程依赖问题（Long-Term Dependencies Problem）.</p>
 <p>解决长期依赖问题的有效方法就是改变循环神经网络的循环体结构，以便某一个时刻的误差能够反向传播足够远的距离，从而让远距离的信息能够决策该时刻的输出。如长短期记忆网络（Long Short-Term Memory Network,LSTM）和门控循环单元网络（Gated Recurrent Unit, GRU）等。</p>

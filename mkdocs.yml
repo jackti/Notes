@@ -20,6 +20,8 @@ extra:
     language: 'jp'
 
 markdown_extensions:
+  - attr_list
+  - md_in_html
   - admonition
   - codehilite:
       guess_lang: false

@@ -1148,7 +1148,7 @@
   
     <li class="md-nav__item">
       <a href="../../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/05_%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%281%29/" class="md-nav__link">
-        神经网络优化概述
+        神经网络优化概述(一)
       </a>
     </li>
   
@@ -1162,7 +1162,7 @@
   
     <li class="md-nav__item">
       <a href="../../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/05_%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%282%29/" class="md-nav__link">
-        数据预处理
+        神经网络优化概述(二)
       </a>
     </li>
   
@@ -1190,7 +1190,7 @@
   
     <li class="md-nav__item">
       <a href="../../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/07_%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" class="md-nav__link">
-        07 注意力机制
+        注意力机制
       </a>
     </li>
   
@@ -1639,7 +1639,7 @@ L=\max(0,\alpha_2+\alpha_1-C)   \qquad    H=\min(C, \alpha_2+\alpha_1)
 \end{align}
 </script>
 </div>
-<p>检验实在<span class="arithmatex"><span class="MathJax_Preview">\varepsilon</span><script type="math/tex">\varepsilon</script></span>范围内进行的。在检验过程中，首先选择违反<span class="arithmatex"><span class="MathJax_Preview">0 \lt \alpha_i \le C  \Rightarrow  y^{(i)}g(x^{(i)})=1</span><script type="math/tex">0 \lt \alpha_i \le C  \Rightarrow  y^{(i)}g(x^{(i)})=1</script></span> 这个条件的点。如果这些支持向量都满足KKT条件，在选择违反<span class="arithmatex"><span class="MathJax_Preview">\alpha_i =0 \Rightarrow y^{(i)}g(x^{(i)})\ge1</span><script type="math/tex">\alpha_i =0 \Rightarrow y^{(i)}g(x^{(i)})\ge1</script></span> 或者$ \alpha_i= C \Rightarrow y<sup>{(i)}g(x</sup>{(i)})\le1$ 的点。</p>
+<p>检验实在<span class="arithmatex"><span class="MathJax_Preview">\varepsilon</span><script type="math/tex">\varepsilon</script></span>范围内进行的。在检验过程中，首先选择违反<span class="arithmatex"><span class="MathJax_Preview">0 \lt \alpha_i \le C  \Rightarrow  y^{(i)}g(x^{(i)})=1</span><script type="math/tex">0 \lt \alpha_i \le C  \Rightarrow  y^{(i)}g(x^{(i)})=1</script></span> 这个条件的点。如果这些支持向量都满足KKT条件，在选择违反<span class="arithmatex"><span class="MathJax_Preview">\alpha_i =0 \Rightarrow y^{(i)}g(x^{(i)})\ge1</span><script type="math/tex">\alpha_i =0 \Rightarrow y^{(i)}g(x^{(i)})\ge1</script></span> 或者$ \alpha_i= C \Rightarrow y<sup _i_="(i)">{(i)}g(x</sup>)\le1$ 的点。</p>
 <h3 id="_3">第二个变量的选择<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <p>SMO算法称选择第二个变量为内层循环，假设我们在外层循环已经找到了<span class="arithmatex"><span class="MathJax_Preview">\alpha_1</span><script type="math/tex">\alpha_1</script></span>，第二个变量<span class="arithmatex"><span class="MathJax_Preview">\alpha_2</span><script type="math/tex">\alpha_2</script></span>的选择标准是让<span class="arithmatex"><span class="MathJax_Preview">|E_1-E_2|</span><script type="math/tex">|E_1-E_2|</script></span>有足够大的变化。由于<span class="arithmatex"><span class="MathJax_Preview">\alpha_1</span><script type="math/tex">\alpha_1</script></span>定了的时候<span class="arithmatex"><span class="MathJax_Preview">E_1</span><script type="math/tex">E_1</script></span>也确定了，所以要想<span class="arithmatex"><span class="MathJax_Preview">|E_1-E_2|</span><script type="math/tex">|E_1-E_2|</script></span>最大，只需要在<span class="arithmatex"><span class="MathJax_Preview">E_1</span><script type="math/tex">E_1</script></span>为正时，选择最小的<span class="arithmatex"><span class="MathJax_Preview">E_i</span><script type="math/tex">E_i</script></span>作为<span class="arithmatex"><span class="MathJax_Preview">E_2</span><script type="math/tex">E_2</script></span>，在<span class="arithmatex"><span class="MathJax_Preview">E_1</span><script type="math/tex">E_1</script></span>为负时，选择最大的<span class="arithmatex"><span class="MathJax_Preview">E_i</span><script type="math/tex">E_i</script></span>作为<span class="arithmatex"><span class="MathJax_Preview">E_2</span><script type="math/tex">E_2</script></span>。为了节省计算时间，将所有<span class="arithmatex"><span class="MathJax_Preview">E_i</span><script type="math/tex">E_i</script></span>值都保存在一个列表中。</p>
 <p>如果内层循环找到的点不能让目标函数有足够的下降，可以采用遍历支持向量点来做<span class="arithmatex"><span class="MathJax_Preview">\alpha_2</span><script type="math/tex">\alpha_2</script></span>，直到目标函数有足够的下降，如果所有的支持向量做<span class="arithmatex"><span class="MathJax_Preview">\alpha_2</span><script type="math/tex">\alpha_2</script></span>都不能让目标函数有足够下降，可以跳出循环，重新选择<span class="arithmatex"><span class="MathJax_Preview">\alpha_2</span><script type="math/tex">\alpha_2</script></span>。</p>
@@ -1701,7 +1701,7 @@ b^{new}=\frac{b_1^{new}+b_2^{new}}{2}
 </div>
 <p>得到了<span class="arithmatex"><span class="MathJax_Preview">b^{new}</span><script type="math/tex">b^{new}</script></span>就可以更新<span class="arithmatex"><span class="MathJax_Preview">E_i</span><script type="math/tex">E_i</script></span>：
 $$
-E_i = \sum_{S}y<sup>{(i)}\alpha_iK(x</sup>{(i)},x<sup>{(j)})+b</sup>{new}-y^{(i)}
+E_i = \sum_{S}y<sup _i_="(i)">{(i)}\alpha_iK(x</sup>,x<sup new="new">{(j)})+b</sup>-y^{(i)}
 $$
 其中<span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>是所有支持向量<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>的集合。</p>
 <h2 id="smo_1">SMO算法<a class="headerlink" href="#smo_1" title="Permanent link">&para;</a></h2>

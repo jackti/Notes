@@ -15,7 +15,7 @@
     
     
       
-        <title>07 注意力机制 - 我的知识笔记</title>
+        <title>注意力机制 - 我的知识笔记</title>
       
     
     
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              07 注意力机制
+              注意力机制
             
           </span>
         </div>
@@ -1064,7 +1064,7 @@
   
     <li class="md-nav__item">
       <a href="../05_%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%281%29/" class="md-nav__link">
-        神经网络优化概述
+        神经网络优化概述(一)
       </a>
     </li>
   
@@ -1078,7 +1078,7 @@
   
     <li class="md-nav__item">
       <a href="../05_%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%282%29/" class="md-nav__link">
-        数据预处理
+        神经网络优化概述(二)
       </a>
     </li>
   
@@ -1115,12 +1115,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          07 注意力机制
+          注意力机制
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        07 注意力机制
+        注意力机制
       </a>
       
         
@@ -1148,6 +1148,47 @@
         <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
     加权平均
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    注意力机制的变体
+  </a>
+  
+    <nav class="md-nav" aria-label="注意力机制的变体">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    硬性注意力
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    健值对注意力
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    多头注意力
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    自注意力模型
   </a>
   
 </li>
@@ -1207,6 +1248,47 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    注意力机制的变体
+  </a>
+  
+    <nav class="md-nav" aria-label="注意力机制的变体">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    硬性注意力
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    健值对注意力
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    多头注意力
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    自注意力模型
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1221,7 +1303,6 @@
                 
 
 
-<p></p>
 <h1 id="_1">注意力机制<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <p>注意力是一种人类不可或缺的复杂认知能力，指人可以在关注一些信息的同时忽略另一些信息的选择能力，注意力一般分为两种：</p>
 <p>（1）自上而下的有意识的注意力，称为聚焦式注意力(<code>Focus Attention</code>)，聚焦式注意力是指有预定目的、依赖任务的，主动有意识得聚焦于某一对象的注意力，后面提到的注意力通常都是指自上而下的聚焦式注意力。</p>
@@ -1237,17 +1318,28 @@
 2. 根据注意力分布来计算输入信息的加权平均</p>
 <h2 id="_2">注意力分布<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>为了从<span class="arithmatex"><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span>个输入向量<span class="arithmatex"><span class="MathJax_Preview">[\boldsymbol{x}_1,\cdots,\boldsymbol{x}_N]</span><script type="math/tex">[\boldsymbol{x}_1,\cdots,\boldsymbol{x}_N]</script></span>中选择出和某个特定任务相关的信息，需要引入一个和任务相关的表示，称为查询向量(<code>Query Vector</code>)并通过一个打分函数来计算每个输入向量和查询向量之间的相关性.</p>
-<p>给定一个和任务相关的查询向量<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{q}</span><script type="math/tex">\boldsymbol{q}</script></span>，用注意力变量<span class="arithmatex"><span class="MathJax_Preview">z\in [1,\cdots,N]</span><script type="math/tex">z\in [1,\cdots,N]</script></span>来表示被选择信息的索引位置，即<span class="arithmatex"><span class="MathJax_Preview">z=n</span><script type="math/tex">z=n</script></span>表示选择了第<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>个输入向量，为了计算方便，采用一种"软性"的信息选择机制。首先计算在给定<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{q}</span><script type="math/tex">\boldsymbol{q}</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{X}</span><script type="math/tex">\boldsymbol{X}</script></span>下，选择第<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>个输入向量的概率<span class="arithmatex"><span class="MathJax_Preview">\alpha_n</span><script type="math/tex">\alpha_n</script></span>
-$$
+<p>给定一个和任务相关的查询向量<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{q}</span><script type="math/tex">\boldsymbol{q}</script></span>，用注意力变量<span class="arithmatex"><span class="MathJax_Preview">z\in [1,\cdots,N]</span><script type="math/tex">z\in [1,\cdots,N]</script></span>来表示被选择信息的索引位置，即<span class="arithmatex"><span class="MathJax_Preview">z=n</span><script type="math/tex">z=n</script></span>表示选择了第<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>个输入向量，为了计算方便，采用一种"软性"的信息选择机制。首先计算在给定<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{q}</span><script type="math/tex">\boldsymbol{q}</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{X}</span><script type="math/tex">\boldsymbol{X}</script></span>下，选择第<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>个输入向量的概率<span class="arithmatex"><span class="MathJax_Preview">\alpha_n</span><script type="math/tex">\alpha_n</script></span></p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{aligned}
 \alpha_n 
-&amp;= p(z=n|\boldsymbol{X},\boldsymbol{q}) \
-&amp;=\operatorname{softmax}(s(\boldsymbol{x}<em>n,\boldsymbol{q}))\
+&amp;= p(z=n|\boldsymbol{X},\boldsymbol{q}) \\
+&amp;=\operatorname{softmax}(s(\boldsymbol{x}_n,\boldsymbol{q}))\\
 &amp;=\frac{\operatorname{exp}(s(\boldsymbol{x}_n,\boldsymbol{q}))}
-{\sum</em>{j=1}^N \operatorname{exp}(s(\boldsymbol{x}_j,\boldsymbol{q})) }  <br />
+{\sum_{j=1}^N \operatorname{exp}(s(\boldsymbol{x}_j,\boldsymbol{q})) }    
 \end{aligned}
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">\alpha_n</span><script type="math/tex">\alpha_n</script></span>称为注意力分布，<span class="arithmatex"><span class="MathJax_Preview">s(\boldsymbol{x},\boldsymbol{q})</span><script type="math/tex">s(\boldsymbol{x},\boldsymbol{q})</script></span>为注意力打分函数，其中可以使用以下几种方式来计算</p>
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\alpha_n 
+&= p(z=n|\boldsymbol{X},\boldsymbol{q}) \\
+&=\operatorname{softmax}(s(\boldsymbol{x}_n,\boldsymbol{q}))\\
+&=\frac{\operatorname{exp}(s(\boldsymbol{x}_n,\boldsymbol{q}))}
+{\sum_{j=1}^N \operatorname{exp}(s(\boldsymbol{x}_j,\boldsymbol{q})) }    
+\end{aligned}
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">\alpha_n</span><script type="math/tex">\alpha_n</script></span>称为注意力分布，<span class="arithmatex"><span class="MathJax_Preview">s(\boldsymbol{x},\boldsymbol{q})</span><script type="math/tex">s(\boldsymbol{x},\boldsymbol{q})</script></span>为注意力打分函数，其中可以使用以下几种方式来计算</p>
 <table>
 <thead>
 <tr>
@@ -1279,78 +1371,130 @@ $$
 <p>当输入向量的维度<span class="arithmatex"><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span>比较高时，点积模型的值通常有比较大的方差，从而导致<span class="arithmatex"><span class="MathJax_Preview">\operatorname{Softmax}</span><script type="math/tex">\operatorname{Softmax}</script></span>函数的梯度会比较小。因此，缩放点积模型可以比较好地解决这个问题。</p>
 <p>双线性模型是一种泛化的点积模型，当<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{W}=\boldsymbol{U}^\top \boldsymbol{U}</span><script type="math/tex">\boldsymbol{W}=\boldsymbol{U}^\top \boldsymbol{U}</script></span>双线性模型可以写为<span class="arithmatex"><span class="MathJax_Preview">s(\boldsymbol{x},\boldsymbol{q})=\boldsymbol{x}\boldsymbol{U}^\top \boldsymbol{V}\boldsymbol{q}=(\boldsymbol{U}\boldsymbol{x})^\top (\boldsymbol{V}\boldsymbol{q})</span><script type="math/tex">s(\boldsymbol{x},\boldsymbol{q})=\boldsymbol{x}\boldsymbol{U}^\top \boldsymbol{V}\boldsymbol{q}=(\boldsymbol{U}\boldsymbol{x})^\top (\boldsymbol{V}\boldsymbol{q})</script></span>即分别对<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{x}</span><script type="math/tex">\boldsymbol{x}</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{q}</span><script type="math/tex">\boldsymbol{q}</script></span>进行线性变换后计算点积，相比点积模型，双线性模型在计算相似度时引入了非对称性.</p>
 <h2 id="_3">加权平均<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p>注意力分布<span class="arithmatex"><span class="MathJax_Preview">\alpha_n</span><script type="math/tex">\alpha_n</script></span>可以解释为在给定任务相关的查询<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{q}</span><script type="math/tex">\boldsymbol{q}</script></span>时，第<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>个输入向量受关注的程度，可以采用一种"软性"的信息选择机制对输入信息进行汇总，即
-$$
+<p>注意力分布<span class="arithmatex"><span class="MathJax_Preview">\alpha_n</span><script type="math/tex">\alpha_n</script></span>可以解释为在给定任务相关的查询<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{q}</span><script type="math/tex">\boldsymbol{q}</script></span>时，第<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>个输入向量受关注的程度，可以采用一种"软性"的信息选择机制对输入信息进行汇总，即</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{aligned}
 \operatorname{att}(\boldsymbol{X},\boldsymbol{q})
-&amp;=\sum_{n=1}^N \alpha_n \boldsymbol{x}<em>n\
-&amp;=\mathbb{E}</em>{\boldsymbol{z} \sim p(\boldsymbol{z}| \boldsymbol{X},\boldsymbol{q})}[\boldsymbol{x}_z]
+&amp;=\sum_{n=1}^N \alpha_n \boldsymbol{x}_n\\
+&amp;=\mathbb{E}_{\boldsymbol{z} \sim p(\boldsymbol{z}| \boldsymbol{X},\boldsymbol{q})}[\boldsymbol{x}_z]
 \end{aligned}
-$$</p>
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\operatorname{att}(\boldsymbol{X},\boldsymbol{q})
+&=\sum_{n=1}^N \alpha_n \boldsymbol{x}_n\\
+&=\mathbb{E}_{\boldsymbol{z} \sim p(\boldsymbol{z}| \boldsymbol{X},\boldsymbol{q})}[\boldsymbol{x}_z]
+\end{aligned}
+</script>
+</div>
 <p>注意力机制可以单独使用，但更多地用作神经网络中的一个组件.</p>
-<h1 id="_4">注意力机制的变体<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h1>
+<h2 id="_4">注意力机制的变体<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p>除了上面介绍的基本模式外，注意力机制还存在一些变化的模型。</p>
-<h2 id="_5">硬性注意力<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<h3 id="_5">硬性注意力<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <p>前面的注意力是软性注意力，其选择地信息是所有输入向量在注意力分布下的期望。此外还有一种注意力只关注某一个输入向量，叫做硬注意力机制。硬注意力机制有两种实现方式：
-（1）一种是选取最高概率的一个输入向量，即
-$$
+（1）一种是选取最高概率的一个输入向量，即</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \operatorname{att}(\boldsymbol{X},\boldsymbol{q})
 =\boldsymbol{x}_{\hat{n}}
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">\hat{n}</span><script type="math/tex">\hat{n}</script></span>为概率最大的输入向量下标，即<span class="arithmatex"><span class="MathJax_Preview">\hat{n}=\underset{n=1}{\arg \max } \alpha_{n}</span><script type="math/tex">\hat{n}=\underset{n=1}{\arg \max } \alpha_{n}</script></span></p>
+</div>
+<script type="math/tex; mode=display">
+\operatorname{att}(\boldsymbol{X},\boldsymbol{q})
+=\boldsymbol{x}_{\hat{n}}
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">\hat{n}</span><script type="math/tex">\hat{n}</script></span>为概率最大的输入向量下标，即<span class="arithmatex"><span class="MathJax_Preview">\hat{n}=\underset{n=1}{\arg \max } \alpha_{n}</span><script type="math/tex">\hat{n}=\underset{n=1}{\arg \max } \alpha_{n}</script></span></p>
 <p>（2）另一种硬性注意力可以通过在注意力分布上随机采样的方式实现。</p>
 <p>硬性注意力的一个缺点是基于最大采样或随机采样的方式来选择信息，使得最终的损失函数与注意力分布之间的函数关系不可导，无法使用反向传播算 法进行训练.因此，硬性注意力通常需要使用强化学习来进行训练.为了使用反向传播算法，一般使用软性注意力来代替硬性注意力.</p>
-<h2 id="_6">健值对注意力<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
-<p>更一般地，我们可以用键值对(<code>key-value pair</code>)格式来表示输入信息，其中“键”用来计算注意力分布<span class="arithmatex"><span class="MathJax_Preview">\alpha_n</span><script type="math/tex">\alpha_n</script></span>，“值”用来计算聚合信息.用<span class="arithmatex"><span class="MathJax_Preview">(\boldsymbol{K},\boldsymbol{V}) = [(\boldsymbol{k}_1,\boldsymbol{v}_1),⋯,(\boldsymbol{k}_N,\boldsymbol{v}_N)]</span><script type="math/tex">(\boldsymbol{K},\boldsymbol{V}) = [(\boldsymbol{k}_1,\boldsymbol{v}_1),⋯,(\boldsymbol{k}_N,\boldsymbol{v}_N)]</script></span>表示<span class="arithmatex"><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span>组输入信息，给定任务相关的查询向量<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{q}</span><script type="math/tex">\boldsymbol{q}</script></span>时，注意力函数为
-$$
+<h3 id="_6">健值对注意力<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>更一般地，我们可以用键值对(<code>key-value pair</code>)格式来表示输入信息，其中“键”用来计算注意力分布<span class="arithmatex"><span class="MathJax_Preview">\alpha_n</span><script type="math/tex">\alpha_n</script></span>，“值”用来计算聚合信息.用<span class="arithmatex"><span class="MathJax_Preview">(\boldsymbol{K},\boldsymbol{V}) = [(\boldsymbol{k}_1,\boldsymbol{v}_1),⋯,(\boldsymbol{k}_N,\boldsymbol{v}_N)]</span><script type="math/tex">(\boldsymbol{K},\boldsymbol{V}) = [(\boldsymbol{k}_1,\boldsymbol{v}_1),⋯,(\boldsymbol{k}_N,\boldsymbol{v}_N)]</script></span>表示<span class="arithmatex"><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span>组输入信息，给定任务相关的查询向量<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{q}</span><script type="math/tex">\boldsymbol{q}</script></span>时，注意力函数为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{aligned}
-\operatorname{att}((\boldsymbol{K}, \boldsymbol{V}), \boldsymbol{q}) &amp;=\sum_{n=1}^{N} \alpha_{n} \boldsymbol{v}<em>{n} \
-&amp;=\sum</em>{n=1}^{N} \frac{\exp \left(s\left(\boldsymbol{k}<em>{n}, \boldsymbol{q}\right)\right)}{\sum</em>{j} \exp \left(s\left(\boldsymbol{k}<em>{j}, \boldsymbol{q}\right)\right)} \boldsymbol{v}</em>{n},
+\operatorname{att}((\boldsymbol{K}, \boldsymbol{V}), \boldsymbol{q}) &amp;=\sum_{n=1}^{N} \alpha_{n} \boldsymbol{v}_{n} \\
+&amp;=\sum_{n=1}^{N} \frac{\exp \left(s\left(\boldsymbol{k}_{n}, \boldsymbol{q}\right)\right)}{\sum_{j} \exp \left(s\left(\boldsymbol{k}_{j}, \boldsymbol{q}\right)\right)} \boldsymbol{v}_{n},
 \end{aligned}
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">s(\boldsymbol{k}_n,\boldsymbol{q})</span><script type="math/tex">s(\boldsymbol{k}_n,\boldsymbol{q})</script></span>为打分函数。当<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{K}=\boldsymbol{V}</span><script type="math/tex">\boldsymbol{K}=\boldsymbol{V}</script></span>时，键值对模式就等价于普通的注意力机制.</p>
-<p><img src="assets/image-20210123201346323.png" alt="image-20210123201346323" style="zoom:30%;" /></p>
-<p><img src="assets/image-20210626190228372.png" alt="image-20210626190228372" style="zoom:50%;" /></p>
-<h2 id="_7">多头注意力<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
-<p>多头注意力(<code>Multi-Head Attention</code>)是利用多个查询<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{Q}=[\boldsymbol{q}_1,\cdots,\boldsymbol{q}_M]</span><script type="math/tex">\boldsymbol{Q}=[\boldsymbol{q}_1,\cdots,\boldsymbol{q}_M]</script></span>来并行地输从输入信息中选取多组信息，每个注意力关注输入信息的不同部分
-$$
-\operatorname{att}((\boldsymbol{K}, \boldsymbol{V}), \boldsymbol{Q})=\operatorname{att}\left((\boldsymbol{K}, \boldsymbol{V}), \boldsymbol{q}<em>{1}\right) \oplus \cdots \oplus \operatorname{att}\left((\boldsymbol{K}, \boldsymbol{V}), \boldsymbol{q}</em>{M}\right)
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">\oplus</span><script type="math/tex">\oplus</script></span>表示向量拼接.</p>
-<h1 id="_8">自注意力模型<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h1>
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\operatorname{att}((\boldsymbol{K}, \boldsymbol{V}), \boldsymbol{q}) &=\sum_{n=1}^{N} \alpha_{n} \boldsymbol{v}_{n} \\
+&=\sum_{n=1}^{N} \frac{\exp \left(s\left(\boldsymbol{k}_{n}, \boldsymbol{q}\right)\right)}{\sum_{j} \exp \left(s\left(\boldsymbol{k}_{j}, \boldsymbol{q}\right)\right)} \boldsymbol{v}_{n},
+\end{aligned}
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">s(\boldsymbol{k}_n,\boldsymbol{q})</span><script type="math/tex">s(\boldsymbol{k}_n,\boldsymbol{q})</script></span>为打分函数。当<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{K}=\boldsymbol{V}</span><script type="math/tex">\boldsymbol{K}=\boldsymbol{V}</script></span>时，键值对模式就等价于普通的注意力机制.</p>
+<p><img _="," alt="image" height="80%" src="../assets/image-20210123201346323.png" width="80%" /></p>
+<p><img _="," alt="image" height="80%" src="../assets/image-20210626190228372.png" width="80%" /></p>
+<h3 id="_7">多头注意力<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>多头注意力(<code>Multi-Head Attention</code>)是利用多个查询<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{Q}=[\boldsymbol{q}_1,\cdots,\boldsymbol{q}_M]</span><script type="math/tex">\boldsymbol{Q}=[\boldsymbol{q}_1,\cdots,\boldsymbol{q}_M]</script></span>来并行地输从输入信息中选取多组信息，每个注意力关注输入信息的不同部分</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\operatorname{att}((\boldsymbol{K}, \boldsymbol{V}), \boldsymbol{Q})=\operatorname{att}\left((\boldsymbol{K}, \boldsymbol{V}), \boldsymbol{q}_{1}\right) \oplus \cdots \oplus \operatorname{att}\left((\boldsymbol{K}, \boldsymbol{V}), \boldsymbol{q}_{M}\right)
+</div>
+<script type="math/tex; mode=display">
+\operatorname{att}((\boldsymbol{K}, \boldsymbol{V}), \boldsymbol{Q})=\operatorname{att}\left((\boldsymbol{K}, \boldsymbol{V}), \boldsymbol{q}_{1}\right) \oplus \cdots \oplus \operatorname{att}\left((\boldsymbol{K}, \boldsymbol{V}), \boldsymbol{q}_{M}\right)
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">\oplus</span><script type="math/tex">\oplus</script></span>表示向量拼接.</p>
+<h2 id="_8">自注意力模型<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
 <p>当使用神经网络来处理一个变长的向量序列时，我们通常可以使用卷积网络或循环网络进行编码来得到一个相同长度的输出向量序列，如图所示</p>
-<p><img src="assets/image-20210125231949944.png" alt="image-20210125231949944" style="zoom:30%;" /></p>
+<p><img _="," alt="image" height="80%" src="../assets/image-20210125231949944.png" width="80%" /></p>
 <p>基于卷积或循环网络的序列编码都是一种局部的编码方式，只建模了输入信息的局部依赖关系.虽然循环网络理论上可以建立长距离依赖关系，但是由于 信息传递的容量以及梯度消失问题，实际上也只能建立短距离依赖关系。</p>
 <p>如果要建立输入序列之间的长距离依赖关系，可以使用以下两种方法:(1)一种方法是增加网络的层数，通过一个深层网络来获取远距离的信息交互;(2)另一种方 法是使用全连接网络.全连接网络是一种非常直接的建模远距离依赖的模型，但是无法处理变长的输入序列.不同的输入长度，其连接权重的大小也是不同的. 这时我们就可以利用注意力机制来“动态”地生成不同连接的权重，这就是自注意力模型(<code>Self-Attention Model</code>)</p>
 <p>为了提高模型能力，自注意力模型经常采用查询-键-值(<code>Query-Key-Value， QKV</code>)模式，其计算过程如图8.4所示，其中红色字母表示矩阵的维度.</p>
-<p><img src="assets/image-20210125233301077.png" alt="image-20210125233301077" style="zoom:30%;" /></p>
+<p><img _="," alt="image" height="80%" src="../assets/image-20210125233301077.png" width="80%" /></p>
 <p>假设输入序列为<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{X}= [\boldsymbol{x}_1,⋯,\boldsymbol{x}_N] ∈ \mathbb{R}^{D_x \times N}</span><script type="math/tex">\boldsymbol{X}= [\boldsymbol{x}_1,⋯,\boldsymbol{x}_N] ∈ \mathbb{R}^{D_x \times N}</script></span>，输出序列为<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{H} = [\boldsymbol{h}_1,⋯,\boldsymbol{h}_𝑁] ∈ \mathbb{R}^{𝐷_v \times 𝑁}</span><script type="math/tex">\boldsymbol{H} = [\boldsymbol{h}_1,⋯,\boldsymbol{h}_𝑁] ∈ \mathbb{R}^{𝐷_v \times 𝑁}</script></span> ，自注意力模型的具体计算过程如下:</p>
 <p>(1)对于每个输入<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{x}_i</span><script type="math/tex">\boldsymbol{x}_i</script></span>，我们首先将其线性映射到三个不同的空间，得到查询向量<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{q}_i \in \mathbb{R}^{D_k}</span><script type="math/tex">\boldsymbol{q}_i \in \mathbb{R}^{D_k}</script></span> 、键向量<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{k}_i \in \mathbb{R}^{D_k}</span><script type="math/tex">\boldsymbol{k}_i \in \mathbb{R}^{D_k}</script></span> 和值向量<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{v}_i \in \mathbb{R}^{D_v}</span><script type="math/tex">\boldsymbol{v}_i \in \mathbb{R}^{D_v}</script></span></p>
-<p>对于整个输入序列<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{X}</span><script type="math/tex">\boldsymbol{X}</script></span>，线性映射过程可以简写为
-$$
+<p>对于整个输入序列<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{X}</span><script type="math/tex">\boldsymbol{X}</script></span>，线性映射过程可以简写为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{array}{l}
-\boldsymbol{Q}=\boldsymbol{W}<em>{q} \boldsymbol{X} \in \mathbb{R}^{D</em>{k} \times N} \
-\boldsymbol{K}=\boldsymbol{W}<em>{k} \boldsymbol{X} \in \mathbb{R}^{D</em>{k} \times N} \
-\boldsymbol{V}=\boldsymbol{W}<em>{v} \boldsymbol{X} \in \mathbb{R}^{D</em>{v} \times N}
+\boldsymbol{Q}=\boldsymbol{W}_{q} \boldsymbol{X} \in \mathbb{R}^{D_{k} \times N} \\
+\boldsymbol{K}=\boldsymbol{W}_{k} \boldsymbol{X} \in \mathbb{R}^{D_{k} \times N} \\
+\boldsymbol{V}=\boldsymbol{W}_{v} \boldsymbol{X} \in \mathbb{R}^{D_{v} \times N}
 \end{array}
-$$
-其中 <span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{W}_{q} \in \mathbb{R}^{D_{k} \times D_{x}}, \boldsymbol{W}_{k} \in \mathbb{R}^{D_{k} \times D_{x}}, \boldsymbol{W}_{v} \in \mathbb{R}^{D_{v} \times D_{x}}</span><script type="math/tex">\boldsymbol{W}_{q} \in \mathbb{R}^{D_{k} \times D_{x}}, \boldsymbol{W}_{k} \in \mathbb{R}^{D_{k} \times D_{x}}, \boldsymbol{W}_{v} \in \mathbb{R}^{D_{v} \times D_{x}}</script></span> f分别为线性映射的参数矩阵，<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{Q}=\left[\boldsymbol{q}_{1}, \cdots, \boldsymbol{q}_{N}\right], \boldsymbol{K}=\left[\boldsymbol{k}_{1}, \cdots, \boldsymbol{k}_{N}\right], \boldsymbol{V}=\left[\boldsymbol{v}_{1}, \cdots, \boldsymbol{v}_{N}\right]</span><script type="math/tex">\boldsymbol{Q}=\left[\boldsymbol{q}_{1}, \cdots, \boldsymbol{q}_{N}\right], \boldsymbol{K}=\left[\boldsymbol{k}_{1}, \cdots, \boldsymbol{k}_{N}\right], \boldsymbol{V}=\left[\boldsymbol{v}_{1}, \cdots, \boldsymbol{v}_{N}\right]</script></span> 分别是由查询向量、键向量和值向量构成的矩阵.</p>
-<p>(2)对于每一个查询向量<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{q}_n \in \boldsymbol{Q}</span><script type="math/tex">\boldsymbol{q}_n \in \boldsymbol{Q}</script></span>，利用键值对注意力机制，可以得到输出向量<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{h}_n</span><script type="math/tex">\boldsymbol{h}_n</script></span> 
-$$
-\begin{aligned}
-\boldsymbol{h}<em>{n}
-&amp;=\operatorname{att}\left((\boldsymbol{K}, \boldsymbol{V}), \boldsymbol{q}</em>{n}\right)\
-&amp;=\sum_{j=1}^{N} \alpha_{n j} \boldsymbol{v}<em>{j} \
-&amp;=\sum</em>{j=1}^{N} \operatorname{softmax}\left(s\left(\boldsymbol{k}<em>{j}, \boldsymbol{q}</em>{n}\right)\right) \boldsymbol{v}<em>{j}
-\end{aligned}
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">n,j\in [1,\cdots,N]</span><script type="math/tex">n,j\in [1,\cdots,N]</script></span>为输出和输入向量序列的位置，<span class="arithmatex"><span class="MathJax_Preview">\alpha_{nj}</span><script type="math/tex">\alpha_{nj}</script></span>表示第<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>个输出关注到第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>个输入的权重.
-如果使用缩放点积来作为注意力打分函数，输出向量序列可以简写为
-$$
-\boldsymbol{H}=\boldsymbol{V} \operatorname{softmax}\left(\frac{\boldsymbol{K}^{\top} \boldsymbol{Q}}{\sqrt{D</em>{k}}}\right)
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">\operatorname{softmax}(\cdot)</span><script type="math/tex">\operatorname{softmax}(\cdot)</script></span>为按列进行归一化的函数。下图中给出全连接模型和自注意力模型的对比，其中实线表示可学习的权重，虚线表示动态生成的权重.由于自注意力模型的权重是动态生成的，因此可以处理变长的信息序列.</p>
-<p><img src="assets/image-20210126000605275.png" alt="image-20210126000605275" style="zoom:40%;" /></p>
+</div>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+\boldsymbol{Q}=\boldsymbol{W}_{q} \boldsymbol{X} \in \mathbb{R}^{D_{k} \times N} \\
+\boldsymbol{K}=\boldsymbol{W}_{k} \boldsymbol{X} \in \mathbb{R}^{D_{k} \times N} \\
+\boldsymbol{V}=\boldsymbol{W}_{v} \boldsymbol{X} \in \mathbb{R}^{D_{v} \times N}
+\end{array}
+</script>
+</div>
+<p>其中 <span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{W}_{q} \in \mathbb{R}^{D_{k} \times D_{x}}, \boldsymbol{W}_{k} \in \mathbb{R}^{D_{k} \times D_{x}}, \boldsymbol{W}_{v} \in \mathbb{R}^{D_{v} \times D_{x}}</span><script type="math/tex">\boldsymbol{W}_{q} \in \mathbb{R}^{D_{k} \times D_{x}}, \boldsymbol{W}_{k} \in \mathbb{R}^{D_{k} \times D_{x}}, \boldsymbol{W}_{v} \in \mathbb{R}^{D_{v} \times D_{x}}</script></span> f分别为线性映射的参数矩阵，<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{Q}=\left[\boldsymbol{q}_{1}, \cdots, \boldsymbol{q}_{N}\right], \boldsymbol{K}=\left[\boldsymbol{k}_{1}, \cdots, \boldsymbol{k}_{N}\right], \boldsymbol{V}=\left[\boldsymbol{v}_{1}, \cdots, \boldsymbol{v}_{N}\right]</span><script type="math/tex">\boldsymbol{Q}=\left[\boldsymbol{q}_{1}, \cdots, \boldsymbol{q}_{N}\right], \boldsymbol{K}=\left[\boldsymbol{k}_{1}, \cdots, \boldsymbol{k}_{N}\right], \boldsymbol{V}=\left[\boldsymbol{v}_{1}, \cdots, \boldsymbol{v}_{N}\right]</script></span> 分别是由查询向量、键向量和值向量构成的矩阵.</p>
+<p>(2)对于每一个查询向量<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{q}_n \in \boldsymbol{Q}</span><script type="math/tex">\boldsymbol{q}_n \in \boldsymbol{Q}</script></span>，利用键值对注意力机制，可以得到输出向量<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{h}_n</span><script type="math/tex">\boldsymbol{h}_n</script></span> </p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+\boldsymbol{h}_{n}
+&amp;=\operatorname{att}\left((\boldsymbol{K}, \boldsymbol{V}), \boldsymbol{q}_{n}\right)\\
+&amp;=\sum_{j=1}^{N} \alpha_{n j} \boldsymbol{v}_{j} \\
+&amp;=\sum_{j=1}^{N} \operatorname{softmax}\left(s\left(\boldsymbol{k}_{j}, \boldsymbol{q}_{n}\right)\right) \boldsymbol{v}_{j}
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\boldsymbol{h}_{n}
+&=\operatorname{att}\left((\boldsymbol{K}, \boldsymbol{V}), \boldsymbol{q}_{n}\right)\\
+&=\sum_{j=1}^{N} \alpha_{n j} \boldsymbol{v}_{j} \\
+&=\sum_{j=1}^{N} \operatorname{softmax}\left(s\left(\boldsymbol{k}_{j}, \boldsymbol{q}_{n}\right)\right) \boldsymbol{v}_{j}
+\end{align}
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">n,j\in [1,\cdots,N]</span><script type="math/tex">n,j\in [1,\cdots,N]</script></span>为输出和输入向量序列的位置，<span class="arithmatex"><span class="MathJax_Preview">\alpha_{nj}</span><script type="math/tex">\alpha_{nj}</script></span>表示第<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>个输出关注到第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>个输入的权重.
+如果使用缩放点积来作为注意力打分函数，输出向量序列可以简写为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\boldsymbol{H}=\boldsymbol{V} \operatorname{softmax}\left(\frac{\boldsymbol{K}^{\top} \boldsymbol{Q}}{\sqrt{D_{k}}}\right)
+</div>
+<script type="math/tex; mode=display">
+\boldsymbol{H}=\boldsymbol{V} \operatorname{softmax}\left(\frac{\boldsymbol{K}^{\top} \boldsymbol{Q}}{\sqrt{D_{k}}}\right)
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">\operatorname{softmax}(\cdot)</span><script type="math/tex">\operatorname{softmax}(\cdot)</script></span>为按列进行归一化的函数。下图中给出全连接模型和自注意力模型的对比，其中实线表示可学习的权重，虚线表示动态生成的权重.由于自注意力模型的权重是动态生成的，因此可以处理变长的信息序列.</p>
+<p><img _="," alt="image" height="80%" src="../assets/image-20210125233301077.png" width="80%" /></p>
 
               
             </article>

@@ -1159,7 +1159,7 @@
   
     <li class="md-nav__item">
       <a href="../05_%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%281%29/" class="md-nav__link">
-        神经网络优化概述
+        神经网络优化概述(一)
       </a>
     </li>
   
@@ -1173,7 +1173,7 @@
   
     <li class="md-nav__item">
       <a href="../05_%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%282%29/" class="md-nav__link">
-        数据预处理
+        神经网络优化概述(二)
       </a>
     </li>
   
@@ -1201,7 +1201,7 @@
   
     <li class="md-nav__item">
       <a href="../07_%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" class="md-nav__link">
-        07 注意力机制
+        注意力机制
       </a>
     </li>
   
@@ -1316,62 +1316,90 @@
 
 
 <h1 id="_1">基于门控的循环神经网络<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<p>原始的RNN传播过程如下
-<img src="assets/RNN2.png" alt="RNN2.jpg" style="zoom:30%"/></p>
+<p>原始的RNN传播过程如下</p>
+<p><img alt="RNN" height="80%" src="../assets/RNN2.png" width="80%" /></p>
 <p>如果我们略去每层都有的 <span class="arithmatex"><span class="MathJax_Preview">o^{(t)},y^{(t)},L^{(t)}</span><script type="math/tex">o^{(t)},y^{(t)},L^{(t)}</script></span> ，则RNN的模型可以简化成如下图的形式：</p>
-<p><img src="assets/LSTM1.png" alt="LSTM1.png" style="zoom:35%"/></p>
+<p><img alt="RNN" height="80%" src="../assets/LSTM1.png" width="80%" /></p>
 <p>图中可以很清晰看出在隐藏状态<span class="arithmatex"><span class="MathJax_Preview">ℎ^{(𝑡)}</span><script type="math/tex">ℎ^{(𝑡)}</script></span>由<span class="arithmatex"><span class="MathJax_Preview">𝑥^{(𝑡)}</span><script type="math/tex">𝑥^{(𝑡)}</script></span>和<span class="arithmatex"><span class="MathJax_Preview">ℎ^{(𝑡−1)}</span><script type="math/tex">ℎ^{(𝑡−1)}</script></span>得到。得到<span class="arithmatex"><span class="MathJax_Preview">ℎ^{(𝑡)}</span><script type="math/tex">ℎ^{(𝑡)}</script></span>后一方面用于当前层的模型损失计算，另一方面用于计算下一层的<span class="arithmatex"><span class="MathJax_Preview">ℎ^{(𝑡+1)}</span><script type="math/tex">ℎ^{(𝑡+1)}</script></span>。</p>
 <p>为了改善循环神经网络RNN的长程依赖问题，一种很好地解决方案就是在RNN的基础上引入<code>门控机制</code>来控制信息的累积速度，包括有选择地加入新的信息，并有选择的遗忘之前的累积的信息，这一类网络称为<code>基于门控的循环神经网络</code>(Gated RNN)，常见的有两种类型：长短期记忆网络和门控循环网络。</p>
 <h2 id="_2">长短期记忆网络<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>长短期记忆网络(Long Short-Term Memory Network,LSTM)是循环神经网络的一个变体，可以有效的解决简单神经网络的梯度爆炸或消失问题。
-<img src="assets/LSTM2.png" alt="LSTM2.png" style="zoom:30%"/></p>
+<p>长短期记忆网络(Long Short-Term Memory Network,LSTM)是循环神经网络的一个变体，可以有效的解决简单神经网络的梯度爆炸或消失问题。</p>
+<p><img alt="RNN" height="50%" src="../assets/LSTM2.png" width="50%" /></p>
 <p>可以看到LSTM的结构要比RNN的复杂的多,在标准的RNN中，每个模块只有一个非常简单的结构，例如一个<code>tanh</code>层。但在LSTM模块中有多个交互的层。</p>
-<p>首先介绍图中各个结构所表示的含义：
-<img src="assets/LSTM3.png" alt="LSTM3.png" style="zoom:30%"/>
-（1）黄色的矩阵就是学习到的神经网络层。
-（2）粉色的圆圈代表按位<code>pointwise</code>操作，诸如向量的和等。
-（3）实体黑线传输着一整个向量，从一个节点的输出到其他节点的输入。
-（4）分开的线表示内容被复制，然后分发到不同的位置。
-（5）合在一起的线，表示向量的拼接。</p>
+<p>首先介绍图中各个结构所表示的含义：</p>
+<p><img alt="RNN" height="50%" src="../assets/LSTM3.png" width="50%" /></p>
+<ul>
+<li>黄色的矩阵就是学习到的神经网络层。</li>
+<li>粉色的圆圈代表按位<code>pointwise</code>操作，诸如向量的和等。</li>
+<li>实体黑线传输着一整个向量，从一个节点的输出到其他节点的输入。</li>
+<li>分开的线表示内容被复制，然后分发到不同的位置。</li>
+<li>合在一起的线，表示向量的拼接。</li>
+</ul>
 <h3 id="lstm">LSTM结构剖析<a class="headerlink" href="#lstm" title="Permanent link">&para;</a></h3>
-<p>LSTM 的关键就是<code>细胞状态</code>，从下图中可以看出，在每个序列索引位置t时刻向前传播的除了和RNN一样的隐藏状态<span class="arithmatex"><span class="MathJax_Preview">ℎ^{(𝑡)}</span><script type="math/tex">ℎ^{(𝑡)}</script></span>，还多了另一个隐藏状态，如图中最上面的长横线。这个隐藏状态我们一般称为细胞状态(Cell State)，记为<span class="arithmatex"><span class="MathJax_Preview">𝐶^{(𝑡)}</span><script type="math/tex">𝐶^{(𝑡)}</script></span>。如下图所示：</p>
-<p><img src="assets/LSTM4.png" alt="LSTM4.png" style="zoom:30%"/></p>
+<p>LSTM 的关键就是细胞状态，从下图中可以看出，在每个序列索引位置t时刻向前传播的除了和RNN一样的隐藏状态<span class="arithmatex"><span class="MathJax_Preview">ℎ^{(𝑡)}</span><script type="math/tex">ℎ^{(𝑡)}</script></span>，还多了另一个隐藏状态，如图中最上面的长横线。这个隐藏状态我们一般称为细胞状态(Cell State)，记为<span class="arithmatex"><span class="MathJax_Preview">𝐶^{(𝑡)}</span><script type="math/tex">𝐶^{(𝑡)}</script></span>。如下图所示：</p>
+<p><img alt="RNN" height="50%" src="../assets/LSTM4.png" width="50%" /></p>
 <p>除了细胞状态，LSTM图中还有了很多"奇怪"的结构，这些结构一般称之为<code>门控结构(Gate)</code>。LSTM在在每个序列索引位置t的门一般包括遗忘门，输入门和输出门三种。下面我们就来研究上图中LSTM的遗忘门，输入门和输出门以及细胞状态。</p>
 <h4 id="1lstm">（1）LSTM之遗忘门<a class="headerlink" href="#1lstm" title="Permanent link">&para;</a></h4>
-<p>遗忘门（forget gate）顾名思义，是控制是否遗忘的，在LSTM中即以一定的概率控制是否遗忘上一层的隐藏细胞状态。遗忘门子结构如下图所示：
-<img src="assets/LSTM5.png" alt="LSTM5.png" style="zoom:28%"/>
-图中输入的有上一序列的隐藏状态<span class="arithmatex"><span class="MathJax_Preview">h^{(t−1)}</span><script type="math/tex">h^{(t−1)}</script></span> 和本序列数据<span class="arithmatex"><span class="MathJax_Preview">x^{(t)}</span><script type="math/tex">x^{(t)}</script></span>,通过一个激活函数，一般是<code>sigmoid</code>，得到遗忘门的输出<span class="arithmatex"><span class="MathJax_Preview">f^{(t)}</span><script type="math/tex">f^{(t)}</script></span>。由于<code>sigmoid</code>的输出<span class="arithmatex"><span class="MathJax_Preview">f^{(t)}</span><script type="math/tex">f^{(t)}</script></span>在[0,1]之间，因此这里的输出<span class="arithmatex"><span class="MathJax_Preview">f^{(t)}</span><script type="math/tex">f^{(t)}</script></span>代表了遗忘上一层隐藏细胞状态的概率。用数学表达式即为：
-$$
+<p>遗忘门（forget gate）顾名思义，是控制是否遗忘的，在LSTM中即以一定的概率控制是否遗忘上一层的隐藏细胞状态。遗忘门子结构如下图所示：</p>
+<p><img alt="RNN" height="50%" src="../assets/LSTM5.png" width="50%" /></p>
+<p>图中输入的有上一序列的隐藏状态<span class="arithmatex"><span class="MathJax_Preview">h^{(t−1)}</span><script type="math/tex">h^{(t−1)}</script></span> 和本序列数据<span class="arithmatex"><span class="MathJax_Preview">x^{(t)}</span><script type="math/tex">x^{(t)}</script></span>,通过一个激活函数，一般是<code>sigmoid</code>，得到遗忘门的输出<span class="arithmatex"><span class="MathJax_Preview">f^{(t)}</span><script type="math/tex">f^{(t)}</script></span>。由于<code>sigmoid</code>的输出<span class="arithmatex"><span class="MathJax_Preview">f^{(t)}</span><script type="math/tex">f^{(t)}</script></span>在[0,1]之间，因此这里的输出<span class="arithmatex"><span class="MathJax_Preview">f^{(t)}</span><script type="math/tex">f^{(t)}</script></span>代表了遗忘上一层隐藏细胞状态的概率。用数学表达式即为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 f^{(t)}=\sigma\left(W_{f} \cdot\left[h^{(t-1)}, x^{(t)}\right]+b_{f}\right)
-$$</p>
+</div>
+<script type="math/tex; mode=display">
+f^{(t)}=\sigma\left(W_{f} \cdot\left[h^{(t-1)}, x^{(t)}\right]+b_{f}\right)
+</script>
+</div>
 <h4 id="2lstm">（2）LSTM之输入门<a class="headerlink" href="#2lstm" title="Permanent link">&para;</a></h4>
-<p>输入门（input gate）负责处理当前序列位置的输入，它的子结构如下图：
-<img src="assets/LSTM6.png" alt="LSTM6.png" style="zoom:23%"/>
-从图中可以看到输入门由两部分组成，第一部分使用了<code>sigmoid</code>激活函数，输出为<span class="arithmatex"><span class="MathJax_Preview">i^{(t)}</span><script type="math/tex">i^{(t)}</script></span>,第二部分使用了<code>tanh</code>激活函数，输出为<span class="arithmatex"><span class="MathJax_Preview">\tilde{C}^{(t)}</span><script type="math/tex">\tilde{C}^{(t)}</script></span>, 两者的结果后面会相乘再去更新细胞状态。用数学表达式即为：
-$$
-\begin{aligned}
-i^{(t)} &amp;=\sigma\left(W_{i} \cdot\left[h^{(t-1)}, x^{(t)}\right]+b_{i}\right) \
+<p>输入门（input gate）负责处理当前序列位置的输入，它的子结构如下图：</p>
+<p><img alt="RNN" height="50%" src="../assets/LSTM6.png" width="50%" /></p>
+<p>从图中可以看到输入门由两部分组成，第一部分使用了<code>sigmoid</code>激活函数，输出为<span class="arithmatex"><span class="MathJax_Preview">i^{(t)}</span><script type="math/tex">i^{(t)}</script></span>,第二部分使用了<code>tanh</code>激活函数，输出为<span class="arithmatex"><span class="MathJax_Preview">\tilde{C}^{(t)}</span><script type="math/tex">\tilde{C}^{(t)}</script></span>, 两者的结果后面会相乘再去更新细胞状态。用数学表达式即为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+i^{(t)} &amp;=\sigma\left(W_{i} \cdot\left[h^{(t-1)}, x^{(t)}\right]+b_{i}\right) \\
 \tilde{C}^{(t)} &amp;=\tanh \left(W_{C} \cdot\left[h^{(t-1)}, x^{(t)}\right]+b_{C}\right)
-\end{aligned}
-$$</p>
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+i^{(t)} &=\sigma\left(W_{i} \cdot\left[h^{(t-1)}, x^{(t)}\right]+b_{i}\right) \\
+\tilde{C}^{(t)} &=\tanh \left(W_{C} \cdot\left[h^{(t-1)}, x^{(t)}\right]+b_{C}\right)
+\end{align}
+</script>
+</div>
 <h4 id="3lstm">（3）LSTM之细胞状态更新<a class="headerlink" href="#3lstm" title="Permanent link">&para;</a></h4>
-<p>前面的遗忘门和输入门的结果都会作用于细胞状态<span class="arithmatex"><span class="MathJax_Preview">𝐶^{(𝑡)}</span><script type="math/tex">𝐶^{(𝑡)}</script></span>。我们来看看从细胞状态<span class="arithmatex"><span class="MathJax_Preview">𝐶^{(𝑡−1)}</span><script type="math/tex">𝐶^{(𝑡−1)}</script></span> 如何得到<span class="arithmatex"><span class="MathJax_Preview">𝐶^{(𝑡)}</span><script type="math/tex">𝐶^{(𝑡)}</script></span>。如下图所示：
-<img src="assets/LSTM7.png" alt="LSTM7.png" style="zoom:30%"/>
-细胞状态<span class="arithmatex"><span class="MathJax_Preview">𝐶^{(𝑡)}</span><script type="math/tex">𝐶^{(𝑡)}</script></span>由两部分组成，第一部分是<span class="arithmatex"><span class="MathJax_Preview">𝐶^{(𝑡−1)}</span><script type="math/tex">𝐶^{(𝑡−1)}</script></span>和遗忘门输出<span class="arithmatex"><span class="MathJax_Preview">𝑓^{(𝑡)}</span><script type="math/tex">𝑓^{(𝑡)}</script></span>的乘积，第二部分是输入门的<span class="arithmatex"><span class="MathJax_Preview">i^{(𝑡)}</span><script type="math/tex">i^{(𝑡)}</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\tilde{C}^{(t)}</span><script type="math/tex">\tilde{C}^{(t)}</script></span>的乘积，即：
-$$
-C<sup>{(t)}=f</sup>{(t)} \odot C<sup>{(t-1)}+i</sup>{(t)} \odot \tilde{C}^{(t)}
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">\odot</span><script type="math/tex">\odot</script></span>为Hadamard积。</p>
+<p>前面的遗忘门和输入门的结果都会作用于细胞状态<span class="arithmatex"><span class="MathJax_Preview">𝐶^{(𝑡)}</span><script type="math/tex">𝐶^{(𝑡)}</script></span>。我们来看看从细胞状态<span class="arithmatex"><span class="MathJax_Preview">𝐶^{(𝑡−1)}</span><script type="math/tex">𝐶^{(𝑡−1)}</script></span> 如何得到<span class="arithmatex"><span class="MathJax_Preview">𝐶^{(𝑡)}</span><script type="math/tex">𝐶^{(𝑡)}</script></span>。如下图所示：</p>
+<p><img alt="RNN" height="50%" src="../assets/LSTM7.png" width="50%" /></p>
+<p>细胞状态<span class="arithmatex"><span class="MathJax_Preview">𝐶^{(𝑡)}</span><script type="math/tex">𝐶^{(𝑡)}</script></span>由两部分组成，第一部分是<span class="arithmatex"><span class="MathJax_Preview">𝐶^{(𝑡−1)}</span><script type="math/tex">𝐶^{(𝑡−1)}</script></span>和遗忘门输出<span class="arithmatex"><span class="MathJax_Preview">𝑓^{(𝑡)}</span><script type="math/tex">𝑓^{(𝑡)}</script></span>的乘积，第二部分是输入门的<span class="arithmatex"><span class="MathJax_Preview">i^{(𝑡)}</span><script type="math/tex">i^{(𝑡)}</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\tilde{C}^{(t)}</span><script type="math/tex">\tilde{C}^{(t)}</script></span>的乘积，即：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+C^{(t)}=f^{(t)} \odot C^{(t-1)}+i^{(t)} \odot \tilde{C}^{(t)}
+</div>
+<script type="math/tex; mode=display">
+C^{(t)}=f^{(t)} \odot C^{(t-1)}+i^{(t)} \odot \tilde{C}^{(t)}
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">\odot</span><script type="math/tex">\odot</script></span>为Hadamard积。</p>
 <h4 id="4lstm">（4）LSTM之输出门<a class="headerlink" href="#4lstm" title="Permanent link">&para;</a></h4>
-<p>有了新的隐藏细胞状态<span class="arithmatex"><span class="MathJax_Preview">𝐶^{(𝑡)}</span><script type="math/tex">𝐶^{(𝑡)}</script></span>，我们就可以来看输出门了，子结构如下：
-<img src="assets/LSTM8.png" alt="LSTM8.png" style="zoom:40%"/>
-从图中可以看出，隐藏状态<span class="arithmatex"><span class="MathJax_Preview">ℎ^{(𝑡)}</span><script type="math/tex">ℎ^{(𝑡)}</script></span>的更新由两部分组成，第一部分是<span class="arithmatex"><span class="MathJax_Preview">𝑜^{(𝑡)}</span><script type="math/tex">𝑜^{(𝑡)}</script></span>, 它由上一序列的隐藏状态<span class="arithmatex"><span class="MathJax_Preview">ℎ^{(𝑡−1)}</span><script type="math/tex">ℎ^{(𝑡−1)}</script></span>和本序列数据<span class="arithmatex"><span class="MathJax_Preview">𝑥^{(𝑡)}</span><script type="math/tex">𝑥^{(𝑡)}</script></span>以及激活函数<code>sigmoid</code>得到，第二部分由隐藏状态<span class="arithmatex"><span class="MathJax_Preview">𝐶^{(𝑡)}</span><script type="math/tex">𝐶^{(𝑡)}</script></span>和<code>tanh</code>激活函数组成, 即：
-$$
+<p>有了新的隐藏细胞状态<span class="arithmatex"><span class="MathJax_Preview">𝐶^{(𝑡)}</span><script type="math/tex">𝐶^{(𝑡)}</script></span>，我们就可以来看输出门了，子结构如下：</p>
+<p><img alt="RNN" height="50%" src="../assets/LSTM8.png" width="50%" /></p>
+<p>从图中可以看出，隐藏状态<span class="arithmatex"><span class="MathJax_Preview">ℎ^{(𝑡)}</span><script type="math/tex">ℎ^{(𝑡)}</script></span>的更新由两部分组成，第一部分是<span class="arithmatex"><span class="MathJax_Preview">𝑜^{(𝑡)}</span><script type="math/tex">𝑜^{(𝑡)}</script></span>, 它由上一序列的隐藏状态<span class="arithmatex"><span class="MathJax_Preview">ℎ^{(𝑡−1)}</span><script type="math/tex">ℎ^{(𝑡−1)}</script></span>和本序列数据<span class="arithmatex"><span class="MathJax_Preview">𝑥^{(𝑡)}</span><script type="math/tex">𝑥^{(𝑡)}</script></span>以及激活函数<code>sigmoid</code>得到，第二部分由隐藏状态<span class="arithmatex"><span class="MathJax_Preview">𝐶^{(𝑡)}</span><script type="math/tex">𝐶^{(𝑡)}</script></span>和<code>tanh</code>激活函数组成, 即：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{array}{l}
-o<sup>{(t)}=\sigma\left(W_{o}\left[h</sup>{(t-1)}, x^{(t)}\right]+b_{o}\right) \
-h<sup>{(t)}=o</sup>{(t)}  \odot \operatorname{tanh}\left(C^{(t)}\right)
+o^{(t)}=\sigma\left(W_{o}\left[h^{(t-1)}, x^{(t)}\right]+b_{o}\right) \\
+h^{(t)}=o^{(t)}  \odot \operatorname{tanh}\left(C^{(t)}\right)
 \end{array}
-$$</p>
+</div>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+o^{(t)}=\sigma\left(W_{o}\left[h^{(t-1)}, x^{(t)}\right]+b_{o}\right) \\
+h^{(t)}=o^{(t)}  \odot \operatorname{tanh}\left(C^{(t)}\right)
+\end{array}
+</script>
+</div>
 <p>通过上面的分析可以知道LSTM网络引入门控机制(Gating Mechanism)来控制信息传递的路径，共有三个"门"结构，分别为遗忘门<span class="arithmatex"><span class="MathJax_Preview">f^{(t)}</span><script type="math/tex">f^{(t)}</script></span>、输入门<span class="arithmatex"><span class="MathJax_Preview">i^{(t)}</span><script type="math/tex">i^{(t)}</script></span>和输出门<span class="arithmatex"><span class="MathJax_Preview">，o^{(t)}</span><script type="math/tex">，o^{(t)}</script></span>这三个门的作用为</p>
 <ol>
 <li>遗忘门<span class="arithmatex"><span class="MathJax_Preview">f^{(t)}</span><script type="math/tex">f^{(t)}</script></span>控制上一个时刻的内部状态<span class="arithmatex"><span class="MathJax_Preview">C^{(t-1)}</span><script type="math/tex">C^{(t-1)}</script></span>需要遗忘多少信息。</li>
@@ -1381,18 +1409,28 @@ $$</p>
 <p>LSTM网络中的"门"是一种"软"门，取值在(0,1)之间，表示以一定的比列允许信息通过。</p>
 <p>上面介绍的是最典型的一种LSTM,当然，有些LSTM的结构和上面的LSTM图稍有不同，但是原理是相似的。关于LSTM反向传播的公式推导可以看<a href="https://www.zhuanzhi.ai/document/bbc52d1f0b92389dc9b6b4ed7e161577">链接</a></p>
 <h2 id="_3">门控循环单元网络<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p>门控循环单元(Gated Recurrent Unit,GRU)网络是一种比LSTM网络更加简单的循环神经网络，如图所示理解方式和LSTM也类似。
-<img src="assets/GRU.png" alt="GRU.png" style="zoom:25%"/>
-用数学表达式即为：
-$$
+<p>门控循环单元(Gated Recurrent Unit,GRU)网络是一种比LSTM网络更加简单的循环神经网络，如图所示理解方式和LSTM也类似。</p>
+<p><img alt="RNN" height="50%" src="../assets/GRU.png" width="50%" /></p>
+<p>用数学表达式即为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{aligned}
-z^{(t)} &amp;=\sigma\left(W_{z} \cdot\left[h^{(t-1)}, x^{(t)}\right]\right) \
-r^{(t)} &amp;=\sigma\left(W_{r} \cdot\left[h^{(t-1)}, x^{(t)}\right]\right) \
-\tilde{h}^{(t)} &amp;=\tanh \left(W \cdot\left[r^{(t)} * h^{(t-1)}, x^{(t)}\right]\right) \
-h^{(t)} &amp;=\left(1-z^{(t)}\right) * h<sup>{(t-1)}+z</sup>{(t)} * \tilde{h}^{(t)}
+z^{(t)} &amp;=\sigma\left(W_{z} \cdot\left[h^{(t-1)}, x^{(t)}\right]\right) \\
+r^{(t)} &amp;=\sigma\left(W_{r} \cdot\left[h^{(t-1)}, x^{(t)}\right]\right) \\
+\tilde{h}^{(t)} &amp;=\tanh \left(W \cdot\left[r^{(t)} * h^{(t-1)}, x^{(t)}\right]\right) \\
+h^{(t)} &amp;=\left(1-z^{(t)}\right) * h^{(t-1)}+z^{(t)} * \tilde{h}^{(t)}
 \end{aligned}
-$$
-由于GRU参数更少，所以GRU训练起来比LSTM更快，相比之下需要的数据量更少。</p>
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}
+z^{(t)} &=\sigma\left(W_{z} \cdot\left[h^{(t-1)}, x^{(t)}\right]\right) \\
+r^{(t)} &=\sigma\left(W_{r} \cdot\left[h^{(t-1)}, x^{(t)}\right]\right) \\
+\tilde{h}^{(t)} &=\tanh \left(W \cdot\left[r^{(t)} * h^{(t-1)}, x^{(t)}\right]\right) \\
+h^{(t)} &=\left(1-z^{(t)}\right) * h^{(t-1)}+z^{(t)} * \tilde{h}^{(t)}
+\end{aligned}
+</script>
+</div>
+<p>由于GRU参数更少，所以GRU训练起来比LSTM更快，相比之下需要的数据量更少。</p>
 
               
             </article>
@@ -1422,13 +1460,13 @@ $$
       
       
         
-        <a href="../05_%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%281%29/" class="md-footer__link md-footer__link--next" aria-label="下一页: 神经网络优化概述" rel="next">
+        <a href="../05_%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%281%29/" class="md-footer__link md-footer__link--next" aria-label="下一页: 神经网络优化概述(一)" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 下一页
               </span>
-              神经网络优化概述
+              神经网络优化概述(一)
             </div>
           </div>
           <div class="md-footer__button md-icon">
