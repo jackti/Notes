@@ -40,7 +40,7 @@ DBSCAN的算法流程：
 >
 > 输出：簇划分$C$
 >
-> (1)初始化核心对象集合$\Omega=\empty$，聚类簇数$k=0$，未访问样本集合$\Gamma=D$，簇划分$C=\empty$
+> (1)初始化核心对象集合$\Omega=\emptyset$，聚类簇数$k=0$，未访问样本集合$\Gamma=D$，簇划分$C=\emptyset$
 >
 > (2)对于$j=1,2,...,m$按如下步骤找出所有的核心对象：
 >
@@ -48,11 +48,11 @@ DBSCAN的算法流程：
 >
 > ​	②如果子样本集样本个数满足$|N_{\epsilon}(x^{(j)})|\ge MinPts$，将样本$x^{(j)}$加入核心对象样本集合$\Omega=\Omega \cup{x^{(j)}}$
 >
-> (3)如果核心对象集合$\Omega=\empty$，则算法结束，否则转入步骤(4)
+> (3)如果核心对象集合$\Omega=\emptyset$，则算法结束，否则转入步骤(4)
 >
 > (4)在核心对象集合$\Omega$中，随机选择一个核心对象$o$，初始化当前簇核心对象队列$\Omega_{cur}=\{o\}$，初始化类别序号$k=k+1$，初始化当前簇样本集合$C_k=\{o\}$，更新未访问样本集合$\Gamma=\Gamma-\{o\}$
 >
-> (5)如果当前簇核心对象队列$\Omega_{cur}=\empty$，则当前聚类簇$C_k$生成完毕，更新簇划分$C=\{C_1,C_2,...,C_k\}$，更新核心对象集合$\Omega=\Omega-C_k$，转入步骤(3)
+> (5)如果当前簇核心对象队列$\Omega_{cur}=\emptyset$，则当前聚类簇$C_k$生成完毕，更新簇划分$C=\{C_1,C_2,...,C_k\}$，更新核心对象集合$\Omega=\Omega-C_k$，转入步骤(3)
 >
 > (6)在当前簇核心队列$\Omega_{cur}$中取出一个核心对象$o^{'}$ ，通过邻域距离阈值$\epsilon$找出所有的$\epsilon-$邻域子样本集$N_{\epsilon}(o^{'})$，令$\Delta=N_{\epsilon}(o^{'})\cap \Gamma$，更新当前簇样本集合$C_k=C_k\cup \Delta$，更新未访问样本集合$\Gamma=\Gamma-\Delta$，更新$\Omega_{cur}=\Omega{cur}\cup (N_{\epsilon}(o^{'})\cap\Omega)$，转入步骤(5)
 

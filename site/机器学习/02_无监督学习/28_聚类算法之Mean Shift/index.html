@@ -653,8 +653,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
-        集成学习算法之GBDT
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
       </a>
     </li>
   
@@ -667,8 +667,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
-        集成学习算法之RF
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
+        集成学习算法之GBDT
       </a>
     </li>
   
@@ -1213,25 +1213,45 @@
 <p>MeanShift算法，又称为均值漂移算法，和K-Means算法一样，都是基于聚类中心的聚类算法，但是MeanShift算法不需要事先指定类别个数<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>。在MeanShift算法中，聚类中心是通过在给定区域中的样本的均值来确定的，通过不断更新聚类中心，直到最终的聚类中心不再改变为止。</p>
 <p>MeanShift算法在聚类、图像平滑、分割和视频跟踪等方面有广泛应用。</p>
 <h2 id="meanshift">MeanShift向量<a class="headerlink" href="#meanshift" title="Permanent link">&para;</a></h2>
-<p>对于给定的<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>维向量空间<span class="arithmatex"><span class="MathJax_Preview">\mathbb{R}^n</span><script type="math/tex">\mathbb{R}^n</script></span>中的<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>个样本点<span class="arithmatex"><span class="MathJax_Preview">(x^{(1)},x^{(2)},...,x^{(m)})</span><script type="math/tex">(x^{(1)},x^{(2)},...,x^{(m)})</script></span>，对于其中一个样本<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>，其MeanShift向量为：
-$$
+<p>对于给定的<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>维向量空间<span class="arithmatex"><span class="MathJax_Preview">\mathbb{R}^n</span><script type="math/tex">\mathbb{R}^n</script></span>中的<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>个样本点<span class="arithmatex"><span class="MathJax_Preview">(x^{(1)},x^{(2)},...,x^{(m)})</span><script type="math/tex">(x^{(1)},x^{(2)},...,x^{(m)})</script></span>，对于其中一个样本<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>，其MeanShift向量为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 M_h(x)=\frac{1}{k}\sum_{x^{(i)}\in S_h}(x^{(i)}-x)
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">S_h</span><script type="math/tex">S_h</script></span>值的是一个半径为<span class="arithmatex"><span class="MathJax_Preview">h</span><script type="math/tex">h</script></span>的高纬球区域。<span class="arithmatex"><span class="MathJax_Preview">S_h</span><script type="math/tex">S_h</script></span>的定义为：
-$$
-S_h(x)={y|(y-x)^T(y-x)\le h^2}
-$$
-在<span class="arithmatex"><span class="MathJax_Preview">S_h</span><script type="math/tex">S_h</script></span>的区域内，每一个样本点<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>对样本<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>的贡献是一样。而在实际中，每一个样本点<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>对于样本<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>的贡献是不同的，这种贡献与<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>到每一个点之间的距离是相关的。</p>
-<p>基于以上的考虑，对基本的MeanShift向量形式中增加核函数和样本权重，得到如下的改进MeanShift向量形式：
-$$
+</div>
+<script type="math/tex; mode=display">
+M_h(x)=\frac{1}{k}\sum_{x^{(i)}\in S_h}(x^{(i)}-x)
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">S_h</span><script type="math/tex">S_h</script></span>值的是一个半径为<span class="arithmatex"><span class="MathJax_Preview">h</span><script type="math/tex">h</script></span>的高纬球区域。<span class="arithmatex"><span class="MathJax_Preview">S_h</span><script type="math/tex">S_h</script></span>的定义为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+S_h(x)=\{y|(y-x)^T(y-x)\le h^2\}
+</div>
+<script type="math/tex; mode=display">
+S_h(x)=\{y|(y-x)^T(y-x)\le h^2\}
+</script>
+</div>
+<p>在<span class="arithmatex"><span class="MathJax_Preview">S_h</span><script type="math/tex">S_h</script></span>的区域内，每一个样本点<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>对样本<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>的贡献是一样。而在实际中，每一个样本点<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>对于样本<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>的贡献是不同的，这种贡献与<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>到每一个点之间的距离是相关的。</p>
+<p>基于以上的考虑，对基本的MeanShift向量形式中增加核函数和样本权重，得到如下的改进MeanShift向量形式：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
 M_h(x)
-&amp;=\frac{\sum_{x^{(i)}\in S_h} K(\frac{x<sup>{(i)}-x}{h})(x</sup>{(i)}-x)}{\sum_{x^{(i)}\in S_h} K(\frac{x^{(i)}-x}{h})}\
-&amp;=\frac{\sum_{x^{(i)}\in S_h} K(\frac{x<sup>{(i)}-x}{h})x</sup>{(i)}}{\sum_{x^{(i)}\in S_h} K(\frac{x^{(i)}-x}{h})}-x\
+&amp;=\frac{\sum_{x^{(i)}\in S_h} K(\frac{x^{(i)}-x}{h})(x^{(i)}-x)}{\sum_{x^{(i)}\in S_h} K(\frac{x^{(i)}-x}{h})}\\
+&amp;=\frac{\sum_{x^{(i)}\in S_h} K(\frac{x^{(i)}-x}{h})x^{(i)}}{\sum_{x^{(i)}\in S_h} K(\frac{x^{(i)}-x}{h})}-x\\
 &amp;=m_h(x)-x
 \end{align}
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">m_h(x)\overset{def}=\frac{\sum_{x^{(i)}\in S_h} K(\frac{x^{(i)}-x}{h})x^{(i)}}{\sum_{x^{(i)}\in S_h} K(\frac{x^{(i)}-x}{h})},K(\frac{x^{(i)}-x}{h})</span><script type="math/tex">m_h(x)\overset{def}=\frac{\sum_{x^{(i)}\in S_h} K(\frac{x^{(i)}-x}{h})x^{(i)}}{\sum_{x^{(i)}\in S_h} K(\frac{x^{(i)}-x}{h})},K(\frac{x^{(i)}-x}{h})</script></span>是高斯核函数。</p>
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+M_h(x)
+&=\frac{\sum_{x^{(i)}\in S_h} K(\frac{x^{(i)}-x}{h})(x^{(i)}-x)}{\sum_{x^{(i)}\in S_h} K(\frac{x^{(i)}-x}{h})}\\
+&=\frac{\sum_{x^{(i)}\in S_h} K(\frac{x^{(i)}-x}{h})x^{(i)}}{\sum_{x^{(i)}\in S_h} K(\frac{x^{(i)}-x}{h})}-x\\
+&=m_h(x)-x
+\end{align}
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">m_h(x)\overset{def}=\frac{\sum_{x^{(i)}\in S_h} K(\frac{x^{(i)}-x}{h})x^{(i)}}{\sum_{x^{(i)}\in S_h} K(\frac{x^{(i)}-x}{h})},K(\frac{x^{(i)}-x}{h})</span><script type="math/tex">m_h(x)\overset{def}=\frac{\sum_{x^{(i)}\in S_h} K(\frac{x^{(i)}-x}{h})x^{(i)}}{\sum_{x^{(i)}\in S_h} K(\frac{x^{(i)}-x}{h})},K(\frac{x^{(i)}-x}{h})</script></span>是高斯核函数。</p>
 
               
             </article>

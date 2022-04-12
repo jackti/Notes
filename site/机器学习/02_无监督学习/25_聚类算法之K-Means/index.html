@@ -653,8 +653,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
-        集成学习算法之GBDT
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
       </a>
     </li>
   
@@ -667,8 +667,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
-        集成学习算法之RF
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
+        集成学习算法之GBDT
       </a>
     </li>
   
@@ -1281,15 +1281,25 @@
 <p>K-Means算法是无监督的聚类算法，实现起来比较简单且聚类效果也很不错，因此应用很广泛。</p>
 <h2 id="k-means_1">K-Means算法原理<a class="headerlink" href="#k-means_1" title="Permanent link">&para;</a></h2>
 <p>K-Means算法的思想很简单：对于给定的样本数据，按照样本之间的距离大小，将样本数据划分为<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>个簇。尽量让簇内的点紧密连在一起，而让簇之间的距离尽量大。</p>
-<p>假设簇划分为<span class="arithmatex"><span class="MathJax_Preview">(C_1,C_2,...,C_k)</span><script type="math/tex">(C_1,C_2,...,C_k)</script></span>，则优化目标是最小化平方误差<span class="arithmatex"><span class="MathJax_Preview">E</span><script type="math/tex">E</script></span>：
-$$
-E=\sum_{i=1}^k\sum_{x\in C_i}||x-\mu_i||<em>2^2
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">u_i</span><script type="math/tex">u_i</script></span>是簇<span class="arithmatex"><span class="MathJax_Preview">C_i</span><script type="math/tex">C_i</script></span>的均值向量，称为质心，表达式为：
-$$
-\mu_i=\frac{1}{|C_i|}\sum</em>{x\in C_i}x
-$$
-这是一个NP难问题，直接求解最小化不容易实现。因此只能采用启发式的迭代方法。</p>
+<p>假设簇划分为<span class="arithmatex"><span class="MathJax_Preview">(C_1,C_2,...,C_k)</span><script type="math/tex">(C_1,C_2,...,C_k)</script></span>，则优化目标是最小化平方误差<span class="arithmatex"><span class="MathJax_Preview">E</span><script type="math/tex">E</script></span>：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+E=\sum_{i=1}^k\sum_{x\in C_i}||x-\mu_i||_2^2
+</div>
+<script type="math/tex; mode=display">
+E=\sum_{i=1}^k\sum_{x\in C_i}||x-\mu_i||_2^2
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">u_i</span><script type="math/tex">u_i</script></span>是簇<span class="arithmatex"><span class="MathJax_Preview">C_i</span><script type="math/tex">C_i</script></span>的均值向量，称为质心，表达式为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\mu_i=\frac{1}{|C_i|}\sum_{x\in C_i}x
+</div>
+<script type="math/tex; mode=display">
+\mu_i=\frac{1}{|C_i|}\sum_{x\in C_i}x
+</script>
+</div>
+<p>这是一个NP难问题，直接求解最小化不容易实现。因此只能采用启发式的迭代方法。</p>
 <p><img alt="kmeans" src="../assets/kmeans.png" /></p>
 <p>(a)初始数据集，假设簇的个数<span class="arithmatex"><span class="MathJax_Preview">K=2</span><script type="math/tex">K=2</script></span>；</p>
 <p>(b)随机选择两个样本点作为两个簇的质心，即图中的红色点和蓝色点；</p>
@@ -1303,13 +1313,18 @@ $$
 <p>(1)从数据集<span class="arithmatex"><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span>中随机选择<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>个样本作为初始的质心向量<span class="arithmatex"><span class="MathJax_Preview">(\mu_1,\mu_2,...,\mu_k)</span><script type="math/tex">(\mu_1,\mu_2,...,\mu_k)</script></span></p>
 <p>(2)对于<span class="arithmatex"><span class="MathJax_Preview">n=1,2,...,N</span><script type="math/tex">n=1,2,...,N</script></span></p>
 <p>​  ①将簇划分<span class="arithmatex"><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span>初始化为<span class="arithmatex"><span class="MathJax_Preview">C_j=\varnothing\quad j=1,2,...,k</span><script type="math/tex">C_j=\varnothing\quad j=1,2,...,k</script></span></p>
-<p>​  ②对于<span class="arithmatex"><span class="MathJax_Preview">i=1,2,...,m</span><script type="math/tex">i=1,2,...,m</script></span> 计算样本<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>和各个质心<span class="arithmatex"><span class="MathJax_Preview">\mu_j(j=1,2,...,k)</span><script type="math/tex">\mu_j(j=1,2,...,k)</script></span>的距离
-$$
-d_{ij}=||x<sup>{(i)}-\mu_j||_2</sup>2 \notag
-$$
-​     根据距离最近的均值向量确定<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>的簇标记<span class="arithmatex"><span class="MathJax_Preview">\lambda_i=\arg\min_\limits{j} d_{ij}</span><script type="math/tex">\lambda_i=\arg\min_\limits{j} d_{ij}</script></span>将样本<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>划入相应的簇<span class="arithmatex"><span class="MathJax_Preview">C_{\lambda_i}=C_{\lambda_i}\cup x^{(i)}</span><script type="math/tex">C_{\lambda_i}=C_{\lambda_i}\cup x^{(i)}</script></span> </p>
-<p>​  ③对<span class="arithmatex"><span class="MathJax_Preview">j=1,2,...,k</span><script type="math/tex">j=1,2,...,k</script></span>对<span class="arithmatex"><span class="MathJax_Preview">C_j</span><script type="math/tex">C_j</script></span>中所有的样本点重新计算新的质心
-$$
+<p>​  ②对于<span class="arithmatex"><span class="MathJax_Preview">i=1,2,...,m</span><script type="math/tex">i=1,2,...,m</script></span> 计算样本<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>和各个质心<span class="arithmatex"><span class="MathJax_Preview">\mu_j(j=1,2,...,k)</span><script type="math/tex">\mu_j(j=1,2,...,k)</script></span>的距离</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+d_{ij}=||x^{(i)}-\mu_j||_2^2 \notag
+</div>
+<script type="math/tex; mode=display">
+d_{ij}=||x^{(i)}-\mu_j||_2^2 \notag
+</script>
+</div>
+<p>​ 根据距离最近的均值向量确定<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>的簇标记<span class="arithmatex"><span class="MathJax_Preview">\lambda_i=\arg\min_\limits{j} d_{ij}</span><script type="math/tex">\lambda_i=\arg\min_\limits{j} d_{ij}</script></span>将样本<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>划入相应的簇<span class="arithmatex"><span class="MathJax_Preview">C_{\lambda_i}=C_{\lambda_i}\cup x^{(i)}</span><script type="math/tex">C_{\lambda_i}=C_{\lambda_i}\cup x^{(i)}</script></span> </p>
+<p>​  ③对<span class="arithmatex"><span class="MathJax_Preview">j=1,2,...,k</span><script type="math/tex">j=1,2,...,k</script></span>对<span class="arithmatex"><span class="MathJax_Preview">C_j</span><script type="math/tex">C_j</script></span>中所有的样本点重新计算新的质心</p>
+<p>$$
 \mu_j = \frac{1}{|C_j|}\sum_{x\in C_j}x\notag
 $$
 ​  ④如果所有的<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>个质心向量都没有发生变化，则转到步骤(3)</p>
@@ -1321,11 +1336,16 @@ $$
 <p>K-Means算法就是对K-Means随机初始化质心的优化，其基本思想就是：初始的质心互相距离应该尽可能的远。</p>
 <blockquote>
 <p>(1)从输入的数据点集合随机选择一个点作为第一个聚类中心<span class="arithmatex"><span class="MathJax_Preview">\mu_1</span><script type="math/tex">\mu_1</script></span></p>
-<p>(2)对于数据集中的每一个点<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>，计算它与已选择的聚类中心**最近聚类中心**的距离
-$$
-D(x)=\arg \min \sum_{r=1}<sup>{K_{selected}}||x-\mu_r||_2</sup>2 \notag
-$$
-(3)选择一个新的数据点作为新的聚类中心，选择的原则为：<span class="arithmatex"><span class="MathJax_Preview">D(x)</span><script type="math/tex">D(x)</script></span>较大的点，被选择为聚类中心的概率较大</p>
+<p>(2)对于数据集中的每一个点<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>，计算它与已选择的聚类中心**最近聚类中心**的距离</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+D(x)=\arg \min \sum_{r=1}^{K_{selected}}||x-\mu_r||_2^2 \notag
+</div>
+<script type="math/tex; mode=display">
+D(x)=\arg \min \sum_{r=1}^{K_{selected}}||x-\mu_r||_2^2 \notag
+</script>
+</div>
+<p>(3)选择一个新的数据点作为新的聚类中心，选择的原则为：<span class="arithmatex"><span class="MathJax_Preview">D(x)</span><script type="math/tex">D(x)</script></span>较大的点，被选择为聚类中心的概率较大</p>
 <p>(4)重复步骤(2)和(3)直到选择出<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>个聚类质心</p>
 <p>(5)利用这<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>个质心作为初始化质心运行标准的K-Means算法</p>
 </blockquote>
@@ -1351,7 +1371,7 @@ $$
     <nav class="md-footer__inner md-grid" aria-label="页脚">
       
         
-        <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 集成学习算法之RF" rel="prev">
+        <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 集成学习算法之GBDT" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -1360,7 +1380,7 @@ $$
               <span class="md-footer__direction">
                 上一页
               </span>
-              集成学习算法之RF
+              集成学习算法之GBDT
             </div>
           </div>
         </a>

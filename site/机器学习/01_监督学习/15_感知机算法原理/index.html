@@ -717,8 +717,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
-        集成学习算法之GBDT
+      <a href="../23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
       </a>
     </li>
   
@@ -731,8 +731,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
-        集成学习算法之RF
+      <a href="../24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
+        集成学习算法之GBDT
       </a>
     </li>
   
@@ -1255,72 +1255,123 @@
 <p>感知机(Perceptron)是二分类的线性分类模型，其输入为实例的特征向量，输出为实例的类别，取值为+1和-1二值。感知机对应于输入空间(特征空间)中实例划分为正负两类的分离超平面，属于判别模型，是神经网络和支持向量机的基础。</p>
 <h2 id="_2">感知机模型<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>感知机模型尝试找到一个超平面，能够将训练集正实例点和负实例点完全正确分开。使用感知机的一个前提：<strong>数据是线性可分的</strong>。如果数据是线性不可分，也就意味着感知机模型不适合当前的数据，这时需要考虑其他模型，如支持向量机通过核技巧让数据在高维空间可分，神经网络通过激活函数和增加隐层数量让数据可分。</p>
-<p>给定一个数据集<span class="arithmatex"><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span>：
-$$
-((x_1<sup>{(0)},x_2</sup>{(0)},..,y<sup>{(0)}),(x_1</sup>{(1)},x_2<sup>{(1)},...,y</sup>{(1)}),...,(x_1<sup>{(m)},x_2</sup>{(m)},...,y^{(m)}))
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">x\in \mathbb{R}^n,y\in \{+1,-1\}</span><script type="math/tex">x\in \mathbb{R}^n,y\in \{+1,-1\}</script></span>。现在需要找到一个超平面，即：
-$$
+<p>给定一个数据集<span class="arithmatex"><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span>：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+((x_1^{(0)},x_2^{(0)},..,y^{(0)}),(x_1^{(1)},x_2^{(1)},...,y^{(1)}),...,(x_1^{(m)},x_2^{(m)},...,y^{(m)}))
+</div>
+<script type="math/tex; mode=display">
+((x_1^{(0)},x_2^{(0)},..,y^{(0)}),(x_1^{(1)},x_2^{(1)},...,y^{(1)}),...,(x_1^{(m)},x_2^{(m)},...,y^{(m)}))
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">x\in \mathbb{R}^n,y\in \{+1,-1\}</span><script type="math/tex">x\in \mathbb{R}^n,y\in \{+1,-1\}</script></span>。现在需要找到一个超平面，即：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \theta_0+\theta_1 x_1+...+\theta_n x_n =0
-$$
-能够讲数据集的正实例和负实例完全正确地划分到超平面的两侧。让数据集<span class="arithmatex"><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span>中所有<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}=+1</span><script type="math/tex">y^{(i)}=+1</script></span>的实例都满足<span class="arithmatex"><span class="MathJax_Preview">\theta_0+\theta_1 x_1^{(i)}+...+\theta_n x_n^{(i)} &gt;0</span><script type="math/tex">\theta_0+\theta_1 x_1^{(i)}+...+\theta_n x_n^{(i)} >0</script></span>，让所有<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}=-1</span><script type="math/tex">y^{(i)}=-1</script></span>的实例满足<span class="arithmatex"><span class="MathJax_Preview">\theta_0+\theta_1 x_1^{(i)}+...+\theta_n x_n^{(i)} &lt;0</span><script type="math/tex">\theta_0+\theta_1 x_1^{(i)}+...+\theta_n x_n^{(i)} <0</script></span>。</p>
+</div>
+<script type="math/tex; mode=display">
+\theta_0+\theta_1 x_1+...+\theta_n x_n =0
+</script>
+</div>
+<p>能够讲数据集的正实例和负实例完全正确地划分到超平面的两侧。让数据集<span class="arithmatex"><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span>中所有<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}=+1</span><script type="math/tex">y^{(i)}=+1</script></span>的实例都满足<span class="arithmatex"><span class="MathJax_Preview">\theta_0+\theta_1 x_1^{(i)}+...+\theta_n x_n^{(i)} &gt;0</span><script type="math/tex">\theta_0+\theta_1 x_1^{(i)}+...+\theta_n x_n^{(i)} >0</script></span>，让所有<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}=-1</span><script type="math/tex">y^{(i)}=-1</script></span>的实例满足<span class="arithmatex"><span class="MathJax_Preview">\theta_0+\theta_1 x_1^{(i)}+...+\theta_n x_n^{(i)} &lt;0</span><script type="math/tex">\theta_0+\theta_1 x_1^{(i)}+...+\theta_n x_n^{(i)} <0</script></span>。</p>
 <p><mark>通常这样的超平面也不唯一，即感知器模型可以有多个解</mark>。为了简化上式可以增加一个<span class="arithmatex"><span class="MathJax_Preview">x_0=1</span><script type="math/tex">x_0=1</script></span>，公式(2)可以写成<span class="arithmatex"><span class="MathJax_Preview">\sum_{i=0}^n \theta_i x_i=0</span><script type="math/tex">\sum_{i=0}^n \theta_i x_i=0</script></span>。用向量表示为<span class="arithmatex"><span class="MathJax_Preview">\theta^T\cdot x=0</span><script type="math/tex">\theta^T\cdot x=0</script></span>，其中<span class="arithmatex"><span class="MathJax_Preview">x\in \mathbb{R}^{n+1},\theta \in \mathbb{R}^{n+1}</span><script type="math/tex">x\in \mathbb{R}^{n+1},\theta \in \mathbb{R}^{n+1}</script></span>。</p>
-<p>最终感知机的模型可以写为：
-$$
+<p>最终感知机的模型可以写为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 y=sign(\theta^T x)
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">sign(\cdot)</span><script type="math/tex">sign(\cdot)</script></span>是指示函数，定义为
-$$
-sign(z)=\left {
+</div>
+<script type="math/tex; mode=display">
+y=sign(\theta^T x)
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">sign(\cdot)</span><script type="math/tex">sign(\cdot)</script></span>是指示函数，定义为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+sign(z)=\left \{
 \begin{aligned}
-    +1 \qquad z \ge 0\
-    -1 \qquad z \lt 0\
+    +1 \qquad z \ge 0\\
+    -1 \qquad z \lt 0\\
  \end{aligned}
  \right.
-$$</p>
+</div>
+<script type="math/tex; mode=display">
+sign(z)=\left \{
+\begin{aligned}
+    +1 \qquad z \ge 0\\
+    -1 \qquad z \lt 0\\
+ \end{aligned}
+ \right.
+</script>
+</div>
 <h2 id="_3">感知机损失函数<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p>对于误分类的点<span class="arithmatex"><span class="MathJax_Preview">(x^{(i)},y^{(i)})</span><script type="math/tex">(x^{(i)},y^{(i)})</script></span>存在两种情况(这里注意<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}\in \{+1,-1 \},x ,\theta \in \mathbb{R}^{n+1}</span><script type="math/tex">y^{(i)}\in \{+1,-1 \},x ,\theta \in \mathbb{R}^{n+1}</script></span>)：</p>
 <ul>
 <li>如果<span class="arithmatex"><span class="MathJax_Preview">\theta^T x^{(i)} \gt 0</span><script type="math/tex">\theta^T x^{(i)} \gt 0</script></span>，本来应该是属于<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}=+1</span><script type="math/tex">y^{(i)}=+1</script></span>类别，但误分类为<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}=-1</span><script type="math/tex">y^{(i)}=-1</script></span>类别，则有<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}\theta^T\cdot x^{(i)}&lt;0</span><script type="math/tex">y^{(i)}\theta^T\cdot x^{(i)}<0</script></span>；</li>
 <li>如果<span class="arithmatex"><span class="MathJax_Preview">\theta^T x^{(i)} \lt 0</span><script type="math/tex">\theta^T x^{(i)} \lt 0</script></span>，本来应该是属于<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}=-1</span><script type="math/tex">y^{(i)}=-1</script></span>类别，但误分类为<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}=+1</span><script type="math/tex">y^{(i)}=+1</script></span>类别，则有<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}\theta^T\cdot x^{(i)}&lt;0</span><script type="math/tex">y^{(i)}\theta^T\cdot x^{(i)}<0</script></span>；</li>
 </ul>
-<p>所以误分类的点到超平面的距离为：
-$$
--\frac{1}{||\theta||}y<sup>{(i)}(\theta</sup>T \cdot x^{(i)})
-$$</p>
-<blockquote>
+<p>所以误分类的点到超平面的距离为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+-\frac{1}{||\theta||}y^{(i)}(\theta^T \cdot x^{(i)})
+</div>
+<script type="math/tex; mode=display">
+-\frac{1}{||\theta||}y^{(i)}(\theta^T \cdot x^{(i)})
+</script>
+</div>
+<div class="admonition note">
+<p class="admonition-title">点到直线的距离</p>
 <p>点<span class="arithmatex"><span class="MathJax_Preview">(x_0,y_0)到直线ax+by+c=0</span><script type="math/tex">(x_0,y_0)到直线ax+by+c=0</script></span>的距离为：
-$$
-\begin{aligned}
-\left \Arrowvert \frac{ax_0+by_0+c}{\sqrt{a<sup>2+b</sup>2}} \right \Arrowvert
-\end{aligned}
-$$
-</p>
-</blockquote>
-<p>假设所有误分类的点的集合为<span class="arithmatex"><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>，则所有误分类点到超平面的距离之和为：
-$$
--\frac{1}{||\theta||} \sum_{x^{(i)}\in M}y<sup>{(i)}(\theta</sup>T \cdot x^{(i)})
-$$
-可以发现分子和分母都含有<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>，且两者有固定的倍数关系，即当分子的<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>扩大<span class="arithmatex"><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span>倍，分母也会扩大<span class="arithmatex"><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span>倍。所以可以固定分子或者分母为1，然后求另一个分子或分母的倒数的最小化最为损失函数，这样就可以简化模型。在感知机模型中，采用的是保留分子，即感知机模型的损失函数简化为：
-$$
-J(\theta)=-\sum_{x^{(i)}\in M}y<sup>{(i)}(\theta</sup>T \cdot x^{(i)})
-$$
-<mark>在感知机里面采用的是保留分子，分母固定为1，而在支持向量机中采用的是保留分母，分子固定为1，求<span class="arithmatex"><span class="MathJax_Preview">1/||\theta||</span><script type="math/tex">1/||\theta||</script></span>最大化</mark>。</p>
+<span class="arithmatex"><span class="MathJax_Preview">\left \Arrowvert (ax_{0}+by_{0}+c)/{\sqrt{a^2+b^2}} \right \Arrowvert</span><script type="math/tex">\left \Arrowvert (ax_{0}+by_{0}+c)/{\sqrt{a^2+b^2}} \right \Arrowvert</script></span></p>
+</div>
+<p>假设所有误分类的点的集合为<span class="arithmatex"><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>，则所有误分类点到超平面的距离之和为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+-\frac{1}{||\theta||} \sum_{x^{(i)}\in M}y^{(i)}(\theta^T \cdot x^{(i)})
+</div>
+<script type="math/tex; mode=display">
+-\frac{1}{||\theta||} \sum_{x^{(i)}\in M}y^{(i)}(\theta^T \cdot x^{(i)})
+</script>
+</div>
+<p>可以发现分子和分母都含有<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>，且两者有固定的倍数关系，即当分子的<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>扩大<span class="arithmatex"><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span>倍，分母也会扩大<span class="arithmatex"><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span>倍。所以可以固定分子或者分母为1，然后求另一个分子或分母的倒数的最小化最为损失函数，这样就可以简化模型。在感知机模型中，采用的是保留分子，即感知机模型的损失函数简化为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+J(\theta)=-\sum_{x^{(i)}\in M}y^{(i)}(\theta^T \cdot x^{(i)})
+</div>
+<script type="math/tex; mode=display">
+J(\theta)=-\sum_{x^{(i)}\in M}y^{(i)}(\theta^T \cdot x^{(i)})
+</script>
+</div>
+<p><mark>在感知机里面采用的是保留分子，分母固定为1，而在支持向量机中采用的是保留分母，分子固定为1，求<span class="arithmatex"><span class="MathJax_Preview">1/||\theta||</span><script type="math/tex">1/||\theta||</script></span>最大化</mark>。</p>
 <h2 id="_4">感知机算法<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p>感知机的损失函数是一个凸函数，可以直接采用梯度下降法或牛顿法解决，常用的是梯度下降法。这里需要注意的是<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}\in M</span><script type="math/tex">x^{(i)}\in M</script></span>即只有误分类点集合<span class="arithmatex"><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>的样本才能参与损失函数的优化。感知机模型采用随机梯度下降法，每次仅仅需要一个误分类的点<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}\theta^T\cdot x^{(i)}&lt;0</span><script type="math/tex">y^{(i)}\theta^T\cdot x^{(i)}<0</script></span>来更新梯度。</p>
-<p>损失函数基于<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的偏导数是：
-$$
-\frac{\partial}{\partial \theta}J(\theta)=-\sum_{x^{(i)}\in M}y<sup>{(i)}x</sup>{(i)}
-$$
-<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的梯度下降公式应该为：
-$$
-\theta = \theta +\alpha\sum_{x^{(i)}\in M}y<sup>{(i)}x</sup>{(i)}
-$$
-由于采用随机梯度下降法，所以每次仅仅采用一个误分类的样本来计算梯度，假设采用第<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>个样本来更新梯度，则<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的迭代公式为：
-$$
-\theta =\theta + \alpha y<sup>{(i)}x</sup>{(i)}
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>为步长(或学习率)，<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}</span><script type="math/tex">y^{(i)}</script></span>为样本输出+1或者-1，<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}\in \mathbb{R}^{n+1}</span><script type="math/tex">x^{(i)}\in \mathbb{R}^{n+1}</script></span>。</p>
+<p>损失函数基于<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的偏导数是：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\frac{\partial}{\partial \theta}J(\theta)=-\sum_{x^{(i)}\in M}y^{(i)}x^{(i)}
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial}{\partial \theta}J(\theta)=-\sum_{x^{(i)}\in M}y^{(i)}x^{(i)}
+</script>
+</div>
+<p><span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的梯度下降公式应该为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\theta = \theta +\alpha\sum_{x^{(i)}\in M}y^{(i)}x^{(i)}
+</div>
+<script type="math/tex; mode=display">
+\theta = \theta +\alpha\sum_{x^{(i)}\in M}y^{(i)}x^{(i)}
+</script>
+</div>
+<p>由于采用随机梯度下降法，所以每次仅仅采用一个误分类的样本来计算梯度，假设采用第<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>个样本来更新梯度，则<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的迭代公式为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\theta =\theta + \alpha y^{(i)}x^{(i)}
+</div>
+<script type="math/tex; mode=display">
+\theta =\theta + \alpha y^{(i)}x^{(i)}
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>为步长(或学习率)，<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}</span><script type="math/tex">y^{(i)}</script></span>为样本输出+1或者-1，<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}\in \mathbb{R}^{n+1}</span><script type="math/tex">x^{(i)}\in \mathbb{R}^{n+1}</script></span>。</p>
 <p>感知机算法的实现
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Perceptron</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">n_iterations</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
@@ -1374,15 +1425,25 @@ $$
 <p>这种算法的直观解释是：<strong>当一个实例点被误分类，即位于分离超平面的错误一侧时，则调整参数<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的值，使得分离超平面向该误分类点的一侧移动，以减少该误分类点与超平面的距离，直至超平面越过该误分类点使其被正确分类。</strong></p>
 <p><strong>对于线性可分数据集感知机学习算法原始形式手链，即经过有限次迭代可以得到一个将数据集完全正确划分的分离超平面</strong>。</p>
 <h2 id="_5">感知机对偶形式<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
-<p>感知机模型的原始形式<span class="arithmatex"><span class="MathJax_Preview">\theta = \theta+\alpha y^{(i)}x^{(i)}</span><script type="math/tex">\theta = \theta+\alpha y^{(i)}x^{(i)}</script></span>可以看到，每次梯度的迭代都是选择一个样本来更新<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>向量，经过若干次的迭代得到最终的结果。对于从来都没有误分类过的样本，它被选择参与<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的迭代次数是0，对于多次分类错误的样本<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>，设其参与<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>迭代的次数为<span class="arithmatex"><span class="MathJax_Preview">m_j</span><script type="math/tex">m_j</script></span>。令<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>向量的初始值为0，这样<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>向量的表达式可以写成：
-$$
-\theta = \alpha\sum_{j=1}^{m}m_j y<sup>{(j)}x</sup>{(j)}
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">m_j</span><script type="math/tex">m_j</script></span>为样本<span class="arithmatex"><span class="MathJax_Preview">(x^{(j)},y^{(j)})</span><script type="math/tex">(x^{(j)},y^{(j)})</script></span>在随机梯度下降到当前这一步之前因误分类而更新的次数。每一个样本<span class="arithmatex"><span class="MathJax_Preview">(x^{(j)},y^{(j)})</span><script type="math/tex">(x^{(j)},y^{(j)})</script></span>的<span class="arithmatex"><span class="MathJax_Preview">m_j</span><script type="math/tex">m_j</script></span>初始值为0，每当样本在梯度下降迭代中因误分类而被更新时<span class="arithmatex"><span class="MathJax_Preview">m_j\leftarrow m_j+1</span><script type="math/tex">m_j\leftarrow m_j+1</script></span>。由于<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>是常量，令<span class="arithmatex"><span class="MathJax_Preview">\beta_j=\alpha m_j</span><script type="math/tex">\beta_j=\alpha m_j</script></span>，则向量<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的表达式为：
-$$
-\theta = \sum_{j=1}^m \beta_j y<sup>{(j)}x</sup>{(j)}
-$$
-对于每一步判断误分类的条件，可以从<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}\theta^T\cdot x^{(i)} \le0</span><script type="math/tex">y^{(i)}\theta^T\cdot x^{(i)} \le0</script></span> 变为<span class="arithmatex"><span class="MathJax_Preview">y^{(i)} \sum_{j=1}^m \beta_j y^{(j)}x^{(j)} \cdot x^{(i)} \le0</span><script type="math/tex">y^{(i)} \sum_{j=1}^m \beta_j y^{(j)}x^{(j)} \cdot x^{(i)} \le0</script></span>来判断。在这个判断条件中存在两个样本<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>和<span class="arithmatex"><span class="MathJax_Preview">x^{(j)}</span><script type="math/tex">x^{(j)}</script></span>的内积，这个内积计算的结果在后续的迭代过程中是可以重复使用的。为了方便，可以预先将训练集中样本内积计算出来并以矩阵的形式存储，称为Gram矩阵，这是一个对称矩阵，记作<span class="arithmatex"><span class="MathJax_Preview">G=[x^{(i)},y^{(j)}]</span><script type="math/tex">G=[x^{(i)},y^{(j)}]</script></span>。Gram矩阵就是支持向量机对偶模型比原始模型高效的原因。</p>
+<p>感知机模型的原始形式<span class="arithmatex"><span class="MathJax_Preview">\theta = \theta+\alpha y^{(i)}x^{(i)}</span><script type="math/tex">\theta = \theta+\alpha y^{(i)}x^{(i)}</script></span>可以看到，每次梯度的迭代都是选择一个样本来更新<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>向量，经过若干次的迭代得到最终的结果。对于从来都没有误分类过的样本，它被选择参与<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的迭代次数是0，对于多次分类错误的样本<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>，设其参与<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>迭代的次数为<span class="arithmatex"><span class="MathJax_Preview">m_j</span><script type="math/tex">m_j</script></span>。令<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>向量的初始值为0，这样<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>向量的表达式可以写成：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\theta = \alpha\sum_{j=1}^{m}m_j y^{(j)}x^{(j)}
+</div>
+<script type="math/tex; mode=display">
+\theta = \alpha\sum_{j=1}^{m}m_j y^{(j)}x^{(j)}
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">m_j</span><script type="math/tex">m_j</script></span>为样本<span class="arithmatex"><span class="MathJax_Preview">(x^{(j)},y^{(j)})</span><script type="math/tex">(x^{(j)},y^{(j)})</script></span>在随机梯度下降到当前这一步之前因误分类而更新的次数。每一个样本<span class="arithmatex"><span class="MathJax_Preview">(x^{(j)},y^{(j)})</span><script type="math/tex">(x^{(j)},y^{(j)})</script></span>的<span class="arithmatex"><span class="MathJax_Preview">m_j</span><script type="math/tex">m_j</script></span>初始值为0，每当样本在梯度下降迭代中因误分类而被更新时<span class="arithmatex"><span class="MathJax_Preview">m_j\leftarrow m_j+1</span><script type="math/tex">m_j\leftarrow m_j+1</script></span>。由于<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>是常量，令<span class="arithmatex"><span class="MathJax_Preview">\beta_j=\alpha m_j</span><script type="math/tex">\beta_j=\alpha m_j</script></span>，则向量<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的表达式为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\theta = \sum_{j=1}^m \beta_j y^{(j)}x^{(j)}
+</div>
+<script type="math/tex; mode=display">
+\theta = \sum_{j=1}^m \beta_j y^{(j)}x^{(j)}
+</script>
+</div>
+<p>对于每一步判断误分类的条件，可以从<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}\theta^T\cdot x^{(i)} \le0</span><script type="math/tex">y^{(i)}\theta^T\cdot x^{(i)} \le0</script></span> 变为<span class="arithmatex"><span class="MathJax_Preview">y^{(i)} \sum_{j=1}^m \beta_j y^{(j)}x^{(j)} \cdot x^{(i)} \le0</span><script type="math/tex">y^{(i)} \sum_{j=1}^m \beta_j y^{(j)}x^{(j)} \cdot x^{(i)} \le0</script></span>来判断。在这个判断条件中存在两个样本<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>和<span class="arithmatex"><span class="MathJax_Preview">x^{(j)}</span><script type="math/tex">x^{(j)}</script></span>的内积，这个内积计算的结果在后续的迭代过程中是可以重复使用的。为了方便，可以预先将训练集中样本内积计算出来并以矩阵的形式存储，称为Gram矩阵，这是一个对称矩阵，记作<span class="arithmatex"><span class="MathJax_Preview">G=[x^{(i)},y^{(j)}]</span><script type="math/tex">G=[x^{(i)},y^{(j)}]</script></span>。Gram矩阵就是支持向量机对偶模型比原始模型高效的原因。</p>
 <p>感知机学习算法的对偶形式：</p>
 <blockquote>
 <p>输入：训练数据集<span class="arithmatex"><span class="MathJax_Preview">D={(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(m)},y^{(m)})},\beta=0,\alpha=1</span><script type="math/tex">D={(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(m)},y^{(m)})},\beta=0,\alpha=1</script></span></p>
@@ -1396,13 +1457,19 @@ $$
 \end{aligned}
 $$
 (4)转至(2)，直至训练集中没有误分类点。</p>
-<p>(5)此时<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>向量的结果为
-$$
+<p>(5)此时<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>向量的结果为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{aligned}
-\theta =\sum_{j=1}^m \beta_j y<sup>{(j)}x</sup>{(j)}
+\theta =\sum_{j=1}^m \beta_j y^{(j)}x^{(j)}
 \end{aligned}
-$$
-</p>
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\theta =\sum_{j=1}^m \beta_j y^{(j)}x^{(j)}
+\end{aligned}
+</script>
+</div>
 </blockquote>
 
               

@@ -653,8 +653,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
-        集成学习算法之GBDT
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
       </a>
     </li>
   
@@ -667,8 +667,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
-        集成学习算法之RF
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
+        集成学习算法之GBDT
       </a>
     </li>
   
@@ -1240,78 +1240,152 @@
 <h1 id="lle">降维算法之LLE<a class="headerlink" href="#lle" title="Permanent link">&para;</a></h1>
 <p>局部线性嵌入(Locally Linear Embedding,简称LLE)也是非常重要的降维算法。和传统的PCA、LDA等关注样本方差的降维方法相比，LLE关注降维时保持样本局部的线性特征，由于LLE在降维时保持了样本的局部特征，广泛地用于图像识别、高维数据可视化等领域。</p>
 <h2 id="lle_1">LLE算法思想<a class="headerlink" href="#lle_1" title="Permanent link">&para;</a></h2>
-<p>LLE假设数据在较小的局部是线性的，即某一个数据可以有它领域中几个样本来线性表示。如一个样本<span class="arithmatex"><span class="MathJax_Preview">x_1</span><script type="math/tex">x_1</script></span>，在它的高维邻域里用<span class="arithmatex"><span class="MathJax_Preview">k-</span><script type="math/tex">k-</script></span>近邻思想找到和它最近的三个样本<span class="arithmatex"><span class="MathJax_Preview">x_2,x_3,x_4</span><script type="math/tex">x_2,x_3,x_4</script></span>，然后假设<span class="arithmatex"><span class="MathJax_Preview">x_1</span><script type="math/tex">x_1</script></span>可以用<span class="arithmatex"><span class="MathJax_Preview">x_2,x_3,x_4</span><script type="math/tex">x_2,x_3,x_4</script></span>来表示。
-$$
+<p>LLE假设数据在较小的局部是线性的，即某一个数据可以有它领域中几个样本来线性表示。如一个样本<span class="arithmatex"><span class="MathJax_Preview">x_1</span><script type="math/tex">x_1</script></span>，在它的高维邻域里用<span class="arithmatex"><span class="MathJax_Preview">k-</span><script type="math/tex">k-</script></span>近邻思想找到和它最近的三个样本<span class="arithmatex"><span class="MathJax_Preview">x_2,x_3,x_4</span><script type="math/tex">x_2,x_3,x_4</script></span>，然后假设<span class="arithmatex"><span class="MathJax_Preview">x_1</span><script type="math/tex">x_1</script></span>可以用<span class="arithmatex"><span class="MathJax_Preview">x_2,x_3,x_4</span><script type="math/tex">x_2,x_3,x_4</script></span>来表示。</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 x_1=w_{12}x_2+w_{13}x_3+w_{14}x_4
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">w_{12},w_{13},w_{14}</span><script type="math/tex">w_{12},w_{13},w_{14}</script></span>为权重系数。通过LLE降维后，假设<span class="arithmatex"><span class="MathJax_Preview">x_1</span><script type="math/tex">x_1</script></span>在低维空间对应的投影<span class="arithmatex"><span class="MathJax_Preview">x_1^{'}</span><script type="math/tex">x_1^{'}</script></span>和<span class="arithmatex"><span class="MathJax_Preview">x_2,x_3,x_4</span><script type="math/tex">x_2,x_3,x_4</script></span>对应的投影<span class="arithmatex"><span class="MathJax_Preview">x_2^{'},x_3^{'},x_4^{'}</span><script type="math/tex">x_2^{'},x_3^{'},x_4^{'}</script></span>也尽量保持同样的线性关系，即
-$$
-x_1^{'} \approx w_{12}x_2<sup>{'}+w_{13}x_3</sup>{'}+w_{14}x_4^{'}
-$$
-也就是说投影前后线性关系的权重系数<span class="arithmatex"><span class="MathJax_Preview">w_{12},w_{13},w_{14}</span><script type="math/tex">w_{12},w_{13},w_{14}</script></span>尽量不变或最小改变。由于线性关系只在样本的附近起作用，离样本远的点对局部的线性关系没有影响，因此降维的复杂度降低了很多。</p>
+</div>
+<script type="math/tex; mode=display">
+x_1=w_{12}x_2+w_{13}x_3+w_{14}x_4
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">w_{12},w_{13},w_{14}</span><script type="math/tex">w_{12},w_{13},w_{14}</script></span>为权重系数。通过LLE降维后，假设<span class="arithmatex"><span class="MathJax_Preview">x_1</span><script type="math/tex">x_1</script></span>在低维空间对应的投影<span class="arithmatex"><span class="MathJax_Preview">x_1^{'}</span><script type="math/tex">x_1^{'}</script></span>和<span class="arithmatex"><span class="MathJax_Preview">x_2,x_3,x_4</span><script type="math/tex">x_2,x_3,x_4</script></span>对应的投影<span class="arithmatex"><span class="MathJax_Preview">x_2^{'},x_3^{'},x_4^{'}</span><script type="math/tex">x_2^{'},x_3^{'},x_4^{'}</script></span>也尽量保持同样的线性关系，即</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+x_1^{'} \approx w_{12}x_2^{'}+w_{13}x_3^{'}+w_{14}x_4^{'}
+</div>
+<script type="math/tex; mode=display">
+x_1^{'} \approx w_{12}x_2^{'}+w_{13}x_3^{'}+w_{14}x_4^{'}
+</script>
+</div>
+<p>也就是说投影前后线性关系的权重系数<span class="arithmatex"><span class="MathJax_Preview">w_{12},w_{13},w_{14}</span><script type="math/tex">w_{12},w_{13},w_{14}</script></span>尽量不变或最小改变。由于线性关系只在样本的附近起作用，离样本远的点对局部的线性关系没有影响，因此降维的复杂度降低了很多。</p>
 <h2 id="lle_2">LLE算法推导<a class="headerlink" href="#lle_2" title="Permanent link">&para;</a></h2>
 <p>对于LLE算法，首先需要确定邻域<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>的大小，即需要多少个邻域样本来线性表示某个样本。假设这个值为<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>，可以通过和knn一样的思想通过距离度量比如欧氏距离来选择某样本的<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>个最近邻。</p>
-<p>假设现有<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>个<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>维样本<span class="arithmatex"><span class="MathJax_Preview">\{x_1,x_2,...,x_m\}</span><script type="math/tex">\{x_1,x_2,...,x_m\}</script></span>可以用均方差作为回归问题的损失函数，即：
-$$
-J(w)=\sum_{i=1}^m ||x_i-\sum_{j=1}<sup>kw_{ij}x_j||_2</sup>2
-$$
-一般会对权重系数<span class="arithmatex"><span class="MathJax_Preview">w_{ij}</span><script type="math/tex">w_{ij}</script></span>做归一化的限制，即权重系数需满足
-$$
+<p>假设现有<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>个<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>维样本<span class="arithmatex"><span class="MathJax_Preview">\{x_1,x_2,...,x_m\}</span><script type="math/tex">\{x_1,x_2,...,x_m\}</script></span>可以用均方差作为回归问题的损失函数，即：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+J(w)=\sum_{i=1}^m ||x_i-\sum_{j=1}^kw_{ij}x_j||_2^2
+</div>
+<script type="math/tex; mode=display">
+J(w)=\sum_{i=1}^m ||x_i-\sum_{j=1}^kw_{ij}x_j||_2^2
+</script>
+</div>
+<p>一般会对权重系数<span class="arithmatex"><span class="MathJax_Preview">w_{ij}</span><script type="math/tex">w_{ij}</script></span>做归一化的限制，即权重系数需满足</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \sum_{j=1}^k w_{ij}=1
-$$
-对于不在样本<span class="arithmatex"><span class="MathJax_Preview">x_i</span><script type="math/tex">x_i</script></span>邻域内的样本<span class="arithmatex"><span class="MathJax_Preview">x_j</span><script type="math/tex">x_j</script></span>，令其<span class="arithmatex"><span class="MathJax_Preview">w_{ij}=0</span><script type="math/tex">w_{ij}=0</script></span></p>
-<p>对于式(3)，我们将其矩阵化：
-$$
+</div>
+<script type="math/tex; mode=display">
+\sum_{j=1}^k w_{ij}=1
+</script>
+</div>
+<p>对于不在样本<span class="arithmatex"><span class="MathJax_Preview">x_i</span><script type="math/tex">x_i</script></span>邻域内的样本<span class="arithmatex"><span class="MathJax_Preview">x_j</span><script type="math/tex">x_j</script></span>，令其<span class="arithmatex"><span class="MathJax_Preview">w_{ij}=0</span><script type="math/tex">w_{ij}=0</script></span></p>
+<p>对于式(3)，我们将其矩阵化：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{aligned}
 J(W)
-&amp;=\sum_{i=1}^m ||x_i-\sum_{j=1}<sup>kw_{ij}x_j||_2</sup>2\
-&amp;=\sum_{i=1}^m ||\sum_{j=1}^k w_{ij}\cdot x_i-\sum_{j=1}^k w_{ij}x_j||\
-&amp;=\sum_{i=1}^m ||\sum_{j=1}^k w_{ij}(x_i-x_j)||<em>2^2\
-&amp;=\sum</em>{i=1}^m W_i^T (x_i-x_j)^T(x_i-x_j)W_i
+&amp;=\sum_{i=1}^m ||x_i-\sum_{j=1}^kw_{ij}x_j||_2^2\\
+&amp;=\sum_{i=1}^m ||\sum_{j=1}^k w_{ij}\cdot x_i-\sum_{j=1}^k w_{ij}x_j||\\
+&amp;=\sum_{i=1}^m ||\sum_{j=1}^k w_{ij}(x_i-x_j)||_2^2\\
+&amp;=\sum_{i=1}^m W_i^T (x_i-x_j)^T(x_i-x_j)W_i
 \end{aligned}
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">W_i=(w_{i1},w_{i2},...,w_{ik})^T</span><script type="math/tex">W_i=(w_{i1},w_{i2},...,w_{ik})^T</script></span>。令矩阵<span class="arithmatex"><span class="MathJax_Preview">Z_i=(x_i-x_j)^T (x_i-x_j)</span><script type="math/tex">Z_i=(x_i-x_j)^T (x_i-x_j)</script></span>则上式进一步简化为
-$$
+</div>
+<script type="math/tex; mode=display">
 \begin{aligned}
-J(W)=\sum_{i=1}^m W_i^T Z_i W_i\
+J(W)
+&=\sum_{i=1}^m ||x_i-\sum_{j=1}^kw_{ij}x_j||_2^2\\
+&=\sum_{i=1}^m ||\sum_{j=1}^k w_{ij}\cdot x_i-\sum_{j=1}^k w_{ij}x_j||\\
+&=\sum_{i=1}^m ||\sum_{j=1}^k w_{ij}(x_i-x_j)||_2^2\\
+&=\sum_{i=1}^m W_i^T (x_i-x_j)^T(x_i-x_j)W_i
+\end{aligned}
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">W_i=(w_{i1},w_{i2},...,w_{ik})^T</span><script type="math/tex">W_i=(w_{i1},w_{i2},...,w_{ik})^T</script></span>。令矩阵<span class="arithmatex"><span class="MathJax_Preview">Z_i=(x_i-x_j)^T (x_i-x_j)</span><script type="math/tex">Z_i=(x_i-x_j)^T (x_i-x_j)</script></span>则上式进一步简化为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{aligned}
+J(W)=\sum_{i=1}^m W_i^T Z_i W_i\\
 s.t. \sum_{i=1}^k w_{ij}=W_i^T 1_k=1
 \end{aligned}
-$$
-利用拉格朗日乘子法合为一个优化目标：
-$$
-L(W)=\sum_{i=1}<sup>mW_i</sup>T Z_i W_i+\lambda (W_i^T 1_k-1)
-$$
-对式(5)求导令其为0，可以得到：
-$$
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}
+J(W)=\sum_{i=1}^m W_i^T Z_i W_i\\
+s.t. \sum_{i=1}^k w_{ij}=W_i^T 1_k=1
+\end{aligned}
+</script>
+</div>
+<p>利用拉格朗日乘子法合为一个优化目标：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+L(W)=\sum_{i=1}^mW_i^T Z_i W_i+\lambda (W_i^T 1_k-1)
+</div>
+<script type="math/tex; mode=display">
+L(W)=\sum_{i=1}^mW_i^T Z_i W_i+\lambda (W_i^T 1_k-1)
+</script>
+</div>
+<p>对式(5)求导令其为0，可以得到：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 2Z_iW_i +\lambda 1_k=0
-$$
-最后得到
-$$
-W_i=\lambda<sup>{'}Z_i</sup>{-1}1_k
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">\lambda^{'}=-\frac{1}{2}\lambda</span><script type="math/tex">\lambda^{'}=-\frac{1}{2}\lambda</script></span>为一个常数。利用<span class="arithmatex"><span class="MathJax_Preview">W_i^T 1_k=1</span><script type="math/tex">W_i^T 1_k=1</script></span>对<span class="arithmatex"><span class="MathJax_Preview">W_i</span><script type="math/tex">W_i</script></span>归一化，那么最终权重系数<span class="arithmatex"><span class="MathJax_Preview">W_i</span><script type="math/tex">W_i</script></span>为：
-$$
-W_i=\frac{Z_i<sup>{-1}1_k}{1_k</sup>T Z_i^{-1}1_k}
-$$</p>
+</div>
+<script type="math/tex; mode=display">
+2Z_iW_i +\lambda 1_k=0
+</script>
+</div>
+<p>最后得到</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+W_i=\lambda^{'}Z_i^{-1}1_k
+</div>
+<script type="math/tex; mode=display">
+W_i=\lambda^{'}Z_i^{-1}1_k
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">\lambda^{'}=-\frac{1}{2}\lambda</span><script type="math/tex">\lambda^{'}=-\frac{1}{2}\lambda</script></span>为一个常数。利用<span class="arithmatex"><span class="MathJax_Preview">W_i^T 1_k=1</span><script type="math/tex">W_i^T 1_k=1</script></span>对<span class="arithmatex"><span class="MathJax_Preview">W_i</span><script type="math/tex">W_i</script></span>归一化，那么最终权重系数<span class="arithmatex"><span class="MathJax_Preview">W_i</span><script type="math/tex">W_i</script></span>为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+W_i=\frac{Z_i^{-1}1_k}{1_k^T Z_i^{-1}1_k}
+</div>
+<script type="math/tex; mode=display">
+W_i=\frac{Z_i^{-1}1_k}{1_k^T Z_i^{-1}1_k}
+</script>
+</div>
 <p>通过式(5)就可以得到高维的权重系数，如果现有<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>维样本集<span class="arithmatex"><span class="MathJax_Preview">\{x_1,x_2,...,x_m\}</span><script type="math/tex">\{x_1,x_2,...,x_m\}</script></span>在低维的<span class="arithmatex"><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span>维度投影为<span class="arithmatex"><span class="MathJax_Preview">\{y_1,y_2,...,y_m\}</span><script type="math/tex">\{y_1,y_2,...,y_m\}</script></span>由于希望保持线性关系，对应的均方差损失函数最小，即最小化损失函数<span class="arithmatex"><span class="MathJax_Preview">J(Y)</span><script type="math/tex">J(Y)</script></span>如下
 $$
 J(y)=\sum_{i=1}^m ||y_i - \sum_{j=1}^m w_{ij}y_j||_2^2
 $$
 式(9)和式(3)的损失函数几乎相同。唯一区别是在式(3)中高维数据已知，目标是求最小值对应的权重系数<span class="arithmatex"><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>；而在式(9)中系数权重<span class="arithmatex"><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>已知，求对应的低维数据。</p>
-<p>为了得到标准化的数据，一般会加上如下约束条件：
-$$
+<p>为了得到标准化的数据，一般会加上如下约束条件：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \sum_{i=1}^m y_i=0; \qquad \frac{1}{m}\sum_{i=1}^m y_i y_i^T = I
-$$
-对损失函数(9)矩阵化：
-$$
+</div>
+<script type="math/tex; mode=display">
+\sum_{i=1}^m y_i=0; \qquad \frac{1}{m}\sum_{i=1}^m y_i y_i^T = I
+</script>
+</div>
+<p>对损失函数(9)矩阵化：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
 J(Y)
-&amp;=\sum_{i=1}^m ||y_i-\sum_{j=1}^k w_{ij}y_j||<em>2^2\
-&amp;=\sum</em>{i=1}^m ||Y I_i-YW_i||_2^2\
-&amp;=tr(Y<sup>T(I-W)</sup>T(I-W)Y)
+&amp;=\sum_{i=1}^m ||y_i-\sum_{j=1}^k w_{ij}y_j||_2^2\\
+&amp;=\sum_{i=1}^m ||Y I_i-YW_i||_2^2\\
+&amp;=tr(Y^T(I-W)^T(I-W)Y)
 \end{align}
-$$
-令<span class="arithmatex"><span class="MathJax_Preview">M=(I-W)^T(I-W)</span><script type="math/tex">M=(I-W)^T(I-W)</script></span>，则优化函数转变为<span class="arithmatex"><span class="MathJax_Preview">J(Y)=tr(Y^T M Y)</span><script type="math/tex">J(Y)=tr(Y^T M Y)</script></span>，约束条件为<span class="arithmatex"><span class="MathJax_Preview">Y^TY=m I</span><script type="math/tex">Y^TY=m I</script></span></p>
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+J(Y)
+&=\sum_{i=1}^m ||y_i-\sum_{j=1}^k w_{ij}y_j||_2^2\\
+&=\sum_{i=1}^m ||Y I_i-YW_i||_2^2\\
+&=tr(Y^T(I-W)^T(I-W)Y)
+\end{align}
+</script>
+</div>
+<p>令<span class="arithmatex"><span class="MathJax_Preview">M=(I-W)^T(I-W)</span><script type="math/tex">M=(I-W)^T(I-W)</script></span>，则优化函数转变为<span class="arithmatex"><span class="MathJax_Preview">J(Y)=tr(Y^T M Y)</span><script type="math/tex">J(Y)=tr(Y^T M Y)</script></span>，约束条件为<span class="arithmatex"><span class="MathJax_Preview">Y^TY=m I</span><script type="math/tex">Y^TY=m I</script></span></p>
 <p>利用拉格朗日乘子法有：
 $$
 L(Y)=tr(Y^T MY)+\lambda(Y^T Y- m I)

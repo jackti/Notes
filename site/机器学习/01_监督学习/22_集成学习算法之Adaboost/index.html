@@ -743,8 +743,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
-        集成学习算法之GBDT
+      <a href="../23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
       </a>
     </li>
   
@@ -757,8 +757,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
-        集成学习算法之RF
+      <a href="../24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
+        集成学习算法之GBDT
       </a>
     </li>
   
@@ -1310,229 +1310,446 @@
 <blockquote>
 <p>输入：训练数据集<span class="arithmatex"><span class="MathJax_Preview">T=\{(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(N)},y^{(N)})\}</span><script type="math/tex">T=\{(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(N)},y^{(N)})\}</script></span> 和弱学习器算法，其中<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}\in\mathbb{R}^n,y^{(i)}\in\{+1,-1\}</span><script type="math/tex">x^{(i)}\in\mathbb{R}^n,y^{(i)}\in\{+1,-1\}</script></span></p>
 <p>输出：最终的分类器<span class="arithmatex"><span class="MathJax_Preview">G(x)</span><script type="math/tex">G(x)</script></span></p>
-<p>(1)初始化训练数据的分布
-$$
+<p>(1)初始化训练数据的分布</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 D_1=(w_{11},...,w_{1i},...,w_{1N}),w_{1i}=\frac{1}{N}\quad i=1,2,...,N \notag
-$$
-(2)对于<span class="arithmatex"><span class="MathJax_Preview">m=1,2,...,M</span><script type="math/tex">m=1,2,...,M</script></span></p>
-<p>​ ①使用具有权值分布<span class="arithmatex"><span class="MathJax_Preview">D_m</span><script type="math/tex">D_m</script></span>的训练数据集学习，得到基本分类器
-$$
-G_m(x):\mathcal{X}\Rightarrow{-1,+1}\notag
-$$
-​ ②计算<span class="arithmatex"><span class="MathJax_Preview">G_m(x)</span><script type="math/tex">G_m(x)</script></span>在训练数据集上的分类误差率
-$$
-e_m = P(G_m(x^{(i)})\ne y<sup>{(i)})=\sum_{i=1}</sup>Nw_{mi}I(G_m(x^{(i)})\ne y<sup>{(i)})=\sum_{G_m(x</sup>{(i)})\ne y^{(i)}}w_{mi}\notag
-$$
-​ 这里<span class="arithmatex"><span class="MathJax_Preview">w_{mi}</span><script type="math/tex">w_{mi}</script></span>表示第<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>轮中第<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>个实例的权值，且<span class="arithmatex"><span class="MathJax_Preview">\sum_{i=1}^N w_{mi}=1</span><script type="math/tex">\sum_{i=1}^N w_{mi}=1</script></span>。这表明<span class="arithmatex"><span class="MathJax_Preview">G_m(x)</span><script type="math/tex">G_m(x)</script></span>在加权的训练数据集上的分类误差率是<span class="arithmatex"><span class="MathJax_Preview">G_m(x)</span><script type="math/tex">G_m(x)</script></span>误分类样本的权值之和。</p>
-<p>​ ③计算<span class="arithmatex"><span class="MathJax_Preview">G_m(x)</span><script type="math/tex">G_m(x)</script></span>的系数
-$$
+</div>
+<script type="math/tex; mode=display">
+D_1=(w_{11},...,w_{1i},...,w_{1N}),w_{1i}=\frac{1}{N}\quad i=1,2,...,N \notag
+</script>
+</div>
+<p>(2)对于<span class="arithmatex"><span class="MathJax_Preview">m=1,2,...,M</span><script type="math/tex">m=1,2,...,M</script></span></p>
+<p>​ ①使用具有权值分布<span class="arithmatex"><span class="MathJax_Preview">D_m</span><script type="math/tex">D_m</script></span>的训练数据集学习，得到基本分类器</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+G_m(x):\mathcal{X}\Rightarrow\{-1,+1\}\notag
+</div>
+<script type="math/tex; mode=display">
+G_m(x):\mathcal{X}\Rightarrow\{-1,+1\}\notag
+</script>
+</div>
+<p>​ ②计算<span class="arithmatex"><span class="MathJax_Preview">G_m(x)</span><script type="math/tex">G_m(x)</script></span>在训练数据集上的分类误差率</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+e_m = P(G_m(x^{(i)})\ne y^{(i)})=\sum_{i=1}^Nw_{mi}I(G_m(x^{(i)})\ne y^{(i)})=\sum_{G_m(x^{(i)})\ne y^{(i)}}w_{mi}\notag
+</div>
+<script type="math/tex; mode=display">
+e_m = P(G_m(x^{(i)})\ne y^{(i)})=\sum_{i=1}^Nw_{mi}I(G_m(x^{(i)})\ne y^{(i)})=\sum_{G_m(x^{(i)})\ne y^{(i)}}w_{mi}\notag
+</script>
+</div>
+<p>​ 这里<span class="arithmatex"><span class="MathJax_Preview">w_{mi}</span><script type="math/tex">w_{mi}</script></span>表示第<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>轮中第<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>个实例的权值，且<span class="arithmatex"><span class="MathJax_Preview">\sum_{i=1}^N w_{mi}=1</span><script type="math/tex">\sum_{i=1}^N w_{mi}=1</script></span>。这表明<span class="arithmatex"><span class="MathJax_Preview">G_m(x)</span><script type="math/tex">G_m(x)</script></span>在加权的训练数据集上的分类误差率是<span class="arithmatex"><span class="MathJax_Preview">G_m(x)</span><script type="math/tex">G_m(x)</script></span>误分类样本的权值之和。</p>
+<p>​ ③计算<span class="arithmatex"><span class="MathJax_Preview">G_m(x)</span><script type="math/tex">G_m(x)</script></span>的系数</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \alpha_m=\frac{1}{2}\ln\frac{1-e_m}{e_m}\notag
-$$
-<span class="arithmatex"><span class="MathJax_Preview">\alpha_m</span><script type="math/tex">\alpha_m</script></span>表示<span class="arithmatex"><span class="MathJax_Preview">G_m(x)</span><script type="math/tex">G_m(x)</script></span>在最终分类器中的重要性。当<span class="arithmatex"><span class="MathJax_Preview">e_m\le\frac{1}{2}</span><script type="math/tex">e_m\le\frac{1}{2}</script></span>时，<span class="arithmatex"><span class="MathJax_Preview">\alpha_m\ge0</span><script type="math/tex">\alpha_m\ge0</script></span>并且<span class="arithmatex"><span class="MathJax_Preview">\alpha_m</span><script type="math/tex">\alpha_m</script></span>随着<span class="arithmatex"><span class="MathJax_Preview">e_m</span><script type="math/tex">e_m</script></span>的减小而增大，所以误分类率越小的基本分类器在最终的分类器中的作用越大。</p>
-<p>​ ④跟新训练数据集的权值分布
-$$
+</div>
+<script type="math/tex; mode=display">
+\alpha_m=\frac{1}{2}\ln\frac{1-e_m}{e_m}\notag
+</script>
+</div>
+<p><span class="arithmatex"><span class="MathJax_Preview">\alpha_m</span><script type="math/tex">\alpha_m</script></span>表示<span class="arithmatex"><span class="MathJax_Preview">G_m(x)</span><script type="math/tex">G_m(x)</script></span>在最终分类器中的重要性。当<span class="arithmatex"><span class="MathJax_Preview">e_m\le\frac{1}{2}</span><script type="math/tex">e_m\le\frac{1}{2}</script></span>时，<span class="arithmatex"><span class="MathJax_Preview">\alpha_m\ge0</span><script type="math/tex">\alpha_m\ge0</script></span>并且<span class="arithmatex"><span class="MathJax_Preview">\alpha_m</span><script type="math/tex">\alpha_m</script></span>随着<span class="arithmatex"><span class="MathJax_Preview">e_m</span><script type="math/tex">e_m</script></span>的减小而增大，所以误分类率越小的基本分类器在最终的分类器中的作用越大。</p>
+<p>​ ④跟新训练数据集的权值分布</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{array}{}
-D_{m+1}=(w_{m+1,1},w_{m+1,2},...,w_{m+1,N}) \notag \
-w_{m+1,i}=\frac{w_{mi}}{Z_m}\exp(-\alpha_my<sup>{(i)}G_m(x</sup>{(i)})) \qquad i=1,2,...,N
+D_{m+1}=(w_{m+1,1},w_{m+1,2},...,w_{m+1,N}) \notag \\
+w_{m+1,i}=\frac{w_{mi}}{Z_m}\exp(-\alpha_my^{(i)}G_m(x^{(i)})) \qquad i=1,2,...,N
 \end{array}
-$$
-这里<span class="arithmatex"><span class="MathJax_Preview">Z_m</span><script type="math/tex">Z_m</script></span>是规范化因子
-$$
-Z_m=\sum_{i=1}^N w_{mi}\exp(-\alpha_my<sup>{(i)}G_m(x</sup>{(i)}))\notag
-$$
-它使<span class="arithmatex"><span class="MathJax_Preview">D_{m+1}</span><script type="math/tex">D_{m+1}</script></span>称为一个概率分布。可知被基本分类器<span class="arithmatex"><span class="MathJax_Preview">G_m(x)</span><script type="math/tex">G_m(x)</script></span>误分类的样本权重得以扩大，而被正确分类样本的权重得以缩小。</p>
-<p>(3)构建基本分类器的线性组合
-$$
+</div>
+<script type="math/tex; mode=display">
+\begin{array}{}
+D_{m+1}=(w_{m+1,1},w_{m+1,2},...,w_{m+1,N}) \notag \\
+w_{m+1,i}=\frac{w_{mi}}{Z_m}\exp(-\alpha_my^{(i)}G_m(x^{(i)})) \qquad i=1,2,...,N
+\end{array}
+</script>
+</div>
+<p>这里<span class="arithmatex"><span class="MathJax_Preview">Z_m</span><script type="math/tex">Z_m</script></span>是规范化因子</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+Z_m=\sum_{i=1}^N w_{mi}\exp(-\alpha_my^{(i)}G_m(x^{(i)}))\notag
+</div>
+<script type="math/tex; mode=display">
+Z_m=\sum_{i=1}^N w_{mi}\exp(-\alpha_my^{(i)}G_m(x^{(i)}))\notag
+</script>
+</div>
+<p>它使<span class="arithmatex"><span class="MathJax_Preview">D_{m+1}</span><script type="math/tex">D_{m+1}</script></span>称为一个概率分布。可知被基本分类器<span class="arithmatex"><span class="MathJax_Preview">G_m(x)</span><script type="math/tex">G_m(x)</script></span>误分类的样本权重得以扩大，而被正确分类样本的权重得以缩小。</p>
+<p>(3)构建基本分类器的线性组合</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 f(x)=\sum_{i=1}^M\alpha_mG_m(x) \notag
-$$
-线性组合<span class="arithmatex"><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span>实现<span class="arithmatex"><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>个基本分类器的加权表决。系数<span class="arithmatex"><span class="MathJax_Preview">\alpha_m</span><script type="math/tex">\alpha_m</script></span>表示基本分类器<span class="arithmatex"><span class="MathJax_Preview">G_m(x)</span><script type="math/tex">G_m(x)</script></span>的重要性(但是这里所有<span class="arithmatex"><span class="MathJax_Preview">\alpha_m</span><script type="math/tex">\alpha_m</script></span>之和并不为1)，<span class="arithmatex"><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span>的符号决定实例<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>的类，<span class="arithmatex"><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span>的绝对值表示分类的确信度。</p>
+</div>
+<script type="math/tex; mode=display">
+f(x)=\sum_{i=1}^M\alpha_mG_m(x) \notag
+</script>
+</div>
+<p>线性组合<span class="arithmatex"><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span>实现<span class="arithmatex"><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>个基本分类器的加权表决。系数<span class="arithmatex"><span class="MathJax_Preview">\alpha_m</span><script type="math/tex">\alpha_m</script></span>表示基本分类器<span class="arithmatex"><span class="MathJax_Preview">G_m(x)</span><script type="math/tex">G_m(x)</script></span>的重要性(但是这里所有<span class="arithmatex"><span class="MathJax_Preview">\alpha_m</span><script type="math/tex">\alpha_m</script></span>之和并不为1)，<span class="arithmatex"><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span>的符号决定实例<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>的类，<span class="arithmatex"><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span>的绝对值表示分类的确信度。</p>
 </blockquote>
 <h2 id="adaboost_2">Adaboost算法的解释<a class="headerlink" href="#adaboost_2" title="Permanent link">&para;</a></h2>
 <p>在Adaboost算法中直接给出了弱学习器系数公式和样本权重更新迭代公式，并没有给出推导。至于推导过程则可以从Adaboost算法的另一种解释得到：<strong>Adaboost算法是模型为加法模型，损失函数为指数函数，学习算法为前向分步算法的分类问题。</strong></p>
 <p>模型为加法模型很好理解：最终的强分类器是若干个弱分类器加权平均而得到的。</p>
 <h3 id="_1">前向分步算法<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
-<p>考虑加法模型
-$$
+<p>考虑加法模型</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 f(x)=\sum_{i=1}^M\beta_mb(x;\gamma_m)
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">b(x;\gamma_m)</span><script type="math/tex">b(x;\gamma_m)</script></span>为基函数，<span class="arithmatex"><span class="MathJax_Preview">\gamma_m</span><script type="math/tex">\gamma_m</script></span>是基函数的参数，<span class="arithmatex"><span class="MathJax_Preview">\beta_m</span><script type="math/tex">\beta_m</script></span>为基函数的系数。式(1)是一个明显的加法模型。</p>
-<p>在给定训练数据以及损失函数<span class="arithmatex"><span class="MathJax_Preview">L(y,f(x))</span><script type="math/tex">L(y,f(x))</script></span>的条件下，学习加法模型<span class="arithmatex"><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span>可以看成是经验风险极小化即损失函数极小化问题：
-$$
+</div>
+<script type="math/tex; mode=display">
+f(x)=\sum_{i=1}^M\beta_mb(x;\gamma_m)
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">b(x;\gamma_m)</span><script type="math/tex">b(x;\gamma_m)</script></span>为基函数，<span class="arithmatex"><span class="MathJax_Preview">\gamma_m</span><script type="math/tex">\gamma_m</script></span>是基函数的参数，<span class="arithmatex"><span class="MathJax_Preview">\beta_m</span><script type="math/tex">\beta_m</script></span>为基函数的系数。式(1)是一个明显的加法模型。</p>
+<p>在给定训练数据以及损失函数<span class="arithmatex"><span class="MathJax_Preview">L(y,f(x))</span><script type="math/tex">L(y,f(x))</script></span>的条件下，学习加法模型<span class="arithmatex"><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span>可以看成是经验风险极小化即损失函数极小化问题：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
-&amp;\min_{\beta_m,\gamma_m}\sum_{i=1}<sup>NL(y</sup>{(i)},f(x^{(i)}))\
-\Rightarrow &amp;\min_{\beta_m,\gamma_m} \sum_{i=1}<sup>NL(y</sup>{(i)},\sum_{m=1}<sup>M\beta_mb(x</sup>{(i)},\gamma_m))
+&amp;\min_{\beta_m,\gamma_m}\sum_{i=1}^NL(y^{(i)},f(x^{(i)}))\\
+\Rightarrow &amp;\min_{\beta_m,\gamma_m} \sum_{i=1}^NL(y^{(i)},\sum_{m=1}^M\beta_mb(x^{(i)},\gamma_m))
 \end{align}
-$$
-通常式(3)是一个复杂的优化问题，需要同时求解出从<span class="arithmatex"><span class="MathJax_Preview">m=1</span><script type="math/tex">m=1</script></span>到<span class="arithmatex"><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>的所有参数<span class="arithmatex"><span class="MathJax_Preview">\beta_m,\gamma_m</span><script type="math/tex">\beta_m,\gamma_m</script></span>。前向分布算法求解这一优化问题的思想是：由于是加法模型，如果能够从前往后，每一步只学习一个基函数及其系数，逐步逼近优化目标函数，那么就可以简化优化的复杂度。即每步只需优化损失函数：
-$$
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+&\min_{\beta_m,\gamma_m}\sum_{i=1}^NL(y^{(i)},f(x^{(i)}))\\
+\Rightarrow &\min_{\beta_m,\gamma_m} \sum_{i=1}^NL(y^{(i)},\sum_{m=1}^M\beta_mb(x^{(i)},\gamma_m))
+\end{align}
+</script>
+</div>
+<p>通常式(3)是一个复杂的优化问题，需要同时求解出从<span class="arithmatex"><span class="MathJax_Preview">m=1</span><script type="math/tex">m=1</script></span>到<span class="arithmatex"><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>的所有参数<span class="arithmatex"><span class="MathJax_Preview">\beta_m,\gamma_m</span><script type="math/tex">\beta_m,\gamma_m</script></span>。前向分布算法求解这一优化问题的思想是：由于是加法模型，如果能够从前往后，每一步只学习一个基函数及其系数，逐步逼近优化目标函数，那么就可以简化优化的复杂度。即每步只需优化损失函数：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \min_{\beta,\gamma}\sum_{i=1}^N L(y^{(i)},\beta b(x^{(i)};\gamma))
-$$
-前向分步算法步骤如下：</p>
+</div>
+<script type="math/tex; mode=display">
+\min_{\beta,\gamma}\sum_{i=1}^N L(y^{(i)},\beta b(x^{(i)};\gamma))
+</script>
+</div>
+<p>前向分步算法步骤如下：</p>
 <blockquote>
 <p>输入：训练数据集<span class="arithmatex"><span class="MathJax_Preview">T=\{(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(N)},y^{(N)})\}</span><script type="math/tex">T=\{(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(N)},y^{(N)})\}</script></span> ；损失函数<span class="arithmatex"><span class="MathJax_Preview">L(y,f(x))</span><script type="math/tex">L(y,f(x))</script></span>；基函数集<span class="arithmatex"><span class="MathJax_Preview">\{ b(x;\gamma)\}</span><script type="math/tex">\{ b(x;\gamma)\}</script></span></p>
 <p>输出：加法模型<span class="arithmatex"><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span></p>
 <p>(1)初始化<span class="arithmatex"><span class="MathJax_Preview">f_0(x)=0</span><script type="math/tex">f_0(x)=0</script></span></p>
 <p>(2)对<span class="arithmatex"><span class="MathJax_Preview">m=1,2,...,M</span><script type="math/tex">m=1,2,...,M</script></span></p>
-<p>​ ①极小化损失函数
-$$
+<p>​ ①极小化损失函数</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 (\beta_m,\gamma_m)= \arg \min_{\beta,\gamma}\sum_{i=1}^N L(y^{(i)},f_{m-1}(x)+\beta b(x^{(i)};\gamma)) \notag
-$$
-​     得到参数<span class="arithmatex"><span class="MathJax_Preview">\beta_m,\gamma_m</span><script type="math/tex">\beta_m,\gamma_m</script></span></p>
-<p>​ ②更新
-$$
+</div>
+<script type="math/tex; mode=display">
+(\beta_m,\gamma_m)= \arg \min_{\beta,\gamma}\sum_{i=1}^N L(y^{(i)},f_{m-1}(x)+\beta b(x^{(i)};\gamma)) \notag
+</script>
+</div>
+<p>​     得到参数<span class="arithmatex"><span class="MathJax_Preview">\beta_m,\gamma_m</span><script type="math/tex">\beta_m,\gamma_m</script></span></p>
+<p>​ ②更新</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 f_m(x)=f_{m-1}(x)+\beta_mb(x;\gamma_m)\notag
-$$
-​ ③得到加法模型
-$$
+</div>
+<script type="math/tex; mode=display">
+f_m(x)=f_{m-1}(x)+\beta_mb(x;\gamma_m)\notag
+</script>
+</div>
+<p>​ ③得到加法模型</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 f(x)=f_M(x)=\sum_{m=1}^M \beta_mb(x;\gamma_m) \notag
-$$
-</p>
+</div>
+<script type="math/tex; mode=display">
+f(x)=f_M(x)=\sum_{m=1}^M \beta_mb(x;\gamma_m) \notag
+</script>
+</div>
 </blockquote>
 <p>前向分步算法的的优势在将同时求解出从<span class="arithmatex"><span class="MathJax_Preview">m=1</span><script type="math/tex">m=1</script></span>到<span class="arithmatex"><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>的所有参数<span class="arithmatex"><span class="MathJax_Preview">\beta_m,\gamma_m</span><script type="math/tex">\beta_m,\gamma_m</script></span>的优化问题简化为逐次求解各个<span class="arithmatex"><span class="MathJax_Preview">\beta_m,\gamma_m</span><script type="math/tex">\beta_m,\gamma_m</script></span>的优化问题。</p>
 <h3 id="adaboost_3">前向分步算法与AdaBoost<a class="headerlink" href="#adaboost_3" title="Permanent link">&para;</a></h3>
-<p>通过前向分步算法是可以推导出AdaBoost算法的。其中加法模型为
-$$
+<p>通过前向分步算法是可以推导出AdaBoost算法的。其中加法模型为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 f(x)=\sum_{m=1}^M(\alpha_mG_m(x))
-$$
-损失函数为指数函数
-$$
+</div>
+<script type="math/tex; mode=display">
+f(x)=\sum_{m=1}^M(\alpha_mG_m(x))
+</script>
+</div>
+<p>损失函数为指数函数</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 L(y,f(x))=\exp(-yf(x))
-$$
-假设经过<span class="arithmatex"><span class="MathJax_Preview">m-1</span><script type="math/tex">m-1</script></span>轮迭代前向分步算法已经得到<span class="arithmatex"><span class="MathJax_Preview">f_{m-1}(x)</span><script type="math/tex">f_{m-1}(x)</script></span>：
-$$
+</div>
+<script type="math/tex; mode=display">
+L(y,f(x))=\exp(-yf(x))
+</script>
+</div>
+<p>假设经过<span class="arithmatex"><span class="MathJax_Preview">m-1</span><script type="math/tex">m-1</script></span>轮迭代前向分步算法已经得到<span class="arithmatex"><span class="MathJax_Preview">f_{m-1}(x)</span><script type="math/tex">f_{m-1}(x)</script></span>：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
 f_{m-1}(x)
-&amp;=f_{m-2}(x)+\alpha_{m-1}G_{m-1}(x)\
-&amp;=f_{m-3}(x)+\alpha_{m-2}G_{m-2}(x)+\alpha_{m-1}G_{m-1}(x)\
-&amp;=\alpha_{1}G_{1}(x)+\alpha_{2}G_{2}(x)+...+\alpha_{m-1}G_{m-1}(x)\
+&amp;=f_{m-2}(x)+\alpha_{m-1}G_{m-1}(x)\\
+&amp;=f_{m-3}(x)+\alpha_{m-2}G_{m-2}(x)+\alpha_{m-1}G_{m-1}(x)\\
+&amp;=\alpha_{1}G_{1}(x)+\alpha_{2}G_{2}(x)+...+\alpha_{m-1}G_{m-1}(x)\\
 \end{align}
-$$
-在第<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>轮迭代得到<span class="arithmatex"><span class="MathJax_Preview">\alpha_m,G_m(x)</span><script type="math/tex">\alpha_m,G_m(x)</script></span>和<span class="arithmatex"><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span>
-$$
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+f_{m-1}(x)
+&=f_{m-2}(x)+\alpha_{m-1}G_{m-1}(x)\\
+&=f_{m-3}(x)+\alpha_{m-2}G_{m-2}(x)+\alpha_{m-1}G_{m-1}(x)\\
+&=\alpha_{1}G_{1}(x)+\alpha_{2}G_{2}(x)+...+\alpha_{m-1}G_{m-1}(x)\\
+\end{align}
+</script>
+</div>
+<p>在第<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>轮迭代得到<span class="arithmatex"><span class="MathJax_Preview">\alpha_m,G_m(x)</span><script type="math/tex">\alpha_m,G_m(x)</script></span>和<span class="arithmatex"><span class="MathJax_Preview">f(x)</span><script type="math/tex">f(x)</script></span></p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 f_{m}(x)=f_{m-1}(x)+\alpha_mG_m(x)
-$$
-目标是使前向分步算法得到<span class="arithmatex"><span class="MathJax_Preview">\alpha_m</span><script type="math/tex">\alpha_m</script></span>和<span class="arithmatex"><span class="MathJax_Preview">G_m(x)</span><script type="math/tex">G_m(x)</script></span>使<span class="arithmatex"><span class="MathJax_Preview">f_m(x)</span><script type="math/tex">f_m(x)</script></span>在训练数据集上的指数损失最小，即
-$$
+</div>
+<script type="math/tex; mode=display">
+f_{m}(x)=f_{m-1}(x)+\alpha_mG_m(x)
+</script>
+</div>
+<p>目标是使前向分步算法得到<span class="arithmatex"><span class="MathJax_Preview">\alpha_m</span><script type="math/tex">\alpha_m</script></span>和<span class="arithmatex"><span class="MathJax_Preview">G_m(x)</span><script type="math/tex">G_m(x)</script></span>使<span class="arithmatex"><span class="MathJax_Preview">f_m(x)</span><script type="math/tex">f_m(x)</script></span>在训练数据集上的指数损失最小，即</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
 (\alpha_m,G_m(x))
-&amp;=\arg\min_{\alpha,G}\sum_{i=1}<sup>N\exp(-y</sup>{(i)}f_m(x^{(i)}))\
-&amp;=\arg\min_{\alpha,G}\sum_{i=1}<sup>N\exp[-y</sup>{(i)}(f_{m-1}(x^{(i)})+\alpha G(x^{(i)}))]\
-&amp;=\arg\min_{\alpha,G}\sum_{i=1}<sup>N\exp[-y</sup>{(i)}f_{m-1}(x^{(i)}) - y^{(i)}\alpha G(x^{(i)})]\
-&amp;=\arg\min_{\alpha,G}\sum_{i=1}<sup>N{\exp(-y</sup>{(i)}f_{m-1}(x^{(i)})   \cdot  \exp(-y^{(i)}\alpha G(x^{(i)}))}\
+&amp;=\arg\min_{\alpha,G}\sum_{i=1}^N\exp(-y^{(i)}f_m(x^{(i)}))\\
+&amp;=\arg\min_{\alpha,G}\sum_{i=1}^N\exp[-y^{(i)}(f_{m-1}(x^{(i)})+\alpha G(x^{(i)}))]\\
+&amp;=\arg\min_{\alpha,G}\sum_{i=1}^N\exp[-y^{(i)}f_{m-1}(x^{(i)}) - y^{(i)}\alpha G(x^{(i)})]\\
+&amp;=\arg\min_{\alpha,G}\sum_{i=1}^N\{\exp(-y^{(i)}f_{m-1}(x^{(i)})   \cdot  \exp(-y^{(i)}\alpha G(x^{(i)}))\}\\
 \end{align}
-$$</p>
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+(\alpha_m,G_m(x))
+&=\arg\min_{\alpha,G}\sum_{i=1}^N\exp(-y^{(i)}f_m(x^{(i)}))\\
+&=\arg\min_{\alpha,G}\sum_{i=1}^N\exp[-y^{(i)}(f_{m-1}(x^{(i)})+\alpha G(x^{(i)}))]\\
+&=\arg\min_{\alpha,G}\sum_{i=1}^N\exp[-y^{(i)}f_{m-1}(x^{(i)}) - y^{(i)}\alpha G(x^{(i)})]\\
+&=\arg\min_{\alpha,G}\sum_{i=1}^N\{\exp(-y^{(i)}f_{m-1}(x^{(i)})   \cdot  \exp(-y^{(i)}\alpha G(x^{(i)}))\}\\
+\end{align}
+</script>
+</div>
 <p>令<span class="arithmatex"><span class="MathJax_Preview">\bar{w}_{mi}=\exp[-y^{(i)}f_{m-1}(x^{(i)})]</span><script type="math/tex">\bar{w}_{mi}=\exp[-y^{(i)}f_{m-1}(x^{(i)})]</script></span> ，由于<span class="arithmatex"><span class="MathJax_Preview">\bar{w}_{mi}</span><script type="math/tex">\bar{w}_{mi}</script></span> 既不依赖<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>也不依赖<span class="arithmatex"><span class="MathJax_Preview">G</span><script type="math/tex">G</script></span>，是一个与最小化无关，但是<span class="arithmatex"><span class="MathJax_Preview">\bar{w}_{mi}</span><script type="math/tex">\bar{w}_{mi}</script></span>是依赖于<span class="arithmatex"><span class="MathJax_Preview">f_{m-1}(x)</span><script type="math/tex">f_{m-1}(x)</script></span>，随着每一轮迭代而发生改变。</p>
-<p>由于<span class="arithmatex"><span class="MathJax_Preview">y^{(i)},G(x^{(i)})\in \{+1,-1\}</span><script type="math/tex">y^{(i)},G(x^{(i)})\in \{+1,-1\}</script></span>，所以<span class="arithmatex"><span class="MathJax_Preview">y\alpha G(x)</span><script type="math/tex">y\alpha G(x)</script></span>可以写成另一种形式
-$$
+<p>由于<span class="arithmatex"><span class="MathJax_Preview">y^{(i)},G(x^{(i)})\in \{+1,-1\}</span><script type="math/tex">y^{(i)},G(x^{(i)})\in \{+1,-1\}</script></span>，所以<span class="arithmatex"><span class="MathJax_Preview">y\alpha G(x)</span><script type="math/tex">y\alpha G(x)</script></span>可以写成另一种形式</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 y\alpha G(x)=
-\left{
+\left\{
 \begin{array}{}
-    \alpha &amp;\quad y\cdot G(x)=1 \
+    \alpha &amp;\quad y\cdot G(x)=1 \\
     -\alpha &amp;\quad y\cdot G(x)=-1
 \end{array}
 \right.
-$$
-损失函数可以写成
-$$
+</div>
+<script type="math/tex; mode=display">
+y\alpha G(x)=
+\left\{
+\begin{array}{}
+    \alpha &\quad y\cdot G(x)=1 \\
+    -\alpha &\quad y\cdot G(x)=-1
+\end{array}
+\right.
+</script>
+</div>
+<p>损失函数可以写成</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
 L(\alpha,G)
-&amp;=\sum_{i=1}<sup>N{\exp(-y</sup>{(i)}f_{m-1}(x^{(i)})   \cdot  \exp(-y^{(i)}\alpha G(x^{(i)}))}\
-&amp;=\sum_{i=1}<sup>N\bar{w}_{mi}\cdot\exp(-y</sup>{(i)}\alpha G(x^{(i)}))\
-&amp;=\sum_{i=1}<sup>N\bar{w}_{mi}\cdot\exp(-y</sup>{(i)}\alpha G(x^{(i)}))\
-&amp;=\sum_{y<sup>{(i)}=G_m(x</sup>{(i)})}\bar{w}<em>{mi} e<sup>{-\alpha}+\sum_{y</sup>{(i)}\ne G_m(x^{(i)})}\bar{w}</em>{mi} e^{\alpha}\
-&amp;= e^{-\alpha} \sum_{y<sup>{(i)}=G_m(x</sup>{(i)})}\bar{w}<em>{mi} + e^{\alpha} \sum</em>{y^{(i)}\ne G_m(x^{(i)})}\bar{w}<em>{mi} \
-&amp;= e^{-\alpha} \sum</em>{i=1}^N \bar{w}<em>{mi} I(y<sup>{(i)}=G_{m}(x</sup>{(i)})) + e^{\alpha} \sum</em>{i=1}^N \bar{w}<em>{mi} I(y^{(i)}\ne G</em>{m}(x^{(i)}))\
-&amp;=e^{-\alpha} \sum_{i=1}^N \bar{w}<em>{mi} +(e<sup>{\alpha}+e</sup>{-\alpha}) \sum</em>{i=1}^N \bar{w}<em>{mi} I(y^{(i)}\ne G_m(x^{(i)}))\
+&amp;=\sum_{i=1}^N\{\exp(-y^{(i)}f_{m-1}(x^{(i)})   \cdot  \exp(-y^{(i)}\alpha G(x^{(i)}))\}\\
+&amp;=\sum_{i=1}^N\bar{w}_{mi}\cdot\exp(-y^{(i)}\alpha G(x^{(i)}))\\
+&amp;=\sum_{i=1}^N\bar{w}_{mi}\cdot\exp(-y^{(i)}\alpha G(x^{(i)}))\\
+&amp;=\sum_{y^{(i)}=G_m(x^{(i)})}\bar{w}_{mi} e^{-\alpha}+\sum_{y^{(i)}\ne G_m(x^{(i)})}\bar{w}_{mi} e^{\alpha}\\
+&amp;= e^{-\alpha} \sum_{y^{(i)}=G_m(x^{(i)})}\bar{w}_{mi} + e^{\alpha} \sum_{y^{(i)}\ne G_m(x^{(i)})}\bar{w}_{mi} \\
+&amp;= e^{-\alpha} \sum_{i=1}^N \bar{w}_{mi} I(y^{(i)}=G_{m}(x^{(i)})) + e^{\alpha} \sum_{i=1}^N \bar{w}_{mi} I(y^{(i)}\ne G_{m}(x^{(i)}))\\
+&amp;=e^{-\alpha} \sum_{i=1}^N \bar{w}_{mi} +(e^{\alpha}+e^{-\alpha}) \sum_{i=1}^N \bar{w}_{mi} I(y^{(i)}\ne G_m(x^{(i)}))\\
 \end{align}
-$$
-对<span class="arithmatex"><span class="MathJax_Preview">L</span><script type="math/tex">L</script></span>求导，得到：
-$$
-\frac{\partial L}{\partial \alpha}=-e<sup>{-\alpha}\sum_{i=1}</sup>N\bar{w}</em>{mi}+(e<sup>{\alpha}+e</sup>{-\alpha})\sum_{i=1}^N \bar{w}<em>{mi}I(y^{(i)}\ne G_m(x^{(i)}))
-$$
-令式(24)等于0，且定义<span class="arithmatex"><span class="MathJax_Preview">e_m=\sum_{i=1}^N \bar{w}_{mi}I(y^{(i)}\ne G_m(x^{(i)}))</span><script type="math/tex">e_m=\sum_{i=1}^N \bar{w}_{mi}I(y^{(i)}\ne G_m(x^{(i)}))</script></span>，那么有：
-$$
+</div>
+<script type="math/tex; mode=display">
 \begin{align}
-(e<sup>{\alpha}+e</sup>{-\alpha})\sum</em>{i=1}^N \bar{w}<em>{mi}I(y^{(i)}\ne G_m(x<sup>{(i)}))&amp;=e</sup>{-\alpha}\sum</em>{i=1}^N\bar{w}<em>{mi}\
-(e<sup>{\alpha}+e</sup>{-\alpha})e_m&amp;=e<sup>{-\alpha}\sum_{i=1}</sup>N\bar{w}</em>{mi}\
-(e<sup>{\alpha}+e</sup>{-\alpha})e_m&amp;=e^{-\alpha}\</p>
-<p>\end{align}
-$$
-式(25)进行移项操作，式(25)-(26)利用了定义<span class="arithmatex"><span class="MathJax_Preview">e_m=\sum_{i=1}^N \bar{w}_{mi}I(y^{(i)}\ne G_m(x^{(i)}))</span><script type="math/tex">e_m=\sum_{i=1}^N \bar{w}_{mi}I(y^{(i)}\ne G_m(x^{(i)}))</script></span> ，式(26)-(27)使用<span class="arithmatex"><span class="MathJax_Preview">\sum_{i=1}^N\bar{w}_{mi}=1</span><script type="math/tex">\sum_{i=1}^N\bar{w}_{mi}=1</script></span>。最终可以求解得到：
-$$
+L(\alpha,G)
+&=\sum_{i=1}^N\{\exp(-y^{(i)}f_{m-1}(x^{(i)})   \cdot  \exp(-y^{(i)}\alpha G(x^{(i)}))\}\\
+&=\sum_{i=1}^N\bar{w}_{mi}\cdot\exp(-y^{(i)}\alpha G(x^{(i)}))\\
+&=\sum_{i=1}^N\bar{w}_{mi}\cdot\exp(-y^{(i)}\alpha G(x^{(i)}))\\
+&=\sum_{y^{(i)}=G_m(x^{(i)})}\bar{w}_{mi} e^{-\alpha}+\sum_{y^{(i)}\ne G_m(x^{(i)})}\bar{w}_{mi} e^{\alpha}\\
+&= e^{-\alpha} \sum_{y^{(i)}=G_m(x^{(i)})}\bar{w}_{mi} + e^{\alpha} \sum_{y^{(i)}\ne G_m(x^{(i)})}\bar{w}_{mi} \\
+&= e^{-\alpha} \sum_{i=1}^N \bar{w}_{mi} I(y^{(i)}=G_{m}(x^{(i)})) + e^{\alpha} \sum_{i=1}^N \bar{w}_{mi} I(y^{(i)}\ne G_{m}(x^{(i)}))\\
+&=e^{-\alpha} \sum_{i=1}^N \bar{w}_{mi} +(e^{\alpha}+e^{-\alpha}) \sum_{i=1}^N \bar{w}_{mi} I(y^{(i)}\ne G_m(x^{(i)}))\\
+\end{align}
+</script>
+</div>
+<p>对<span class="arithmatex"><span class="MathJax_Preview">L</span><script type="math/tex">L</script></span>求导，得到：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\frac{\partial L}{\partial \alpha}=-e^{-\alpha}\sum_{i=1}^N\bar{w}_{mi}+(e^{\alpha}+e^{-\alpha})\sum_{i=1}^N \bar{w}_{mi}I(y^{(i)}\ne G_m(x^{(i)}))
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial \alpha}=-e^{-\alpha}\sum_{i=1}^N\bar{w}_{mi}+(e^{\alpha}+e^{-\alpha})\sum_{i=1}^N \bar{w}_{mi}I(y^{(i)}\ne G_m(x^{(i)}))
+</script>
+</div>
+<p>令式(24)等于0，且定义<span class="arithmatex"><span class="MathJax_Preview">e_m=\sum_{i=1}^N \bar{w}_{mi}I(y^{(i)}\ne G_m(x^{(i)}))</span><script type="math/tex">e_m=\sum_{i=1}^N \bar{w}_{mi}I(y^{(i)}\ne G_m(x^{(i)}))</script></span>，那么有：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+(e^{\alpha}+e^{-\alpha})\sum_{i=1}^N \bar{w}_{mi}I(y^{(i)}\ne G_m(x^{(i)}))&amp;=e^{-\alpha}\sum_{i=1}^N\bar{w}_{mi}\\
+(e^{\alpha}+e^{-\alpha})e_m&amp;=e^{-\alpha}\sum_{i=1}^N\bar{w}_{mi}\\
+(e^{\alpha}+e^{-\alpha})e_m&amp;=e^{-\alpha}\\
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+(e^{\alpha}+e^{-\alpha})\sum_{i=1}^N \bar{w}_{mi}I(y^{(i)}\ne G_m(x^{(i)}))&=e^{-\alpha}\sum_{i=1}^N\bar{w}_{mi}\\
+(e^{\alpha}+e^{-\alpha})e_m&=e^{-\alpha}\sum_{i=1}^N\bar{w}_{mi}\\
+(e^{\alpha}+e^{-\alpha})e_m&=e^{-\alpha}\\
+\end{align}
+</script>
+</div>
+<p>式(25)进行移项操作，式(25)-(26)利用了定义<span class="arithmatex"><span class="MathJax_Preview">e_m=\sum_{i=1}^N \bar{w}_{mi}I(y^{(i)}\ne G_m(x^{(i)}))</span><script type="math/tex">e_m=\sum_{i=1}^N \bar{w}_{mi}I(y^{(i)}\ne G_m(x^{(i)}))</script></span> ，式(26)-(27)使用<span class="arithmatex"><span class="MathJax_Preview">\sum_{i=1}^N\bar{w}_{mi}=1</span><script type="math/tex">\sum_{i=1}^N\bar{w}_{mi}=1</script></span>。最终可以求解得到：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \alpha = \frac{1}{2}\ln \frac{1-e_m}{e_m}
-$$
-这里得到的<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>和Adaboost算法中给出的公式完全一致。</p>
-<p>最后来看每一轮样本权值的更新，由于<span class="arithmatex"><span class="MathJax_Preview">\bar{w}_{mi}=\exp(-y^{(i)}f_{m-1}(x^{(i)}))</span><script type="math/tex">\bar{w}_{mi}=\exp(-y^{(i)}f_{m-1}(x^{(i)}))</script></span>，于是得到：
-$$
+</div>
+<script type="math/tex; mode=display">
+\alpha = \frac{1}{2}\ln \frac{1-e_m}{e_m}
+</script>
+</div>
+<p>这里得到的<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>和Adaboost算法中给出的公式完全一致。</p>
+<p>最后来看每一轮样本权值的更新，由于<span class="arithmatex"><span class="MathJax_Preview">\bar{w}_{mi}=\exp(-y^{(i)}f_{m-1}(x^{(i)}))</span><script type="math/tex">\bar{w}_{mi}=\exp(-y^{(i)}f_{m-1}(x^{(i)}))</script></span>，于是得到：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
-\bar{w}<em>{m+1,i}
-&amp;=\exp(-y<sup>{(i)}f_{m}(x</sup>{(i)}))\
-&amp;=\exp[-y<sup>{(i)}(f_{m-1}(x</sup>{(i)})+\alpha_m G_m(x^{(i)}))]\
-&amp;=\bar{w}</em>{mi}\exp(-y^{(i)}\alpha_m G_m(x^{(i)}))\
+\bar{w}_{m+1,i}
+&amp;=\exp(-y^{(i)}f_{m}(x^{(i)}))\\
+&amp;=\exp[-y^{(i)}(f_{m-1}(x^{(i)})+\alpha_m G_m(x^{(i)}))]\\
+&amp;=\bar{w}_{mi}\exp(-y^{(i)}\alpha_m G_m(x^{(i)}))\\
 \end{align}
-$$
-式(31)和Adaboost算法中样本权值的更新，只是相差了规范化因子。</p>
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\bar{w}_{m+1,i}
+&=\exp(-y^{(i)}f_{m}(x^{(i)}))\\
+&=\exp[-y^{(i)}(f_{m-1}(x^{(i)})+\alpha_m G_m(x^{(i)}))]\\
+&=\bar{w}_{mi}\exp(-y^{(i)}\alpha_m G_m(x^{(i)}))\\
+\end{align}
+</script>
+</div>
+<p>式(31)和Adaboost算法中样本权值的更新，只是相差了规范化因子。</p>
 <h2 id="adaboost_4">Adaboost算法误差分析<a class="headerlink" href="#adaboost_4" title="Permanent link">&para;</a></h2>
 <p>Adaboost最基本的性质是在学习过程中不断减少训练误差，即在训练数据集上的分类误差率。</p>
 <blockquote>
-<p>定理：Adaboost算法最终分类器的训练误差界为
-$$
-\frac{1}{N}\sum_{i=1}^N I(G(x^{(i)})\ne y^{(i)})\le \frac{1}{N}\sum_{i}\exp(-y<sup>{(i)}f(x</sup>{(i)}))=\prod_m Z_m
-$$
-</p>
+<p>定理：Adaboost算法最终分类器的训练误差界为</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\frac{1}{N}\sum_{i=1}^N I(G(x^{(i)})\ne y^{(i)})\le \frac{1}{N}\sum_{i}\exp(-y^{(i)}f(x^{(i)}))=\prod_m Z_m
+</div>
+<script type="math/tex; mode=display">
+\frac{1}{N}\sum_{i=1}^N I(G(x^{(i)})\ne y^{(i)})\le \frac{1}{N}\sum_{i}\exp(-y^{(i)}f(x^{(i)}))=\prod_m Z_m
+</script>
+</div>
 </blockquote>
 <p>证明：首先证明第一个不等式：当<span class="arithmatex"><span class="MathJax_Preview">G(x^{(i)})\ne y^{(i)}</span><script type="math/tex">G(x^{(i)})\ne y^{(i)}</script></span>时，<span class="arithmatex"><span class="MathJax_Preview">y^{(i)}f(x^{(i)})\lt 0</span><script type="math/tex">y^{(i)}f(x^{(i)})\lt 0</script></span>，因而<span class="arithmatex"><span class="MathJax_Preview">\exp(-y^{(i)}f(x^{(i)}))\ge 1</span><script type="math/tex">\exp(-y^{(i)}f(x^{(i)}))\ge 1</script></span>。</p>
-<p>得到
-$$
-\sum_i \exp(-y<sup>{(i)}f(x</sup>{(i)}))\ge N \
+<p>得到</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\sum_i \exp(-y^{(i)}f(x^{(i)}))\ge N \\
 \Rightarrow \quad
-\frac{1}{N}\sum_i \exp(-y<sup>{(i)}f(x</sup>{(i)}))\ge \frac{1}{N}\cdot N =1 \ge  \frac{1}{N}\sum_{i=1}^N I(G(x^{(i)})\ne y^{(i)})\
-$$
-证明第二个等式需要使用到<span class="arithmatex"><span class="MathJax_Preview">Z_m</span><script type="math/tex">Z_m</script></span>的定义和样本权重初始值定义：
-$$
+\frac{1}{N}\sum_i \exp(-y^{(i)}f(x^{(i)}))\ge \frac{1}{N}\cdot N =1 \ge  \frac{1}{N}\sum_{i=1}^N I(G(x^{(i)})\ne y^{(i)})\\
+</div>
+<script type="math/tex; mode=display">
+\sum_i \exp(-y^{(i)}f(x^{(i)}))\ge N \\
+\Rightarrow \quad
+\frac{1}{N}\sum_i \exp(-y^{(i)}f(x^{(i)}))\ge \frac{1}{N}\cdot N =1 \ge  \frac{1}{N}\sum_{i=1}^N I(G(x^{(i)})\ne y^{(i)})\\
+</script>
+</div>
+<p>证明第二个等式需要使用到<span class="arithmatex"><span class="MathJax_Preview">Z_m</span><script type="math/tex">Z_m</script></span>的定义和样本权重初始值定义：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
-w_{1i}&amp;=\frac{1}{N}\
-Z_m w_{m+1,i}&amp;=w_{mi}\exp(-\alpha_m y<sup>{(i)}G_m(x</sup>{(i)}))
+w_{1i}&amp;=\frac{1}{N}\\
+Z_m w_{m+1,i}&amp;=w_{mi}\exp(-\alpha_m y^{(i)}G_m(x^{(i)}))
 \end{align}
-$$
-那么有：
-$$
+</div>
+<script type="math/tex; mode=display">
 \begin{align}
-\frac{1}{N}&amp;\sum_i \exp(y<sup>{(i)}f(x</sup>{(i)}))\
-&amp;=\frac{1}{N}\sum_i \exp(  \sum_{m=1}^M\alpha_m y<sup>{(i)}G_m(x</sup>{(i)}) )\
-&amp;=\sum_i \frac{1}{N} \exp(  \sum_{m=1}^M\alpha_m y<sup>{(i)}G_m(x</sup>{(i)}) )\
-&amp;=\sum_i w_{1i} \exp(  \sum_{m=1}^M\alpha_m y<sup>{(i)}G_m(x</sup>{(i)}) )\
-&amp;=\sum_i [ w_{1i}  \alpha_m y<sup>{(1)}G_m(x</sup>{(1)}) ]  \exp(  \sum_{i=2}^M\alpha_m y<sup>{(i)}G_m(x</sup>{(i)}) )\
-&amp;=\sum_i [ w_{1i}  \alpha_m y<sup>{(1)}G_m(x</sup>{(1)}) ]  \exp(  \sum_{i=2}^M\alpha_m y<sup>{(i)}G_m(x</sup>{(i)}) )\
-&amp;=\sum_i [ Z_1 w_{2i} ]  \exp(  \sum_{i=2}^M\alpha_m y<sup>{(i)}G_m(x</sup>{(i)}) )\
-&amp;=Z_1\sum_i w_{2i}   \exp(  \sum_{i=2}^M\alpha_m y<sup>{(i)}G_m(x</sup>{(i)}) )\
-&amp;=Z_1Z_2\sum_i w_{3i}   \exp(  \sum_{i=3}^M\alpha_m y<sup>{(i)}G_m(x</sup>{(i)}) )\
-&amp;=...\
-&amp;=Z_1Z_2 ... Z_{M-1}\sum_i w_{Mi}   \exp(  \sum_{i}\alpha_M y<sup>{(i)}G_M(x</sup>{(i)}) )\
-&amp;=Z_1Z_2 ... Z_{M-1}Z_{M}\
-&amp;=\prod_{i=1}^M Z_i\
+w_{1i}&=\frac{1}{N}\\
+Z_m w_{m+1,i}&=w_{mi}\exp(-\alpha_m y^{(i)}G_m(x^{(i)}))
 \end{align}
-$$
-这一定理说明，可以在每一轮选取适当的<span class="arithmatex"><span class="MathJax_Preview">G_m</span><script type="math/tex">G_m</script></span>使得<span class="arithmatex"><span class="MathJax_Preview">Z_m</span><script type="math/tex">Z_m</script></span>最小，从而使训练误差下降最快。</p>
+</script>
+</div>
+<p>那么有：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+\frac{1}{N}&amp;\sum_i \exp(y^{(i)}f(x^{(i)}))\\
+&amp;=\frac{1}{N}\sum_i \exp(  \sum_{m=1}^M\alpha_m y^{(i)}G_m(x^{(i)}) )\\
+&amp;=\sum_i \frac{1}{N} \exp(  \sum_{m=1}^M\alpha_m y^{(i)}G_m(x^{(i)}) )\\
+&amp;=\sum_i w_{1i} \exp(  \sum_{m=1}^M\alpha_m y^{(i)}G_m(x^{(i)}) )\\
+&amp;=\sum_i [ w_{1i}  \alpha_m y^{(1)}G_m(x^{(1)}) ]  \exp(  \sum_{i=2}^M\alpha_m y^{(i)}G_m(x^{(i)}) )\\
+&amp;=\sum_i [ w_{1i}  \alpha_m y^{(1)}G_m(x^{(1)}) ]  \exp(  \sum_{i=2}^M\alpha_m y^{(i)}G_m(x^{(i)}) )\\
+&amp;=\sum_i [ Z_1 w_{2i} ]  \exp(  \sum_{i=2}^M\alpha_m y^{(i)}G_m(x^{(i)}) )\\
+&amp;=Z_1\sum_i w_{2i}   \exp(  \sum_{i=2}^M\alpha_m y^{(i)}G_m(x^{(i)}) )\\
+&amp;=Z_1Z_2\sum_i w_{3i}   \exp(  \sum_{i=3}^M\alpha_m y^{(i)}G_m(x^{(i)}) )\\
+&amp;=...\\
+&amp;=Z_1Z_2 ... Z_{M-1}\sum_i w_{Mi}   \exp(  \sum_{i}\alpha_M y^{(i)}G_M(x^{(i)}) )\\
+&amp;=Z_1Z_2 ... Z_{M-1}Z_{M}\\
+&amp;=\prod_{i=1}^M Z_i\\
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{1}{N}&\sum_i \exp(y^{(i)}f(x^{(i)}))\\
+&=\frac{1}{N}\sum_i \exp(  \sum_{m=1}^M\alpha_m y^{(i)}G_m(x^{(i)}) )\\
+&=\sum_i \frac{1}{N} \exp(  \sum_{m=1}^M\alpha_m y^{(i)}G_m(x^{(i)}) )\\
+&=\sum_i w_{1i} \exp(  \sum_{m=1}^M\alpha_m y^{(i)}G_m(x^{(i)}) )\\
+&=\sum_i [ w_{1i}  \alpha_m y^{(1)}G_m(x^{(1)}) ]  \exp(  \sum_{i=2}^M\alpha_m y^{(i)}G_m(x^{(i)}) )\\
+&=\sum_i [ w_{1i}  \alpha_m y^{(1)}G_m(x^{(1)}) ]  \exp(  \sum_{i=2}^M\alpha_m y^{(i)}G_m(x^{(i)}) )\\
+&=\sum_i [ Z_1 w_{2i} ]  \exp(  \sum_{i=2}^M\alpha_m y^{(i)}G_m(x^{(i)}) )\\
+&=Z_1\sum_i w_{2i}   \exp(  \sum_{i=2}^M\alpha_m y^{(i)}G_m(x^{(i)}) )\\
+&=Z_1Z_2\sum_i w_{3i}   \exp(  \sum_{i=3}^M\alpha_m y^{(i)}G_m(x^{(i)}) )\\
+&=...\\
+&=Z_1Z_2 ... Z_{M-1}\sum_i w_{Mi}   \exp(  \sum_{i}\alpha_M y^{(i)}G_M(x^{(i)}) )\\
+&=Z_1Z_2 ... Z_{M-1}Z_{M}\\
+&=\prod_{i=1}^M Z_i\\
+\end{align}
+</script>
+</div>
+<p>这一定理说明，可以在每一轮选取适当的<span class="arithmatex"><span class="MathJax_Preview">G_m</span><script type="math/tex">G_m</script></span>使得<span class="arithmatex"><span class="MathJax_Preview">Z_m</span><script type="math/tex">Z_m</script></span>最小，从而使训练误差下降最快。</p>
 <blockquote>
-<p>对于<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的推导方式有两种：第一种是最小化损失函数进行推导（上面的式(28)的推导方式）；第二种是最小化训练误差界进行推导。现在对第二种方式进行推导：
-$$
+<p>对于<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的推导方式有两种：第一种是最小化损失函数进行推导（上面的式(28)的推导方式）；第二种是最小化训练误差界进行推导。现在对第二种方式进行推导：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{array}{}
 Z_m
-&amp;=\sum_{i=1}^N w_{mi}\exp(-\alpha_my<sup>{(i)}G_m(x</sup>{(i)}))\
-&amp;=\sum_\limits{y<sup>{(i)}=G_m(x</sup>{(i)})} w_{mi} e<sup>{-\alpha}+\sum_\limits{y</sup>{(i)}\ne G_m(x^{(i)})}w_{mi} e^{\alpha}\
+&amp;=\sum_{i=1}^N w_{mi}\exp(-\alpha_my^{(i)}G_m(x^{(i)}))\\
+&amp;=\sum_\limits{y^{(i)}=G_m(x^{(i)})} w_{mi} e^{-\alpha}+\sum_\limits{y^{(i)}\ne G_m(x^{(i)})}w_{mi} e^{\alpha}\\
 &amp;=(1-e_m)\cdot e^{-\alpha_m}+e_m\cdot e^{\alpha_m}
 \end{array}
-$$
-对式(48)求导等于0，可以得到：
-$$
+</div>
+<script type="math/tex; mode=display">
+\begin{array}{}
+Z_m
+&=\sum_{i=1}^N w_{mi}\exp(-\alpha_my^{(i)}G_m(x^{(i)}))\\
+&=\sum_\limits{y^{(i)}=G_m(x^{(i)})} w_{mi} e^{-\alpha}+\sum_\limits{y^{(i)}\ne G_m(x^{(i)})}w_{mi} e^{\alpha}\\
+&=(1-e_m)\cdot e^{-\alpha_m}+e_m\cdot e^{\alpha_m}
+\end{array}
+</script>
+</div>
+<p>对式(48)求导等于0，可以得到：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \frac{\partial Z_m}{\partial \alpha_m}=-(1-e_m)\cdot e^{-\alpha_m}+e_m\cdot e^{\alpha_m}=0
-$$
-求得
-$$
+</div>
+<script type="math/tex; mode=display">
+\frac{\partial Z_m}{\partial \alpha_m}=-(1-e_m)\cdot e^{-\alpha_m}+e_m\cdot e^{\alpha_m}=0
+</script>
+</div>
+<p>求得</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \alpha_m = \frac{1}{2}\ln \frac{1-e_m}{e_m}
-$$
-</p>
+</div>
+<script type="math/tex; mode=display">
+\alpha_m = \frac{1}{2}\ln \frac{1-e_m}{e_m}
+</script>
+</div>
 </blockquote>
 <h3 id="adaboost_5">Adaboost算法扩展<a class="headerlink" href="#adaboost_5" title="Permanent link">&para;</a></h3>
 <p>对于Adaboost多元分类算法，原理和二元分类类似，主要的区别在于弱分类器的系数上。比如Adaboost SAMME算法，它的弱分类器系数
@@ -1570,13 +1787,13 @@ $$
       
       
         
-        <a href="../23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-footer__link md-footer__link--next" aria-label="下一页: 集成学习算法之GBDT" rel="next">
+        <a href="../23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-footer__link md-footer__link--next" aria-label="下一页: 集成学习算法之RF" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 下一页
               </span>
-              集成学习算法之GBDT
+              集成学习算法之RF
             </div>
           </div>
           <div class="md-footer__button md-icon">

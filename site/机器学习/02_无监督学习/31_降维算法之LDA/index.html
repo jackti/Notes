@@ -653,8 +653,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
-        集成学习算法之GBDT
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
       </a>
     </li>
   
@@ -667,8 +667,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
-        集成学习算法之RF
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
+        集成学习算法之GBDT
       </a>
     </li>
   
@@ -1287,58 +1287,114 @@
 <p><img alt="lda" src="../assets/lda.png" /></p>
 <p>从直观上认为，右图比左图的投影效果好，因为右图中的红色数据和蓝色数据较为集中，且类别之间的距离明显。而左图的数据在交界处混杂。</p>
 <h2 id="_1">瑞利商和广义瑞利商<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>瑞利商(Rayleigh Quotient)的定义函数<span class="arithmatex"><span class="MathJax_Preview">R(A,x)</span><script type="math/tex">R(A,x)</script></span>表达式为：
-$$
+<p>瑞利商(Rayleigh Quotient)的定义函数<span class="arithmatex"><span class="MathJax_Preview">R(A,x)</span><script type="math/tex">R(A,x)</script></span>表达式为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 R(A,x)=\frac{x^H A x}{x^H x}
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>是非零向量，<span class="arithmatex"><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>是<span class="arithmatex"><span class="MathJax_Preview">n\times n</span><script type="math/tex">n\times n</script></span>的Hermitan矩阵(厄米特矩阵)。所谓的Hermitan矩阵是指满足共轭转置矩阵和原始矩阵相等的矩阵，即<span class="arithmatex"><span class="MathJax_Preview">A^H = A</span><script type="math/tex">A^H = A</script></span>。如果矩阵<span class="arithmatex"><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>是实矩阵，则满足<span class="arithmatex"><span class="MathJax_Preview">A^T=A</span><script type="math/tex">A^T=A</script></span>的矩阵即为Hermitan矩阵。</p>
-<p>瑞利商<span class="arithmatex"><span class="MathJax_Preview">R(A,x)</span><script type="math/tex">R(A,x)</script></span>的一个重要性质：它的最大值等于矩阵<span class="arithmatex"><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>的最大特征值，而最小值等于矩阵<span class="arithmatex"><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>的最小特征值，也就是满足
-$$
+</div>
+<script type="math/tex; mode=display">
+R(A,x)=\frac{x^H A x}{x^H x}
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>是非零向量，<span class="arithmatex"><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>是<span class="arithmatex"><span class="MathJax_Preview">n\times n</span><script type="math/tex">n\times n</script></span>的Hermitan矩阵(厄米特矩阵)。所谓的Hermitan矩阵是指满足共轭转置矩阵和原始矩阵相等的矩阵，即<span class="arithmatex"><span class="MathJax_Preview">A^H = A</span><script type="math/tex">A^H = A</script></span>。如果矩阵<span class="arithmatex"><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>是实矩阵，则满足<span class="arithmatex"><span class="MathJax_Preview">A^T=A</span><script type="math/tex">A^T=A</script></span>的矩阵即为Hermitan矩阵。</p>
+<p>瑞利商<span class="arithmatex"><span class="MathJax_Preview">R(A,x)</span><script type="math/tex">R(A,x)</script></span>的一个重要性质：它的最大值等于矩阵<span class="arithmatex"><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>的最大特征值，而最小值等于矩阵<span class="arithmatex"><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>的最小特征值，也就是满足</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \lambda_{min} \le \frac{x^H A x}{x^H x} \le \lambda_{max}
-$$
-当向量<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>是标准正交基时，即满足<span class="arithmatex"><span class="MathJax_Preview">x^H x=1</span><script type="math/tex">x^H x=1</script></span>时，瑞利商<span class="arithmatex"><span class="MathJax_Preview">R(A,x)=x^H A x</span><script type="math/tex">R(A,x)=x^H A x</script></span> （注意这个形式在谱聚类和PCA都有出现）</p>
-<p>广义瑞利商(Genralized Rayleigh Quotient)的定义函数<span class="arithmatex"><span class="MathJax_Preview">R(A,B,x)</span><script type="math/tex">R(A,B,x)</script></span>表达式为：
-$$
+</div>
+<script type="math/tex; mode=display">
+\lambda_{min} \le \frac{x^H A x}{x^H x} \le \lambda_{max}
+</script>
+</div>
+<p>当向量<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>是标准正交基时，即满足<span class="arithmatex"><span class="MathJax_Preview">x^H x=1</span><script type="math/tex">x^H x=1</script></span>时，瑞利商<span class="arithmatex"><span class="MathJax_Preview">R(A,x)=x^H A x</span><script type="math/tex">R(A,x)=x^H A x</script></span> （注意这个形式在谱聚类和PCA都有出现）</p>
+<p>广义瑞利商(Genralized Rayleigh Quotient)的定义函数<span class="arithmatex"><span class="MathJax_Preview">R(A,B,x)</span><script type="math/tex">R(A,B,x)</script></span>表达式为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 R(A,B,x)=\frac{x^H A x}{x^H B x}
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>是非零向量，<span class="arithmatex"><span class="MathJax_Preview">A,B</span><script type="math/tex">A,B</script></span>为<span class="arithmatex"><span class="MathJax_Preview">n\times n</span><script type="math/tex">n\times n</script></span>的Hermitan矩阵，<span class="arithmatex"><span class="MathJax_Preview">B</span><script type="math/tex">B</script></span>为正定矩阵。</p>
-<p>令<span class="arithmatex"><span class="MathJax_Preview">x=B^{-1/2} x^{'}</span><script type="math/tex">x=B^{-1/2} x^{'}</script></span>，则分子分母转化为：
-$$
+</div>
+<script type="math/tex; mode=display">
+R(A,B,x)=\frac{x^H A x}{x^H B x}
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>是非零向量，<span class="arithmatex"><span class="MathJax_Preview">A,B</span><script type="math/tex">A,B</script></span>为<span class="arithmatex"><span class="MathJax_Preview">n\times n</span><script type="math/tex">n\times n</script></span>的Hermitan矩阵，<span class="arithmatex"><span class="MathJax_Preview">B</span><script type="math/tex">B</script></span>为正定矩阵。</p>
+<p>令<span class="arithmatex"><span class="MathJax_Preview">x=B^{-1/2} x^{'}</span><script type="math/tex">x=B^{-1/2} x^{'}</script></span>，则分子分母转化为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
-&amp;x^H B x = (B<sup>{-&frac12;}x</sup>{'})^H B (B<sup>{-&frac12;}x</sup>{'})=x<sup>{'H}B</sup>{-&frac12;H}B B^{-&frac12;} x<sup>{'}=x</sup>{'H}B^{-&frac12;}B B^{-&frac12;} x<sup>{'}=x</sup>{'H}x^{'}\
-&amp;x^H A x = (B<sup>{-&frac12;}x</sup>{'})^H A (B<sup>{-&frac12;}x</sup>{'})=x<sup>{'H}B</sup>{-&frac12;H}A B^{-&frac12;} x<sup>{'}=x</sup>{'H}B^{-&frac12;}A B^{-&frac12;} x^{'}
+&amp;x^H B x = (B^{-1/2}x^{'})^H B (B^{-1/2}x^{'})=x^{'H}B^{-1/2H}B B^{-1/2} x^{'}=x^{'H}B^{-1/2}B B^{-1/2} x^{'}=x^{'H}x^{'}\\
+&amp;x^H A x = (B^{-1/2}x^{'})^H A (B^{-1/2}x^{'})=x^{'H}B^{-1/2H}A B^{-1/2} x^{'}=x^{'H}B^{-1/2}A B^{-1/2} x^{'}
 \end{align}
-$$
-根据式(4)和式(5)，广义瑞利商可以写成：
-$$
-R(A,B,x)=\frac{x^H A x}{x^H B x}=\frac{x<sup>{'H}B</sup>{-&frac12;}A B^{-&frac12;} x<sup>{'}}{x</sup>{'H}x^{'}}
-$$
-利用前面瑞利商的性质，可知<span class="arithmatex"><span class="MathJax_Preview">R(A,B,x)</span><script type="math/tex">R(A,B,x)</script></span>的最大值为矩阵<span class="arithmatex"><span class="MathJax_Preview">B^{-1/2}AB^{-1/2}</span><script type="math/tex">B^{-1/2}AB^{-1/2}</script></span>的最大特征值，或者说矩阵<span class="arithmatex"><span class="MathJax_Preview">B^{-1}A</span><script type="math/tex">B^{-1}A</script></span>的最大特征值，而最小值为矩阵<span class="arithmatex"><span class="MathJax_Preview">B^{-1}A</span><script type="math/tex">B^{-1}A</script></span>的最小特征值。</p>
-<h2 id="lda_2">二类LDA原理<a class="headerlink" href="#lda_2" title="Permanent link">&para;</a></h2>
-<p>假设数据集<span class="arithmatex"><span class="MathJax_Preview">D=\{(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(m)},y^{(m)})  \}</span><script type="math/tex">D=\{(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(m)},y^{(m)})  \}</script></span>，其中<span class="arithmatex"><span class="MathJax_Preview">x^{(i)} \in \mathbb{R}^n,y^{(i)} \in \{-1,+1\}</span><script type="math/tex">x^{(i)} \in \mathbb{R}^n,y^{(i)} \in \{-1,+1\}</script></span>。现在定义<span class="arithmatex"><span class="MathJax_Preview">N_j(j=0,1)</span><script type="math/tex">N_j(j=0,1)</script></span>为第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>个样本的个数，<span class="arithmatex"><span class="MathJax_Preview">X_j(j=0,1)</span><script type="math/tex">X_j(j=0,1)</script></span>为第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>类样本的集合，<span class="arithmatex"><span class="MathJax_Preview">\mu_j(j=0,1)</span><script type="math/tex">\mu_j(j=0,1)</script></span>为第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>类样本的均值向量，<span class="arithmatex"><span class="MathJax_Preview">\Sigma_j(j=1,2)</span><script type="math/tex">\Sigma_j(j=1,2)</script></span>为第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>类样本的协方差矩阵（准确说是缺少分母部分的协方差矩阵）。
-$$
+</div>
+<script type="math/tex; mode=display">
 \begin{align}
-\mu_j &amp;= \frac{1}{N_j}\sum_{x \in X_j}x \qquad j=0,1\
+&x^H B x = (B^{-1/2}x^{'})^H B (B^{-1/2}x^{'})=x^{'H}B^{-1/2H}B B^{-1/2} x^{'}=x^{'H}B^{-1/2}B B^{-1/2} x^{'}=x^{'H}x^{'}\\
+&x^H A x = (B^{-1/2}x^{'})^H A (B^{-1/2}x^{'})=x^{'H}B^{-1/2H}A B^{-1/2} x^{'}=x^{'H}B^{-1/2}A B^{-1/2} x^{'}
+\end{align}
+</script>
+</div>
+<p>根据式(4)和式(5)，广义瑞利商可以写成：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+R(A,B,x)=\frac{x^H A x}{x^H B x}=\frac{x^{'H}B^{-1/2}A B^{-1/2} x^{'}}{x^{'H}x^{'}}
+</div>
+<script type="math/tex; mode=display">
+R(A,B,x)=\frac{x^H A x}{x^H B x}=\frac{x^{'H}B^{-1/2}A B^{-1/2} x^{'}}{x^{'H}x^{'}}
+</script>
+</div>
+<p>利用前面瑞利商的性质，可知<span class="arithmatex"><span class="MathJax_Preview">R(A,B,x)</span><script type="math/tex">R(A,B,x)</script></span>的最大值为矩阵<span class="arithmatex"><span class="MathJax_Preview">B^{-1/2}AB^{-1/2}</span><script type="math/tex">B^{-1/2}AB^{-1/2}</script></span>的最大特征值，或者说矩阵<span class="arithmatex"><span class="MathJax_Preview">B^{-1}A</span><script type="math/tex">B^{-1}A</script></span>的最大特征值，而最小值为矩阵<span class="arithmatex"><span class="MathJax_Preview">B^{-1}A</span><script type="math/tex">B^{-1}A</script></span>的最小特征值。</p>
+<h2 id="lda_2">二类LDA原理<a class="headerlink" href="#lda_2" title="Permanent link">&para;</a></h2>
+<p>假设数据集<span class="arithmatex"><span class="MathJax_Preview">D=\{(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(m)},y^{(m)})  \}</span><script type="math/tex">D=\{(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(m)},y^{(m)})  \}</script></span>，其中<span class="arithmatex"><span class="MathJax_Preview">x^{(i)} \in \mathbb{R}^n,y^{(i)} \in \{-1,+1\}</span><script type="math/tex">x^{(i)} \in \mathbb{R}^n,y^{(i)} \in \{-1,+1\}</script></span>。现在定义<span class="arithmatex"><span class="MathJax_Preview">N_j(j=0,1)</span><script type="math/tex">N_j(j=0,1)</script></span>为第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>个样本的个数，<span class="arithmatex"><span class="MathJax_Preview">X_j(j=0,1)</span><script type="math/tex">X_j(j=0,1)</script></span>为第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>类样本的集合，<span class="arithmatex"><span class="MathJax_Preview">\mu_j(j=0,1)</span><script type="math/tex">\mu_j(j=0,1)</script></span>为第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>类样本的均值向量，<span class="arithmatex"><span class="MathJax_Preview">\Sigma_j(j=1,2)</span><script type="math/tex">\Sigma_j(j=1,2)</script></span>为第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>类样本的协方差矩阵（准确说是缺少分母部分的协方差矩阵）。</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+\mu_j &amp;= \frac{1}{N_j}\sum_{x \in X_j}x \qquad j=0,1\\
 \Sigma_j &amp;= \sum_{x\in X_j}(x-\mu_j)(x-\mu_j)^T \qquad j=0,1
 \end{align}
-$$
-由于是两类数据，因此只需要将数据投影到一条直线即可。假设投影直线是向量<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>，则对任意一个样本<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>在直线<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>的投影为<span class="arithmatex"><span class="MathJax_Preview">w^T x^{(i)}</span><script type="math/tex">w^T x^{(i)}</script></span>。对于两个类别的中心点<span class="arithmatex"><span class="MathJax_Preview">\mu_0,\mu_1</span><script type="math/tex">\mu_0,\mu_1</script></span>，在直线<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>的投影为<span class="arithmatex"><span class="MathJax_Preview">w^T \mu_0</span><script type="math/tex">w^T \mu_0</script></span>和<span class="arithmatex"><span class="MathJax_Preview">w^T \mu_1</span><script type="math/tex">w^T \mu_1</script></span>。由于LDA需要让不同类别的数据的类别中心之间的距离尽可能的大，即最大化<span class="arithmatex"><span class="MathJax_Preview">||w^T \mu_0-w^T \mu_1||_2^2</span><script type="math/tex">||w^T \mu_0-w^T \mu_1||_2^2</script></span>，同时需要让同一种类别数据的投影尽可能的接近，即最小化协方差<span class="arithmatex"><span class="MathJax_Preview">(w^T \Sigma_0 w</span><script type="math/tex">(w^T \Sigma_0 w</script></span>+<span class="arithmatex"><span class="MathJax_Preview">w^T \Sigma_1 w)</span><script type="math/tex">w^T \Sigma_1 w)</script></span>尽可能的小。综上优化目标为：
-$$
-\arg \max_{w} J(w)=\frac{||w^T \mu_0 - w^T \mu_1||<em>2<sup>2}{w</sup>T \Sigma_0 w+w^T \Sigma_1 w}=\frac{w^T(\mu_0-\mu_1)(\mu_0 - \mu_1)<sup>Tw}{w</sup>T \Sigma_0 w+w^T \Sigma_1 w}
-$$
-一般定义类内散度矩阵<span class="arithmatex"><span class="MathJax_Preview">S_w</span><script type="math/tex">S_w</script></span>为：
-$$
-S_w=\Sigma_0+\Sigma_1=\sum</em>{x\in X_0}(x-\mu_0)(x-\mu_0)^T+\sum_{x\in X_1}(x-\mu_1)(x-\mu_1)^T
-$$
-定义类间散度矩阵<span class="arithmatex"><span class="MathJax_Preview">S_b</span><script type="math/tex">S_b</script></span>为：
-$$
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\mu_j &= \frac{1}{N_j}\sum_{x \in X_j}x \qquad j=0,1\\
+\Sigma_j &= \sum_{x\in X_j}(x-\mu_j)(x-\mu_j)^T \qquad j=0,1
+\end{align}
+</script>
+</div>
+<p>由于是两类数据，因此只需要将数据投影到一条直线即可。假设投影直线是向量<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>，则对任意一个样本<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}</span><script type="math/tex">x^{(i)}</script></span>在直线<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>的投影为<span class="arithmatex"><span class="MathJax_Preview">w^T x^{(i)}</span><script type="math/tex">w^T x^{(i)}</script></span>。对于两个类别的中心点<span class="arithmatex"><span class="MathJax_Preview">\mu_0,\mu_1</span><script type="math/tex">\mu_0,\mu_1</script></span>，在直线<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>的投影为<span class="arithmatex"><span class="MathJax_Preview">w^T \mu_0</span><script type="math/tex">w^T \mu_0</script></span>和<span class="arithmatex"><span class="MathJax_Preview">w^T \mu_1</span><script type="math/tex">w^T \mu_1</script></span>。由于LDA需要让不同类别的数据的类别中心之间的距离尽可能的大，即最大化<span class="arithmatex"><span class="MathJax_Preview">||w^T \mu_0-w^T \mu_1||_2^2</span><script type="math/tex">||w^T \mu_0-w^T \mu_1||_2^2</script></span>，同时需要让同一种类别数据的投影尽可能的接近，即最小化协方差<span class="arithmatex"><span class="MathJax_Preview">(w^T \Sigma_0 w</span><script type="math/tex">(w^T \Sigma_0 w</script></span>+<span class="arithmatex"><span class="MathJax_Preview">w^T \Sigma_1 w)</span><script type="math/tex">w^T \Sigma_1 w)</script></span>尽可能的小。综上优化目标为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\arg \max_{w} J(w)=\frac{||w^T \mu_0 - w^T \mu_1||_2^2}{w^T \Sigma_0 w+w^T \Sigma_1 w}=\frac{w^T(\mu_0-\mu_1)(\mu_0 - \mu_1)^Tw}{w^T \Sigma_0 w+w^T \Sigma_1 w}
+</div>
+<script type="math/tex; mode=display">
+\arg \max_{w} J(w)=\frac{||w^T \mu_0 - w^T \mu_1||_2^2}{w^T \Sigma_0 w+w^T \Sigma_1 w}=\frac{w^T(\mu_0-\mu_1)(\mu_0 - \mu_1)^Tw}{w^T \Sigma_0 w+w^T \Sigma_1 w}
+</script>
+</div>
+<p>一般定义类内散度矩阵<span class="arithmatex"><span class="MathJax_Preview">S_w</span><script type="math/tex">S_w</script></span>为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+S_w=\Sigma_0+\Sigma_1=\sum_{x\in X_0}(x-\mu_0)(x-\mu_0)^T+\sum_{x\in X_1}(x-\mu_1)(x-\mu_1)^T
+</div>
+<script type="math/tex; mode=display">
+S_w=\Sigma_0+\Sigma_1=\sum_{x\in X_0}(x-\mu_0)(x-\mu_0)^T+\sum_{x\in X_1}(x-\mu_1)(x-\mu_1)^T
+</script>
+</div>
+<p>定义类间散度矩阵<span class="arithmatex"><span class="MathJax_Preview">S_b</span><script type="math/tex">S_b</script></span>为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 S_b = (\mu_0-\mu_1)(\mu_0-\mu_1)^T
-$$
-最终优化目标可以写成：
-$$
+</div>
+<script type="math/tex; mode=display">
+S_b = (\mu_0-\mu_1)(\mu_0-\mu_1)^T
+</script>
+</div>
+<p>最终优化目标可以写成：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \arg \max_{w} J(w)=\frac{w^T S_b w}{w^T S_w w}
-$$
-可以发现式(12)就是广义瑞利商。利用广义瑞利商的性质可知，<span class="arithmatex"><span class="MathJax_Preview">J(w)</span><script type="math/tex">J(w)</script></span>的最大值为矩阵<span class="arithmatex"><span class="MathJax_Preview">S^{-1}_w S_b</span><script type="math/tex">S^{-1}_w S_b</script></span>的最大特征值，而对应的<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>为<span class="arithmatex"><span class="MathJax_Preview">S^{-1}_wS_b</span><script type="math/tex">S^{-1}_wS_b</script></span>的最大特征值对应的特征向量。</p>
+</div>
+<script type="math/tex; mode=display">
+\arg \max_{w} J(w)=\frac{w^T S_b w}{w^T S_w w}
+</script>
+</div>
+<p>可以发现式(12)就是广义瑞利商。利用广义瑞利商的性质可知，<span class="arithmatex"><span class="MathJax_Preview">J(w)</span><script type="math/tex">J(w)</script></span>的最大值为矩阵<span class="arithmatex"><span class="MathJax_Preview">S^{-1}_w S_b</span><script type="math/tex">S^{-1}_w S_b</script></span>的最大特征值，而对应的<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>为<span class="arithmatex"><span class="MathJax_Preview">S^{-1}_wS_b</span><script type="math/tex">S^{-1}_wS_b</script></span>的最大特征值对应的特征向量。</p>
 <h2 id="lda_3">多类LDA原理<a class="headerlink" href="#lda_3" title="Permanent link">&para;</a></h2>
 <p>假设数据集<span class="arithmatex"><span class="MathJax_Preview">D=\{ (x^{(1)},y^{(1)}), (x^{(2)},y^{(2)}),..., (x^{(m)},y^{(m)}) \}</span><script type="math/tex">D=\{ (x^{(1)},y^{(1)}), (x^{(2)},y^{(2)}),..., (x^{(m)},y^{(m)}) \}</script></span>，其中<span class="arithmatex"><span class="MathJax_Preview">x^{(i)} \in \mathbb{R}^n,y^{(i)} \in \{C_1,C_2,...,C_k\}，定义</span><script type="math/tex">x^{(i)} \in \mathbb{R}^n,y^{(i)} \in \{C_1,C_2,...,C_k\}，定义</script></span><span class="arithmatex"><span class="MathJax_Preview">N_j(j=1,2,...,k)</span><script type="math/tex">N_j(j=1,2,...,k)</script></span>为第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>类样本的个数，<span class="arithmatex"><span class="MathJax_Preview">X_j(j=1,2,...,k)</span><script type="math/tex">X_j(j=1,2,...,k)</script></span>为第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>类样本的集合，<span class="arithmatex"><span class="MathJax_Preview">\mu_j(j=1,2,...,k)</span><script type="math/tex">\mu_j(j=1,2,...,k)</script></span>为第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>类样本的均值向量，<span class="arithmatex"><span class="MathJax_Preview">\Sigma_j(j=1,2,..,k)</span><script type="math/tex">\Sigma_j(j=1,2,..,k)</script></span>为第<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>类样本的协方差矩阵。</p>
 <p>由于多类向低维投影，此时投影到的低维空间就不是一条直线，而是一个超平面。假设投影到的低维空间的维度为<span class="arithmatex"><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span>，对应的向量为<span class="arithmatex"><span class="MathJax_Preview">(w_1,w_2,...,w_d)</span><script type="math/tex">(w_1,w_2,...,w_d)</script></span>，基向量组成的矩阵为<span class="arithmatex"><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>，是一个<span class="arithmatex"><span class="MathJax_Preview">n\times d</span><script type="math/tex">n\times d</script></span>的矩阵。</p>

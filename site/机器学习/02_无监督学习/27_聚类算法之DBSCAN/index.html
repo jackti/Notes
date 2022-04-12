@@ -653,8 +653,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
-        集成学习算法之GBDT
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
       </a>
     </li>
   
@@ -667,8 +667,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
-        集成学习算法之RF
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
+        集成学习算法之GBDT
       </a>
     </li>
   
@@ -1256,13 +1256,13 @@
 <blockquote>
 <p>输入：样本集<span class="arithmatex"><span class="MathJax_Preview">D=\{x^{(1)},x^{(2)},...,x^{(m)} \}</span><script type="math/tex">D=\{x^{(1)},x^{(2)},...,x^{(m)} \}</script></span>，邻域参数<span class="arithmatex"><span class="MathJax_Preview">(\epsilon,MinPts)</span><script type="math/tex">(\epsilon,MinPts)</script></span></p>
 <p>输出：簇划分<span class="arithmatex"><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span></p>
-<p>(1)初始化核心对象集合<span class="arithmatex"><span class="MathJax_Preview">\Omega=\empty</span><script type="math/tex">\Omega=\empty</script></span>，聚类簇数<span class="arithmatex"><span class="MathJax_Preview">k=0</span><script type="math/tex">k=0</script></span>，未访问样本集合<span class="arithmatex"><span class="MathJax_Preview">\Gamma=D</span><script type="math/tex">\Gamma=D</script></span>，簇划分<span class="arithmatex"><span class="MathJax_Preview">C=\empty</span><script type="math/tex">C=\empty</script></span></p>
+<p>(1)初始化核心对象集合<span class="arithmatex"><span class="MathJax_Preview">\Omega=\emptyset</span><script type="math/tex">\Omega=\emptyset</script></span>，聚类簇数<span class="arithmatex"><span class="MathJax_Preview">k=0</span><script type="math/tex">k=0</script></span>，未访问样本集合<span class="arithmatex"><span class="MathJax_Preview">\Gamma=D</span><script type="math/tex">\Gamma=D</script></span>，簇划分<span class="arithmatex"><span class="MathJax_Preview">C=\emptyset</span><script type="math/tex">C=\emptyset</script></span></p>
 <p>(2)对于<span class="arithmatex"><span class="MathJax_Preview">j=1,2,...,m</span><script type="math/tex">j=1,2,...,m</script></span>按如下步骤找出所有的核心对象：</p>
 <p>​ ①通过距离计算，找到样本<span class="arithmatex"><span class="MathJax_Preview">x^{(j)}</span><script type="math/tex">x^{(j)}</script></span>的<span class="arithmatex"><span class="MathJax_Preview">\epsilon-</span><script type="math/tex">\epsilon-</script></span>邻域子样本集<span class="arithmatex"><span class="MathJax_Preview">N_{\epsilon}(x^{(j)})</span><script type="math/tex">N_{\epsilon}(x^{(j)})</script></span>；</p>
 <p>​ ②如果子样本集样本个数满足<span class="arithmatex"><span class="MathJax_Preview">|N_{\epsilon}(x^{(j)})|\ge MinPts</span><script type="math/tex">|N_{\epsilon}(x^{(j)})|\ge MinPts</script></span>，将样本<span class="arithmatex"><span class="MathJax_Preview">x^{(j)}</span><script type="math/tex">x^{(j)}</script></span>加入核心对象样本集合<span class="arithmatex"><span class="MathJax_Preview">\Omega=\Omega \cup{x^{(j)}}</span><script type="math/tex">\Omega=\Omega \cup{x^{(j)}}</script></span></p>
-<p>(3)如果核心对象集合<span class="arithmatex"><span class="MathJax_Preview">\Omega=\empty</span><script type="math/tex">\Omega=\empty</script></span>，则算法结束，否则转入步骤(4)</p>
+<p>(3)如果核心对象集合<span class="arithmatex"><span class="MathJax_Preview">\Omega=\emptyset</span><script type="math/tex">\Omega=\emptyset</script></span>，则算法结束，否则转入步骤(4)</p>
 <p>(4)在核心对象集合<span class="arithmatex"><span class="MathJax_Preview">\Omega</span><script type="math/tex">\Omega</script></span>中，随机选择一个核心对象<span class="arithmatex"><span class="MathJax_Preview">o</span><script type="math/tex">o</script></span>，初始化当前簇核心对象队列<span class="arithmatex"><span class="MathJax_Preview">\Omega_{cur}=\{o\}</span><script type="math/tex">\Omega_{cur}=\{o\}</script></span>，初始化类别序号<span class="arithmatex"><span class="MathJax_Preview">k=k+1</span><script type="math/tex">k=k+1</script></span>，初始化当前簇样本集合<span class="arithmatex"><span class="MathJax_Preview">C_k=\{o\}</span><script type="math/tex">C_k=\{o\}</script></span>，更新未访问样本集合<span class="arithmatex"><span class="MathJax_Preview">\Gamma=\Gamma-\{o\}</span><script type="math/tex">\Gamma=\Gamma-\{o\}</script></span></p>
-<p>(5)如果当前簇核心对象队列<span class="arithmatex"><span class="MathJax_Preview">\Omega_{cur}=\empty</span><script type="math/tex">\Omega_{cur}=\empty</script></span>，则当前聚类簇<span class="arithmatex"><span class="MathJax_Preview">C_k</span><script type="math/tex">C_k</script></span>生成完毕，更新簇划分<span class="arithmatex"><span class="MathJax_Preview">C=\{C_1,C_2,...,C_k\}</span><script type="math/tex">C=\{C_1,C_2,...,C_k\}</script></span>，更新核心对象集合<span class="arithmatex"><span class="MathJax_Preview">\Omega=\Omega-C_k</span><script type="math/tex">\Omega=\Omega-C_k</script></span>，转入步骤(3)</p>
+<p>(5)如果当前簇核心对象队列<span class="arithmatex"><span class="MathJax_Preview">\Omega_{cur}=\emptyset</span><script type="math/tex">\Omega_{cur}=\emptyset</script></span>，则当前聚类簇<span class="arithmatex"><span class="MathJax_Preview">C_k</span><script type="math/tex">C_k</script></span>生成完毕，更新簇划分<span class="arithmatex"><span class="MathJax_Preview">C=\{C_1,C_2,...,C_k\}</span><script type="math/tex">C=\{C_1,C_2,...,C_k\}</script></span>，更新核心对象集合<span class="arithmatex"><span class="MathJax_Preview">\Omega=\Omega-C_k</span><script type="math/tex">\Omega=\Omega-C_k</script></span>，转入步骤(3)</p>
 <p>(6)在当前簇核心队列<span class="arithmatex"><span class="MathJax_Preview">\Omega_{cur}</span><script type="math/tex">\Omega_{cur}</script></span>中取出一个核心对象<span class="arithmatex"><span class="MathJax_Preview">o^{'}</span><script type="math/tex">o^{'}</script></span> ，通过邻域距离阈值<span class="arithmatex"><span class="MathJax_Preview">\epsilon</span><script type="math/tex">\epsilon</script></span>找出所有的<span class="arithmatex"><span class="MathJax_Preview">\epsilon-</span><script type="math/tex">\epsilon-</script></span>邻域子样本集<span class="arithmatex"><span class="MathJax_Preview">N_{\epsilon}(o^{'})</span><script type="math/tex">N_{\epsilon}(o^{'})</script></span>，令<span class="arithmatex"><span class="MathJax_Preview">\Delta=N_{\epsilon}(o^{'})\cap \Gamma</span><script type="math/tex">\Delta=N_{\epsilon}(o^{'})\cap \Gamma</script></span>，更新当前簇样本集合<span class="arithmatex"><span class="MathJax_Preview">C_k=C_k\cup \Delta</span><script type="math/tex">C_k=C_k\cup \Delta</script></span>，更新未访问样本集合<span class="arithmatex"><span class="MathJax_Preview">\Gamma=\Gamma-\Delta</span><script type="math/tex">\Gamma=\Gamma-\Delta</script></span>，更新<span class="arithmatex"><span class="MathJax_Preview">\Omega_{cur}=\Omega{cur}\cup (N_{\epsilon}(o^{'})\cap\Omega)</span><script type="math/tex">\Omega_{cur}=\Omega{cur}\cup (N_{\epsilon}(o^{'})\cap\Omega)</script></span>，转入步骤(5)</p>
 </blockquote>
 <h2 id="dbscan_2">DBSCAN总结<a class="headerlink" href="#dbscan_2" title="Permanent link">&para;</a></h2>

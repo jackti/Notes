@@ -630,6 +630,40 @@
     核函数
   </a>
   
+    <nav class="md-nav" aria-label="核函数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    线性核函数
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    多项式核函数
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    径向基核函数
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sigmoid" class="md-nav__link">
+    Sigmoid核函数
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -710,8 +744,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
-        集成学习算法之GBDT
+      <a href="../23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
       </a>
     </li>
   
@@ -724,8 +758,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
-        集成学习算法之RF
+      <a href="../24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
+        集成学习算法之GBDT
       </a>
     </li>
   
@@ -1214,6 +1248,40 @@
     核函数
   </a>
   
+    <nav class="md-nav" aria-label="核函数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    线性核函数
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    多项式核函数
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    径向基核函数
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sigmoid" class="md-nav__link">
+    Sigmoid核函数
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1240,92 +1308,166 @@
 <h1 id="_1">支持向量机算法原理(三)<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <p>线性可分SVM的硬间隔最大和软间隔最大算法可以较好的处理线性可分数据，然而还是无法处理完全线性不可分的数据。</p>
 <h2 id="_2">多项式回归的启发<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>假设有一个只有两个特征的多项式回归模型：
-$$
-h_\theta(x_1,x_2)=\theta_0+\theta_1x_1+\theta_2x_2+\theta_3x<sup>2_1+\theta_4x_2</sup>2+\theta_5x_1x_2
-$$
-令<span class="arithmatex"><span class="MathJax_Preview">x_1=x_1,x_2=x_2,x_3=x_1^2,x_4=x_2^2,x_5=x_1x_2</span><script type="math/tex">x_1=x_1,x_2=x_2,x_3=x_1^2,x_4=x_2^2,x_5=x_1x_2</script></span>，将式(1)转换为：
-$$
+<p>假设有一个只有两个特征的多项式回归模型：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+h_\theta(x_1,x_2)=\theta_0+\theta_1x_1+\theta_2x_2+\theta_3x^2_1+\theta_4x_2^2+\theta_5x_1x_2
+</div>
+<script type="math/tex; mode=display">
+h_\theta(x_1,x_2)=\theta_0+\theta_1x_1+\theta_2x_2+\theta_3x^2_1+\theta_4x_2^2+\theta_5x_1x_2
+</script>
+</div>
+<p>令<span class="arithmatex"><span class="MathJax_Preview">x_1=x_1,x_2=x_2,x_3=x_1^2,x_4=x_2^2,x_5=x_1x_2</span><script type="math/tex">x_1=x_1,x_2=x_2,x_3=x_1^2,x_4=x_2^2,x_5=x_1x_2</script></span>，将式(1)转换为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 h_\theta(x_1,x_2)=\theta_0+\theta_1x_1+\theta_2x_2+\theta_3x_3+\theta_4x_4+\theta_5x_5
-$$
-这样式(5)是一个五元线性回归，可以用线性回归的方法来求解。对于每个二元样本特征<span class="arithmatex"><span class="MathJax_Preview">(x_1,x_2)</span><script type="math/tex">(x_1,x_2)</script></span>，都可以按照上面方式得到一个五元样本特征<span class="arithmatex"><span class="MathJax_Preview">(1,x_1,x_2,x_1^2,x_2^2,x_1x_2)</span><script type="math/tex">(1,x_1,x_2,x_1^2,x_2^2,x_1x_2)</script></span>，通过这个的变换，将原来不是线性回归的问题转变为了线性回归问题。</p>
+</div>
+<script type="math/tex; mode=display">
+h_\theta(x_1,x_2)=\theta_0+\theta_1x_1+\theta_2x_2+\theta_3x_3+\theta_4x_4+\theta_5x_5
+</script>
+</div>
+<p>这样式(5)是一个五元线性回归，可以用线性回归的方法来求解。对于每个二元样本特征<span class="arithmatex"><span class="MathJax_Preview">(x_1,x_2)</span><script type="math/tex">(x_1,x_2)</script></span>，都可以按照上面方式得到一个五元样本特征<span class="arithmatex"><span class="MathJax_Preview">(1,x_1,x_2,x_1^2,x_2^2,x_1x_2)</span><script type="math/tex">(1,x_1,x_2,x_1^2,x_2^2,x_1x_2)</script></span>，通过这个的变换，将原来不是线性回归的问题转变为了线性回归问题。</p>
 <p>启发：对于在低维线性不可分的数据，在映射到高维以后，就变成了线性可分的了(如上面例子中二维的不是线性可分的数据，将其映射到五维之后，就变成了线性的数据)。对于SVM线性不可分的低维特征数据，将其映射到高维，就能线性可分。</p>
-<p>对于线性可分SVM的优化目标函数：
-$$
+<p>对于线性可分SVM的优化目标函数：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{align}
-\min_\alpha \quad &amp; \frac{1}{2}\sum_{i=1,j=1}^m \alpha_i\alpha_j y<sup>{(i)}y</sup>{(j)}x^{(i)}\cdot x<sup>{(j)}-\sum_{i=1}</sup>m\alpha_i\
-s.t.&amp;\quad \sum_{i=1}^m \alpha_iy^{(i)}=0 \notag\
+\min_\alpha \quad &amp; \frac{1}{2}\sum_{i=1,j=1}^m \alpha_i\alpha_j y^{(i)}y^{(j)}x^{(i)}\cdot x^{(j)}-\sum_{i=1}^m\alpha_i\\
+s.t.&amp;\quad \sum_{i=1}^m \alpha_iy^{(i)}=0 \notag\\
 &amp;\quad 0\le \alpha_i \le C \notag
 \end{align}
-$$
-其中内积<span class="arithmatex"><span class="MathJax_Preview">x^{(i)} \cdot x^{(j)}</span><script type="math/tex">x^{(i)} \cdot x^{(j)}</script></span>是在低维空间进行，现在可定义一个低维特征空间到高维特征空间的映射<span class="arithmatex"><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span>(如从二维到五维的映射)，将所有特征映射到一个更高的维度，从而使得数据在高维空间是线性可分的。那么优化目标函数变成：
-$$
+</div>
+<script type="math/tex; mode=display">
 \begin{align}
-\min_\alpha \quad &amp; \frac{1}{2}\sum_{i=1,j=1}^m \alpha_i\alpha_j y<sup>{(i)}y</sup>{(j)}\phi(x^{(i)})\cdot \phi(x<sup>{(j)})-\sum_{i=1}</sup>m\alpha_i\
-s.t.&amp;\quad \sum_{i=1}^m \alpha_iy^{(i)}=0 \notag\
+\min_\alpha \quad & \frac{1}{2}\sum_{i=1,j=1}^m \alpha_i\alpha_j y^{(i)}y^{(j)}x^{(i)}\cdot x^{(j)}-\sum_{i=1}^m\alpha_i\\
+s.t.&\quad \sum_{i=1}^m \alpha_iy^{(i)}=0 \notag\\
+&\quad 0\le \alpha_i \le C \notag
+\end{align}
+</script>
+</div>
+<p>其中内积<span class="arithmatex"><span class="MathJax_Preview">x^{(i)} \cdot x^{(j)}</span><script type="math/tex">x^{(i)} \cdot x^{(j)}</script></span>是在低维空间进行，现在可定义一个低维特征空间到高维特征空间的映射<span class="arithmatex"><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span>(如从二维到五维的映射)，将所有特征映射到一个更高的维度，从而使得数据在高维空间是线性可分的。那么优化目标函数变成：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+\min_\alpha \quad &amp; \frac{1}{2}\sum_{i=1,j=1}^m \alpha_i\alpha_j y^{(i)}y^{(j)}\phi(x^{(i)})\cdot \phi(x^{(j)})-\sum_{i=1}^m\alpha_i\\
+s.t.&amp;\quad \sum_{i=1}^m \alpha_iy^{(i)}=0 \notag\\
 &amp;\quad 0\le \alpha_i \le C\notag
 \end{align}
-$$
-式(4)相比与式(3)只是将内积<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}\cdot x^{(j)}</span><script type="math/tex">x^{(i)}\cdot x^{(j)}</script></span>替换为<span class="arithmatex"><span class="MathJax_Preview">\phi(x^{(i)})\cdot\phi(x^{(j)})</span><script type="math/tex">\phi(x^{(i)})\cdot\phi(x^{(j)})</script></span>，将特征从低维空间映射到了高维空间。然而在很多情况下，映射成高维过程中维度是爆炸性增长的(如2维映射5维，3维映射到19维...)，导致直接在高维空间求内积是非常困难的。为了避免这个障碍，设想一个函数满足：
-$$
-K(x<sup>{(i)},x</sup>{(j)})=\phi(x^{(i)})\cdot \phi(x^{(j)})
-$$
-式(5)的好处在于<span class="arithmatex"><span class="MathJax_Preview">K(x^{(i)},x^{(j)})</span><script type="math/tex">K(x^{(i)},x^{(j)})</script></span>的计算是在低维度特征空间中计算的，可以避免在高维特征空间内积的计算<span class="arithmatex"><span class="MathJax_Preview">\phi(x^{(i)})\cdot \phi(x^{(j)})</span><script type="math/tex">\phi(x^{(i)})\cdot \phi(x^{(j)})</script></span>。这样我们既可以将数据映射到高维特征空间从而又避免了高维特征空间庞大的内积计算量。这样的函数便是核函数(Kernel Function)。</p>
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\min_\alpha \quad & \frac{1}{2}\sum_{i=1,j=1}^m \alpha_i\alpha_j y^{(i)}y^{(j)}\phi(x^{(i)})\cdot \phi(x^{(j)})-\sum_{i=1}^m\alpha_i\\
+s.t.&\quad \sum_{i=1}^m \alpha_iy^{(i)}=0 \notag\\
+&\quad 0\le \alpha_i \le C\notag
+\end{align}
+</script>
+</div>
+<p>式(4)相比与式(3)只是将内积<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}\cdot x^{(j)}</span><script type="math/tex">x^{(i)}\cdot x^{(j)}</script></span>替换为<span class="arithmatex"><span class="MathJax_Preview">\phi(x^{(i)})\cdot\phi(x^{(j)})</span><script type="math/tex">\phi(x^{(i)})\cdot\phi(x^{(j)})</script></span>，将特征从低维空间映射到了高维空间。然而在很多情况下，映射成高维过程中维度是爆炸性增长的(如2维映射5维，3维映射到19维...)，导致直接在高维空间求内积是非常困难的。为了避免这个障碍，设想一个函数满足：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+K(x^{(i)},x^{(j)})=\phi(x^{(i)})\cdot \phi(x^{(j)})
+</div>
+<script type="math/tex; mode=display">
+K(x^{(i)},x^{(j)})=\phi(x^{(i)})\cdot \phi(x^{(j)})
+</script>
+</div>
+<p>式(5)的好处在于<span class="arithmatex"><span class="MathJax_Preview">K(x^{(i)},x^{(j)})</span><script type="math/tex">K(x^{(i)},x^{(j)})</script></span>的计算是在低维度特征空间中计算的，可以避免在高维特征空间内积的计算<span class="arithmatex"><span class="MathJax_Preview">\phi(x^{(i)})\cdot \phi(x^{(j)})</span><script type="math/tex">\phi(x^{(i)})\cdot \phi(x^{(j)})</script></span>。这样我们既可以将数据映射到高维特征空间从而又避免了高维特征空间庞大的内积计算量。这样的函数便是核函数(Kernel Function)。</p>
 <h2 id="_3">核函数<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p>令<span class="arithmatex"><span class="MathJax_Preview">\mathcal{X}</span><script type="math/tex">\mathcal{X}</script></span>为输入空间，<span class="arithmatex"><span class="MathJax_Preview">k(\cdot,\cdot)</span><script type="math/tex">k(\cdot,\cdot)</script></span>是定义在<span class="arithmatex"><span class="MathJax_Preview">\mathcal{X}\times \mathcal{X}</span><script type="math/tex">\mathcal{X}\times \mathcal{X}</script></span>上的对称函数，则<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>是核函数当且仅当对于任意数据<span class="arithmatex"><span class="MathJax_Preview">D=\{ x^{(1)},x^{(2)},...,x^{(m)}\}</span><script type="math/tex">D=\{ x^{(1)},x^{(2)},...,x^{(m)}\}</script></span>，"核矩阵"(Kernel Matrix)<span class="arithmatex"><span class="MathJax_Preview">\mathrm{K}</span><script type="math/tex">\mathrm{K}</script></span>总是半正定的：
-$$
+<p>令<span class="arithmatex"><span class="MathJax_Preview">\mathcal{X}</span><script type="math/tex">\mathcal{X}</script></span>为输入空间，<span class="arithmatex"><span class="MathJax_Preview">k(\cdot,\cdot)</span><script type="math/tex">k(\cdot,\cdot)</script></span>是定义在<span class="arithmatex"><span class="MathJax_Preview">\mathcal{X}\times \mathcal{X}</span><script type="math/tex">\mathcal{X}\times \mathcal{X}</script></span>上的对称函数，则<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>是核函数当且仅当对于任意数据<span class="arithmatex"><span class="MathJax_Preview">D=\{ x^{(1)},x^{(2)},...,x^{(m)}\}</span><script type="math/tex">D=\{ x^{(1)},x^{(2)},...,x^{(m)}\}</script></span>，"核矩阵"(Kernel Matrix)<span class="arithmatex"><span class="MathJax_Preview">\mathrm{K}</span><script type="math/tex">\mathrm{K}</script></span>总是半正定的：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \mathrm{K}=
 \begin{bmatrix}
-k(x<sup>{(1)},x</sup>{(1)}) &amp; \cdots &amp; (x<sup>{(1)},x</sup>{(j)}) &amp; \cdots &amp;(x<sup>{(1)},x</sup>{(m)})\
-\vdots&amp; \cdots &amp; \vdots&amp; \cdots &amp;\vdots\
-k(x<sup>{(i)},x</sup>{(1)}) &amp; \cdots &amp; (x<sup>{(i)},x</sup>{(j)}) &amp; \cdots &amp;(x<sup>{(i)},x</sup>{(m)})\
-\vdots&amp; \cdots &amp; \vdots&amp; \cdots &amp;\vdots\
-k(x<sup>{(m)},x</sup>{(1)}) &amp; \cdots &amp; (x<sup>{(m)},x</sup>{(j)}) &amp; \cdots &amp;(x<sup>{(m)},x</sup>{(m)})\
+k(x^{(1)},x^{(1)}) &amp; \cdots &amp; (x^{(1)},x^{(j)}) &amp; \cdots &amp;(x^{(1)},x^{(m)})\\
+\vdots&amp; \cdots &amp; \vdots&amp; \cdots &amp;\vdots\\
+k(x^{(i)},x^{(1)}) &amp; \cdots &amp; (x^{(i)},x^{(j)}) &amp; \cdots &amp;(x^{(i)},x^{(m)})\\
+\vdots&amp; \cdots &amp; \vdots&amp; \cdots &amp;\vdots\\
+k(x^{(m)},x^{(1)}) &amp; \cdots &amp; (x^{(m)},x^{(j)}) &amp; \cdots &amp;(x^{(m)},x^{(m)})\\
 \end{bmatrix}\notag
-$$
-只要一个对称函数所对应的核矩阵半正定，它就能作为核函数使用。事实上，对于一个半正定核矩阵，总能找到一个与之对应的映射<span class="arithmatex"><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span>。换言之，任何一个核函数都隐式地定义了一个称为"再生核希尔伯特空间"(简称RKHS)的特征空间。</p>
+</div>
+<script type="math/tex; mode=display">
+\mathrm{K}=
+\begin{bmatrix}
+k(x^{(1)},x^{(1)}) & \cdots & (x^{(1)},x^{(j)}) & \cdots &(x^{(1)},x^{(m)})\\
+\vdots& \cdots & \vdots& \cdots &\vdots\\
+k(x^{(i)},x^{(1)}) & \cdots & (x^{(i)},x^{(j)}) & \cdots &(x^{(i)},x^{(m)})\\
+\vdots& \cdots & \vdots& \cdots &\vdots\\
+k(x^{(m)},x^{(1)}) & \cdots & (x^{(m)},x^{(j)}) & \cdots &(x^{(m)},x^{(m)})\\
+\end{bmatrix}\notag
+</script>
+</div>
+<p>只要一个对称函数所对应的核矩阵半正定，它就能作为核函数使用。事实上，对于一个半正定核矩阵，总能找到一个与之对应的映射<span class="arithmatex"><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span>。换言之，任何一个核函数都隐式地定义了一个称为"再生核希尔伯特空间"(简称RKHS)的特征空间。</p>
 <p>常见的核函数有：</p>
-<p><strong>线性核函数</strong></p>
-<p>线性核函数(Linear Kernel)即线性可分SVM，表达式为：
-$$
-K(x<sup>{(i)},x</sup>{(j)})=x^{(i)}\cdot x^{(j)}
-$$
-<strong>多项式核函数</strong></p>
-<p>多项式核函数是线性不可分SVM常用的核函数之一，表达式为：
-$$
-K(x<sup>{(i)},x</sup>{(j)})=(\gamma x^{(i)}\cdot x<sup>{(j)}+r)</sup>d
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">\gamma,r,d</span><script type="math/tex">\gamma,r,d</script></span>都需要调参设定。</p>
-<p><strong>径向基核函数</strong></p>
-<p>径向基核函数即高斯核函数，是非线性SVM最主流的核函数，表达式为：
-$$
-K(x<sup>{(i)},x</sup>{(j)})=\exp(-\gamma||x<sup>{(i)}-x</sup>{(j)}||^2)
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">\gamma&gt;0</span><script type="math/tex">\gamma>0</script></span>需要调参设定。</p>
-<p><strong>Sigmoid核函数</strong></p>
-<p>Sigmoid核函数也是线性不可分SVM常用的核函数之一，表达式为：
-$$
-K(x<sup>{(i)},x</sup>{(j)})=tanh(\gamma x^{(i)}\cdot x^{(j)}+r)
-$$
-其中<span class="arithmatex"><span class="MathJax_Preview">\gamma,r</span><script type="math/tex">\gamma,r</script></span>需要调参设定。</p>
+<h3 id="_4">线性核函数<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>线性核函数(Linear Kernel)即线性可分SVM，表达式为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+K(x^{(i)},x^{(j)})=x^{(i)}\cdot x^{(j)}
+</div>
+<script type="math/tex; mode=display">
+K(x^{(i)},x^{(j)})=x^{(i)}\cdot x^{(j)}
+</script>
+</div>
+<h3 id="_5">多项式核函数<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>多项式核函数是线性不可分SVM常用的核函数之一，表达式为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+K(x^{(i)},x^{(j)})=(\gamma x^{(i)}\cdot x^{(j)}+r)^d
+</div>
+<script type="math/tex; mode=display">
+K(x^{(i)},x^{(j)})=(\gamma x^{(i)}\cdot x^{(j)}+r)^d
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">\gamma,r,d</span><script type="math/tex">\gamma,r,d</script></span>都需要调参设定。</p>
+<h3 id="_6">径向基核函数<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>径向基核函数即高斯核函数，是非线性SVM最主流的核函数，表达式为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+K(x^{(i)},x^{(j)})=\exp(-\gamma||x^{(i)}-x^{(j)}||^2)
+</div>
+<script type="math/tex; mode=display">
+K(x^{(i)},x^{(j)})=\exp(-\gamma||x^{(i)}-x^{(j)}||^2)
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">\gamma&gt;0</span><script type="math/tex">\gamma>0</script></span>需要调参设定。</p>
+<h3 id="sigmoid">Sigmoid核函数<a class="headerlink" href="#sigmoid" title="Permanent link">&para;</a></h3>
+<p>Sigmoid核函数也是线性不可分SVM常用的核函数之一，表达式为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+K(x^{(i)},x^{(j)})=tanh(\gamma x^{(i)}\cdot x^{(j)}+r)
+</div>
+<script type="math/tex; mode=display">
+K(x^{(i)},x^{(j)})=tanh(\gamma x^{(i)}\cdot x^{(j)}+r)
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">\gamma,r</span><script type="math/tex">\gamma,r</script></span>需要调参设定。</p>
 <h2 id="svm">分类SVM学习算法<a class="headerlink" href="#svm" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p>输入：训练数据<span class="arithmatex"><span class="MathJax_Preview">D=\{(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(m)},y^{(m)}),\}</span><script type="math/tex">D=\{(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),...,(x^{(m)},y^{(m)}),\}</script></span>，其中<span class="arithmatex"><span class="MathJax_Preview">x^{(i)}\in\mathbb{R}^n,y\in\{+1,-1\}</span><script type="math/tex">x^{(i)}\in\mathbb{R}^n,y\in\{+1,-1\}</script></span></p>
 <p>输出：分离超平面和分类决策函数</p>
-<p>(1)选择适当的核函数<span class="arithmatex"><span class="MathJax_Preview">K(x^{(i)},x^{(j)})</span><script type="math/tex">K(x^{(i)},x^{(j)})</script></span>和惩罚系数<span class="arithmatex"><span class="MathJax_Preview">C&gt;0</span><script type="math/tex">C>0</script></span>，构造约束优化问题
-$$
+<p>(1)选择适当的核函数<span class="arithmatex"><span class="MathJax_Preview">K(x^{(i)},x^{(j)})</span><script type="math/tex">K(x^{(i)},x^{(j)})</script></span>和惩罚系数<span class="arithmatex"><span class="MathJax_Preview">C&gt;0</span><script type="math/tex">C>0</script></span>，构造约束优化问题</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
 \begin{aligned}
-\min_{\alpha}&amp;\sum_{i=1,j=1}^m \alpha_i\alpha_jy<sup>{(i)}y</sup>{(j)}K(x<sup>{(i)},x</sup>{(j)})-\sum_{i=1}^m\alpha_i\
-s.t.&amp;\quad \sum_{i=1}^m \alpha_i y^{(i)}=0\
+\min_{\alpha}&amp;\sum_{i=1,j=1}^m \alpha_i\alpha_jy^{(i)}y^{(j)}K(x^{(i)},x^{(j)})-\sum_{i=1}^m\alpha_i\\
+s.t.&amp;\quad \sum_{i=1}^m \alpha_i y^{(i)}=0\\
 &amp;\quad 0\le \alpha_i \le C
 \end{aligned}
-$$
-(2)用SMO算法求出上式最小时对应的<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>向量值<span class="arithmatex"><span class="MathJax_Preview">\alpha^*</span><script type="math/tex">\alpha^*</script></span></p>
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\min_{\alpha}&\sum_{i=1,j=1}^m \alpha_i\alpha_jy^{(i)}y^{(j)}K(x^{(i)},x^{(j)})-\sum_{i=1}^m\alpha_i\\
+s.t.&\quad \sum_{i=1}^m \alpha_i y^{(i)}=0\\
+&\quad 0\le \alpha_i \le C
+\end{aligned}
+</script>
+</div>
+<p>(2)用SMO算法求出上式最小时对应的<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>向量值<span class="arithmatex"><span class="MathJax_Preview">\alpha^*</span><script type="math/tex">\alpha^*</script></span></p>
 <p>(3)计算<span class="arithmatex"><span class="MathJax_Preview">w^*=\sum_{i=1}^m \alpha_i^*y^{(i)}\phi (x^{(i)})</span><script type="math/tex">w^*=\sum_{i=1}^m \alpha_i^*y^{(i)}\phi (x^{(i)})</script></span></p>
 <p>(4)找出所有的<span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>个支持向量即满足<span class="arithmatex"><span class="MathJax_Preview">0\lt \alpha_s\lt C</span><script type="math/tex">0\lt \alpha_s\lt C</script></span>对应的样本<span class="arithmatex"><span class="MathJax_Preview">(x_s,y_s)</span><script type="math/tex">(x_s,y_s)</script></span>，通过<span class="arithmatex"><span class="MathJax_Preview">y_s(\sum_{i=1}^S \alpha_i y^{(i)}K(x^{(i)},x^s)+b)=1</span><script type="math/tex">y_s(\sum_{i=1}^S \alpha_i y^{(i)}K(x^{(i)},x^s)+b)=1</script></span>，计算出每个支持向量<span class="arithmatex"><span class="MathJax_Preview">(x^{s},y^{s})</span><script type="math/tex">(x^{s},y^{s})</script></span>对应的<span class="arithmatex"><span class="MathJax_Preview">b^*_s=y^{(s)}-\sum_{i=1}^S \alpha_i y^{(i)}K(x^{(i)},x^{s})</span><script type="math/tex">b^*_s=y^{(s)}-\sum_{i=1}^S \alpha_i y^{(i)}K(x^{(i)},x^{s})</script></span>，所有的<span class="arithmatex"><span class="MathJax_Preview">b_s^*</span><script type="math/tex">b_s^*</script></span>对应的平均值即为最终的<span class="arithmatex"><span class="MathJax_Preview">b^*=\frac{1}{S}\sum_{i=1}^S b^*_s</span><script type="math/tex">b^*=\frac{1}{S}\sum_{i=1}^S b^*_s</script></span></p>
 <p>(5)求得分离超平面<span class="arithmatex"><span class="MathJax_Preview">\sum_{i=1}^m \alpha_i^*y^{(i)}K(x^{(i)},x)+b^*=0</span><script type="math/tex">\sum_{i=1}^m \alpha_i^*y^{(i)}K(x^{(i)},x)+b^*=0</script></span>，分类决策函数<span class="arithmatex"><span class="MathJax_Preview">f(x)=sign(\sum_{i=1}^m \alpha_i^*y^{(i)}K(x^{(i)},x)+b^*)</span><script type="math/tex">f(x)=sign(\sum_{i=1}^m \alpha_i^*y^{(i)}K(x^{(i)},x)+b^*)</script></span> </p>
 </blockquote>
-<p>**总结：**对于线性不可分的数据集，常用的做法是把样例特征映射到高维空间，但是一律映射到高维空间，这个维度是很庞大的。为了解决这个问题，引入了核函数，既可以将特征从低维到高维的转换，又可以在低维度上进行计算，避免了高维空间中复杂的计算，真正解决了SVM线性不可分的问题。</p>
+<p><strong>总结：</strong> 对于线性不可分的数据集，常用的做法是把样例特征映射到高维空间，但是一律映射到高维空间，这个维度是很庞大的。为了解决这个问题，引入了核函数，既可以将特征从低维到高维的转换，又可以在低维度上进行计算，避免了高维空间中复杂的计算，真正解决了SVM线性不可分的问题。</p>
 
               
             </article>

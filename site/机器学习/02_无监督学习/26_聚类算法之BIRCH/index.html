@@ -653,8 +653,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
-        集成学习算法之GBDT
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
       </a>
     </li>
   
@@ -667,8 +667,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
-        集成学习算法之RF
+      <a href="../../01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
+        集成学习算法之GBDT
       </a>
     </li>
   
@@ -1257,15 +1257,24 @@
 <p>如图所示：聚类特征树的每个节点叶子节点都有若干个CF，而内部节点的CF有指向孩子节点的指针，所有的叶子节点用一个双向链表连接起来。</p>
 <p><img alt="CFTree" src="../assets/CFTree.png" /></p>
 <h2 id="_1">聚类特征<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>在聚类特征树中，聚类特征的定义为：每一个聚类特征CF是一个三元组，用<span class="arithmatex"><span class="MathJax_Preview">(N,LS,SS)</span><script type="math/tex">(N,LS,SS)</script></span>表示。其中<span class="arithmatex"><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span>代表了这个CF中拥有的样本点数量。<span class="arithmatex"><span class="MathJax_Preview">LS</span><script type="math/tex">LS</script></span>代表了这个CF中拥有的样本点各特征维度的向量和(这是一个向量)。<span class="arithmatex"><span class="MathJax_Preview">SS</span><script type="math/tex">SS</script></span>代表了这个CF中拥有的样本点各特征维度的平方和(这是一个标量)。如下图，在CF Tree中的某一个节点的某个CF中，有下面5个样本<span class="arithmatex"><span class="MathJax_Preview">(3,4),(2,6),(4,5),(4,7),(3,8)</span><script type="math/tex">(3,4),(2,6),(4,5),(4,7),(3,8)</script></span>，则对应的
-$$
-\begin{aligned}
-N=&amp;5\
-LS=&amp;(3+3+4+4+3,4+6+5+7+8)=(16,30)\
-SS=&amp;(3<sup>2+2</sup>2+4^2 +4<sup>2+3</sup>2 + 4<sup>2+6</sup>2+5^2 +7<sup>2+8</sup>2) = (54 + 190) = 244\
-\end{aligned}
-$$
-<img alt="CFFeature" src="../assets/CFFeature.png" /></p>
+<p>在聚类特征树中，聚类特征的定义为：每一个聚类特征CF是一个三元组，用<span class="arithmatex"><span class="MathJax_Preview">(N,LS,SS)</span><script type="math/tex">(N,LS,SS)</script></span>表示。其中<span class="arithmatex"><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span>代表了这个CF中拥有的样本点数量。<span class="arithmatex"><span class="MathJax_Preview">LS</span><script type="math/tex">LS</script></span>代表了这个CF中拥有的样本点各特征维度的向量和(这是一个向量)。<span class="arithmatex"><span class="MathJax_Preview">SS</span><script type="math/tex">SS</script></span>代表了这个CF中拥有的样本点各特征维度的平方和(这是一个标量)。如下图，在CF Tree中的某一个节点的某个CF中，有下面5个样本<span class="arithmatex"><span class="MathJax_Preview">(3,4),(2,6),(4,5),(4,7),(3,8)</span><script type="math/tex">(3,4),(2,6),(4,5),(4,7),(3,8)</script></span>，则对应的</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+N=&amp;5\\
+LS=&amp;(3+3+4+4+3,4+6+5+7+8)=(16,30)\\
+SS=&amp;(3^2+2^2+4^2 +4^2+3^2 + 4^2+6^2+5^2 +7^2+8^2) = (54 + 190) = 244\\
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+N=&5\\
+LS=&(3+3+4+4+3,4+6+5+7+8)=(16,30)\\
+SS=&(3^2+2^2+4^2 +4^2+3^2 + 4^2+6^2+5^2 +7^2+8^2) = (54 + 190) = 244\\
+\end{align}
+</script>
+</div>
+<p><img alt="CFFeature" src="../assets/CFFeature.png" /></p>
 <p>CF满足线性关系，即CF1+CF2=(N1+N2,LS1+LS2,SS1+SS2)。也就是说在CF Tree中每个父节点的CF节点，它的(N,LS,SS)三元组的值等于这个CF节点所指向的所有子节点的三元组之和。</p>
 <h2 id="_2">聚类特征树<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>聚类特征树(CF Tree)的几个重要参数：内部节点的最大CF数B，叶子节点的最大CF树L，叶子节点每个CF的最大样本半径阈值T。</p>

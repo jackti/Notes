@@ -686,6 +686,33 @@
     结合策略
   </a>
   
+    <nav class="md-nav" aria-label="结合策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    平均法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    投票法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    学习法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -717,8 +744,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
-        集成学习算法之GBDT
+      <a href="../23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
       </a>
     </li>
   
@@ -731,8 +758,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
-        集成学习算法之RF
+      <a href="../24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
+        集成学习算法之GBDT
       </a>
     </li>
   
@@ -1235,6 +1262,33 @@
     结合策略
   </a>
   
+    <nav class="md-nav" aria-label="结合策略">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    平均法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    投票法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    学习法
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1276,7 +1330,7 @@
 <li>从表示方面，某些学习任务的真实假设可能不在当前学习算法所考虑的假设空间中，此时若使用单学习器则肯定无效，而通过结合多个学习器，由于相应的假设空间有所扩大，有可能学得更好的近似。</li>
 </ul>
 <p>假定集合包含<span class="arithmatex"><span class="MathJax_Preview">T</span><script type="math/tex">T</script></span>个基学习器<span class="arithmatex"><span class="MathJax_Preview">\{h_1,h_2,...,h_T\}</span><script type="math/tex">\{h_1,h_2,...,h_T\}</script></span>，其中<span class="arithmatex"><span class="MathJax_Preview">h_i</span><script type="math/tex">h_i</script></span>在示例<span class="arithmatex"><span class="MathJax_Preview">x\in \mathbb{R}^n</span><script type="math/tex">x\in \mathbb{R}^n</script></span>上的输出为<span class="arithmatex"><span class="MathJax_Preview">h_i(x)</span><script type="math/tex">h_i(x)</script></span>，对<span class="arithmatex"><span class="MathJax_Preview">h_i(x)</span><script type="math/tex">h_i(x)</script></span>进行结合的常见策略有：</p>
-<p>（1）平均法</p>
+<h3 id="_4">平均法<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
 <p>对于数值型的回归预测问题<span class="arithmatex"><span class="MathJax_Preview">h_i(x)\in \mathbb{R}</span><script type="math/tex">h_i(x)\in \mathbb{R}</script></span> ，通常使用的结合策略是平均法，对若干个弱学习器的输出进行平均得到最终的预测输出。</p>
 <ul>
 <li>简单平均法</li>
@@ -1301,11 +1355,11 @@ H(x)=\sum_{i=1}^T w_i h_i(x)
 </script>
 </div>
 <p>其中<span class="arithmatex"><span class="MathJax_Preview">w_i</span><script type="math/tex">w_i</script></span>是个体学习器<span class="arithmatex"><span class="MathJax_Preview">h_i(x)</span><script type="math/tex">h_i(x)</script></span>的权重，通常要求<span class="arithmatex"><span class="MathJax_Preview">w_i\ge0,\sum_{i=1}^T w_i =1</span><script type="math/tex">w_i\ge0,\sum_{i=1}^T w_i =1</script></span>。</p>
-<p>（2）投票法</p>
+<h3 id="_5">投票法<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <p>对于分类问题的预测，通常使用投票法。假设预测类别是<span class="arithmatex"><span class="MathJax_Preview">\{c_1,c_2,...,c_K\}</span><script type="math/tex">\{c_1,c_2,...,c_K\}</script></span>，对于任意一个预测样本<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>，T个弱学习器的预测结果分别是<span class="arithmatex"><span class="MathJax_Preview">\{ h_1(x),h_2(x),...,h_T(x)\}</span><script type="math/tex">\{ h_1(x),h_2(x),...,h_T(x)\}</script></span>。</p>
 <p>相对多数投票法即少数服从多数，也就是T个弱学习器对样本<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>的预测结果中数量最多的类别<span class="arithmatex"><span class="MathJax_Preview">c_i</span><script type="math/tex">c_i</script></span>为最终的分类类别。如果不止一个类别获得最高票，则随机选择一个做为最终类别。</p>
 <p>绝对多数投票法即要求票数过半数，在相对多数投票法的基础上，不仅仅要求最高票还要求票数过半数。否则会拒绝预测。</p>
-<p>（3）学习法</p>
+<h3 id="_6">学习法<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <p>当训练数据很多时，一种更为强大的结合策略是使用"学习法"，即通过另一个学习器来进行结合。Stacking是学习法的典型代表，Stacking先从初始数据集训练出初级学习器，然后"生成"一个新数据集用于训练次级学习器。在这个新数据集中，初级学习器的输出被当做样例输入特征，而初始样本的标记仍被当做样本标记。通常在Stacking中初级学习器是使用不同学习算法产生的，即**初级集成是异质的**。（如果不严格区分的话，可认为堆叠Stacking、混合Blending、层叠泛化Stacked Generalization其实是同一个算法的不同名字）。</p>
 <p><img alt="stacking" src="../assets/stacking.png" /></p>
 
