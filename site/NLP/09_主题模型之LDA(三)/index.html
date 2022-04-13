@@ -1,0 +1,2084 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="采用Mkdocs-material生成的文档管理网站支持的markdown语法，包括传统语法和扩展语法">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.9">
+    
+    
+      
+        <title>主题模型之LDA(三) - 我的知识笔记</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.120efc48.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.9647289d.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#2094f3">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="blue" data-md-color-accent="pink">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lda" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="我的知识笔记" class="md-header__button md-logo" aria-label="我的知识笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            我的知识笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              主题模型之LDA(三)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../.." class="md-tabs__link">
+      首页
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../00_%E6%96%87%E6%9C%AC%E6%8C%96%E6%8E%98%E4%B9%8B%E8%8B%B1%E6%96%87%E9%A2%84%E5%A4%84%E7%90%86/" class="md-tabs__link md-tabs__link--active">
+        NLP
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/00_%E5%85%B6%E4%BB%96%E8%AE%B0%E5%BD%95/" class="md-tabs__link">
+        机器学习
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/00_%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" class="md-tabs__link">
+        深度学习
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="我的知识笔记" class="md-nav__button md-logo" aria-label="我的知识笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    我的知识笔记
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        首页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          NLP
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="NLP" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          NLP
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00_%E6%96%87%E6%9C%AC%E6%8C%96%E6%8E%98%E4%B9%8B%E8%8B%B1%E6%96%87%E9%A2%84%E5%A4%84%E7%90%86/" class="md-nav__link">
+        文本挖掘之英文预处理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01_%E6%96%87%E6%9C%AC%E6%8C%96%E6%8E%98%E4%B9%8B%E4%B8%AD%E6%96%87%E9%A2%84%E5%A4%84%E7%90%86/" class="md-nav__link">
+        文本挖掘之中文预处理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_%E6%96%87%E6%9C%AC%E6%8C%96%E6%8E%98%E4%B9%8B%E5%88%86%E8%AF%8D%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        文本挖掘之分词原理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_%E6%96%87%E6%9C%AC%E6%8C%96%E6%8E%98%E4%B9%8B%E5%90%91%E9%87%8F%E5%8C%96/" class="md-nav__link">
+        文本挖掘之向量化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%E4%B9%8BLSI/" class="md-nav__link">
+        主题模型之LSI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05_%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%E4%B9%8BNMF/" class="md-nav__link">
+        主题模型之NMF
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06_%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%E4%B9%8BpLSA/" class="md-nav__link">
+        主题模型之pLSA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07_%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%E4%B9%8BLDA%28%E4%B8%80%29/" class="md-nav__link">
+        主题模型之LDA(一)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08_%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%E4%B9%8BLDA%28%E4%BA%8C%29/" class="md-nav__link">
+        主题模型之LDA(二)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          主题模型之LDA(三)
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        主题模型之LDA(三)
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lda_1" class="md-nav__link">
+    LDA变分推断
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#elbo" class="md-nav__link">
+    极大化ELBO求解变分参数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eme" class="md-nav__link">
+    EM算法之E步
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#emm" class="md-nav__link">
+    EM算法之M步
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10_%E8%AF%8D%E5%90%91%E9%87%8F%E4%B9%8Bword2vec%28%E4%B8%80%29/" class="md-nav__link">
+        词向量之word2vec(一)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11_%E8%AF%8D%E5%90%91%E9%87%8F%E4%B9%8Bword2vec%28%E4%BA%8C%29/" class="md-nav__link">
+        词向量之word2vec(二)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12_%E8%AF%8D%E5%90%91%E9%87%8F%E4%B9%8Bword2vec%28%E4%B8%89%29/" class="md-nav__link">
+        词向量之word2vec(三)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          机器学习
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="机器学习" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          机器学习
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          01 监督学习
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="01 监督学习" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          01 监督学习
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/00_%E5%85%B6%E4%BB%96%E8%AE%B0%E5%BD%95/" class="md-nav__link">
+        数学符号
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/00_%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        线性模型
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/01_%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/" class="md-nav__link">
+        最小二乘法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/02_%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%AE%97%E6%B3%95/" class="md-nav__link">
+        梯度下降算法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/03_%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        交叉验证原理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/04_%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0/" class="md-nav__link">
+        模型评估
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/05_%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        线性回归算法原理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/06_%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        逻辑回归算法原理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/07_%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%B8%80%29/" class="md-nav__link">
+        决策树算法原理(一)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/08_%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%BA%8C%29/" class="md-nav__link">
+        决策树算法原理(二)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/09_%E5%86%B3%E7%AD%96%E6%A0%91%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%B8%89%29/" class="md-nav__link">
+        决策树算法原理(三)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/10_%E8%BF%91%E9%82%BB%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        近邻算法原理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/11_%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        朴素贝叶斯算法原理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/12_%E6%9C%80%E5%A4%A7%E7%86%B5%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%B8%80%29/" class="md-nav__link">
+        最大熵算法原理(一)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/13_%E6%9C%80%E5%A4%A7%E7%86%B5%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%BA%8C%29/" class="md-nav__link">
+        最大熵算法原理(二)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/14_%E6%9C%80%E5%A4%A7%E7%86%B5%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%B8%89%29/" class="md-nav__link">
+        最大熵算法原理(三)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/15_%E6%84%9F%E7%9F%A5%E6%9C%BA%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        感知机算法原理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/16_%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%B8%80%29/" class="md-nav__link">
+        支持向量机算法原理(一)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/17_%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%BA%8C%29/" class="md-nav__link">
+        支持向量机算法原理(二)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/18_%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%B8%89%29/" class="md-nav__link">
+        支持向量机算法原理(三)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/19_%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E5%9B%9B%29/" class="md-nav__link">
+        支持向量机算法原理(四)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/20_%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%28%E4%BA%94%29/" class="md-nav__link">
+        支持向量机算法原理(五)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/21_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        集成学习算法之综述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/22_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BAdaboost/" class="md-nav__link">
+        集成学习算法之Adaboost
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/23_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BRF/" class="md-nav__link">
+        集成学习算法之RF
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/01_%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/24_%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E4%B9%8BGBDT/" class="md-nav__link">
+        集成学习算法之GBDT
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_2" type="checkbox" id="__nav_3_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_2">
+          02 无监督学习
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="02 无监督学习" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          02 无监督学习
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/25_%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E4%B9%8BK-Means/" class="md-nav__link">
+        聚类算法之K-Means​
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/26_%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E4%B9%8BBIRCH/" class="md-nav__link">
+        聚类算法之BIRCH
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/27_%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E4%B9%8BDBSCAN/" class="md-nav__link">
+        聚类算法之DBSCAN
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/28_%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E4%B9%8BMean%20Shift/" class="md-nav__link">
+        聚类算法之Mean Shift
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/29_%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E4%B9%8B%E8%B0%B1%E8%81%9A%E7%B1%BB/" class="md-nav__link">
+        聚类算法之谱聚类
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/30_%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E4%B9%8BPCA/" class="md-nav__link">
+        降维算法之PCA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/31_%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E4%B9%8BLDA/" class="md-nav__link">
+        降维算法之LDA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/32_%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E4%B9%8BIsomap/" class="md-nav__link">
+        降维算法之Isomap
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/33_%E9%99%8D%E7%BB%B4%E7%AE%97%E6%B3%95%E4%B9%8BLLE/" class="md-nav__link">
+        降维算法之LLE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/34_%E5%85%B3%E8%81%94%E7%AE%97%E6%B3%95%E4%B9%8BApriori/" class="md-nav__link">
+        关联算法之Apriori
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/35_%E5%85%B3%E8%81%94%E7%AE%97%E6%B3%95%E4%B9%8BFP-Tree/" class="md-nav__link">
+        关联算法之FP-Tree
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/36_%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95%E4%B9%8B%E7%BB%BC%E8%BF%B0/" class="md-nav__link">
+        推荐算法之综述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/37_%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95%E4%B9%8B%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3/" class="md-nav__link">
+        推荐算法之矩阵分解
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/38_%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95%E4%B9%8BSimRank/" class="md-nav__link">
+        推荐算法之SimRank
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/39_%E6%8E%A8%E8%8D%90%E7%AE%97%E6%B3%95%E4%B9%8BPersonalRank/" class="md-nav__link">
+        推荐算法之PersonalRank
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/40_EM%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        EM算法原理
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/02_%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0/41_%E5%88%86%E8%A7%A3%E6%9C%BA%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/" class="md-nav__link">
+        分解机算法原理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          深度学习
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="深度学习" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          深度学习
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/00_%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        神经网络基础
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/01_DNN%E5%89%8D%E9%A6%88%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        DNN前馈神经网络
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/02_CNN%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        CNN卷积神经网络
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/03_RNN%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        RNN循环神经网络
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/04_%E5%9F%BA%E4%BA%8E%E9%97%A8%E6%8E%A7%E7%9A%84%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="md-nav__link">
+        基于门控的循环神经网络
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/05_%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%281%29/" class="md-nav__link">
+        神经网络优化概述(一)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/05_%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96%282%29/" class="md-nav__link">
+        神经网络优化概述(二)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/06_%E7%BD%91%E7%BB%9C%E6%AD%A3%E5%88%99%E5%8C%96/" class="md-nav__link">
+        网络正则化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/07_%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6/" class="md-nav__link">
+        注意力机制
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#lda_1" class="md-nav__link">
+    LDA变分推断
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#elbo" class="md-nav__link">
+    极大化ELBO求解变分参数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eme" class="md-nav__link">
+    EM算法之E步
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#emm" class="md-nav__link">
+    EM算法之M步
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="lda">主题模型之LDA(三)<a class="headerlink" href="#lda" title="Permanent link">&para;</a></h1>
+<p>变分推断EM算法中通过"变分推断"(Variational Inference)和EM算法来得到LDA模型的文档主题分布和主题词分布。首先来看EM算法在这里的使用，模型里面有隐藏变量<span class="arithmatex"><span class="MathJax_Preview">\theta,\beta,z</span><script type="math/tex">\theta,\beta,z</script></span>，模型的参数是<span class="arithmatex"><span class="MathJax_Preview">\alpha,\eta</span><script type="math/tex">\alpha,\eta</script></span>。为了求出模型参数和对应的隐藏变量分布，EM算法需要在E步先求出隐藏变量<span class="arithmatex"><span class="MathJax_Preview">\theta,\beta,z</span><script type="math/tex">\theta,\beta,z</script></span>的基于条件概率分布期望，接着在M步极大化这个期望，得到更新的后验模型参数<span class="arithmatex"><span class="MathJax_Preview">\alpha,\eta</span><script type="math/tex">\alpha,\eta</script></span>。</p>
+<p><img alt="lda_topic2" src="../assets/lda_topic2.png" /></p>
+<p>在EM算法的E步，由于<span class="arithmatex"><span class="MathJax_Preview">\theta,\beta,z</span><script type="math/tex">\theta,\beta,z</script></span>的耦合，很难求出隐藏变量<span class="arithmatex"><span class="MathJax_Preview">\theta,\beta,z</span><script type="math/tex">\theta,\beta,z</script></span>的条件概率分布，也很难求出对应的期望，需要"变分推断"来帮忙，这里所谓的变分推断，就是在隐藏变量存在耦合的情况下，通过变分假设即假设所有的隐含变量都是各自的独立分布形成的，从而去掉了隐藏变量之间的耦合关系。使用各个独立分布形成的变分分布来模拟近似隐藏变量的条件分布，这样就可以顺利使用EM算法了。</p>
+<p>当进行若干轮的E步和M步迭代更新后，就可以得到合适的近似隐藏变量分布<span class="arithmatex"><span class="MathJax_Preview">\theta,\beta,z</span><script type="math/tex">\theta,\beta,z</script></span>和模型后验参数<span class="arithmatex"><span class="MathJax_Preview">\alpha,\eta</span><script type="math/tex">\alpha,\eta</script></span>，进而就得到了我们需要的LDA主题文档分布和主题分布。</p>
+<h2 id="lda_1">LDA变分推断<a class="headerlink" href="#lda_1" title="Permanent link">&para;</a></h2>
+<p>在给定参数<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\eta</span><script type="math/tex">\eta</script></span>，可以得到文档主题分布<span class="arithmatex"><span class="MathJax_Preview">\theta,\beta,z,w</span><script type="math/tex">\theta,\beta,z,w</script></span>的联合概率分布：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+p(\theta,\beta,z,w|\alpha,\eta) =\bigg ( \prod_{k=1}^K p(\beta|\eta) \bigg ) \cdot p(\theta|\alpha)\cdot \bigg (\prod_{n=1}^N p(z_n|\theta)p(w_n|z_n,\beta_{z_n})\bigg )
+</div>
+<script type="math/tex; mode=display">
+p(\theta,\beta,z,w|\alpha,\eta) =\bigg ( \prod_{k=1}^K p(\beta|\eta) \bigg ) \cdot p(\theta|\alpha)\cdot \bigg (\prod_{n=1}^N p(z_n|\theta)p(w_n|z_n,\beta_{z_n})\bigg )
+</script>
+</div>
+<p>由式子(1)可以得到文档的边缘概率，即对<span class="arithmatex"><span class="MathJax_Preview">\theta,\beta,z</span><script type="math/tex">\theta,\beta,z</script></span>求积分即可：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+p(w|\alpha,\eta)=\int\int p(\beta|\eta)p(\theta|\alpha)\bigg (\prod_{n=1}^N\sum_{z_n} p(z_n|\theta)p(w_n|z_n,\beta_{z_n})\bigg)d_{\theta}d_{\beta}
+</div>
+<script type="math/tex; mode=display">
+p(w|\alpha,\eta)=\int\int p(\beta|\eta)p(\theta|\alpha)\bigg (\prod_{n=1}^N\sum_{z_n} p(z_n|\theta)p(w_n|z_n,\beta_{z_n})\bigg)d_{\theta}d_{\beta}
+</script>
+</div>
+<p>要使用EM算法，需要求出隐藏变量的条件概率分布如下：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+p(\theta,\beta,z|w,\alpha,\eta)=\frac{p(\theta,\beta,z,w|\alpha,\eta)}{p(w|\alpha,\eta)}
+</div>
+<script type="math/tex; mode=display">
+p(\theta,\beta,z|w,\alpha,\eta)=\frac{p(\theta,\beta,z,w|\alpha,\eta)}{p(w|\alpha,\eta)}
+</script>
+</div>
+<p>由于<span class="arithmatex"><span class="MathJax_Preview">\theta,\beta,z</span><script type="math/tex">\theta,\beta,z</script></span>之间是互相耦合的，条件概率式(2)是无法直接求出来的。为了解决这个问题引入变分推断，具体就是引入基于mean field assumption的变分推断，这个推断假设所有的隐藏变量都是通过各自的独立分布形成的，如图所示：</p>
+<p><img alt="lda_topic3" src="../assets/lda_topic3.png" /></p>
+<p>假设隐藏变量<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>是由独立分布<span class="arithmatex"><span class="MathJax_Preview">\gamma</span><script type="math/tex">\gamma</script></span>形成的，隐藏变量<span class="arithmatex"><span class="MathJax_Preview">z</span><script type="math/tex">z</script></span>是由独立分布<span class="arithmatex"><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span>形成的，隐藏变量<span class="arithmatex"><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>是由独立分布<span class="arithmatex"><span class="MathJax_Preview">\lambda</span><script type="math/tex">\lambda</script></span>形成的。于是就可以得到了三个隐藏变量联合的变分分布<span class="arithmatex"><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span>为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+q(\beta,\theta,z|\lambda,\phi,\gamma)
+&amp;=\prod_{k=1}^K q(\beta_k|\lambda_k)\prod_{d=1}^M p(\theta_d,z_d|\gamma_d,\phi_d)\\
+&amp;=\prod_{k=1}^K q(\beta_k|\lambda_k)\prod_{d=1}^M\bigg (  q(\theta_d|\gamma_d)\prod_{n=1}^{N_d}q(z_{dn}|\phi_{dn})  \bigg )\\
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+q(\beta,\theta,z|\lambda,\phi,\gamma)
+&=\prod_{k=1}^K q(\beta_k|\lambda_k)\prod_{d=1}^M p(\theta_d,z_d|\gamma_d,\phi_d)\\
+&=\prod_{k=1}^K q(\beta_k|\lambda_k)\prod_{d=1}^M\bigg (  q(\theta_d|\gamma_d)\prod_{n=1}^{N_d}q(z_{dn}|\phi_{dn})  \bigg )\\
+\end{align}
+</script>
+</div>
+<p>现在可以用<span class="arithmatex"><span class="MathJax_Preview">q(\beta,\theta,z|\lambda,\phi,\gamma)</span><script type="math/tex">q(\beta,\theta,z|\lambda,\phi,\gamma)</script></span>来近似估计<span class="arithmatex"><span class="MathJax_Preview">p(\theta,\beta,z|w,\alpha,\eta)</span><script type="math/tex">p(\theta,\beta,z|w,\alpha,\eta)</script></span>，让两个分布尽可能的相似，因此最优化的目标是最小化两个分布之间的KL距离：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+(\gamma^*,\phi^*,\lambda^*)=\arg\min_{\gamma,\phi,\lambda} D( q(\beta,\theta,z|\lambda,\phi,\gamma)  || p(\theta,\beta,z|w,\alpha,\eta))
+</div>
+<script type="math/tex; mode=display">
+(\gamma^*,\phi^*,\lambda^*)=\arg\min_{\gamma,\phi,\lambda} D( q(\beta,\theta,z|\lambda,\phi,\gamma)  || p(\theta,\beta,z|w,\alpha,\eta))
+</script>
+</div>
+<blockquote>
+<p><span class="arithmatex"><span class="MathJax_Preview">D(q||p)</span><script type="math/tex">D(q||p)</script></span>即为KL散度或KL距离，对应分布<span class="arithmatex"><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>和<span class="arithmatex"><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span>的交叉熵，即：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+D(q||p)=\sum_{x}q(x)\log \frac{q(x)}{p(x)}=E_{q(x)}(\log q(x)-\log p(x)) \notag
+</div>
+<script type="math/tex; mode=display">
+D(q||p)=\sum_{x}q(x)\log \frac{q(x)}{p(x)}=E_{q(x)}(\log q(x)-\log p(x)) \notag
+</script>
+</div>
+</blockquote>
+<p>然而直接优化这个KL散度求<span class="arithmatex"><span class="MathJax_Preview">\gamma^*,\phi^*,\lambda^*</span><script type="math/tex">\gamma^*,\phi^*,\lambda^*</script></span>并不是很好求，需要对式(6)进行深入推导。为了简化表示，用<span class="arithmatex"><span class="MathJax_Preview">\mathbb{E}_q(x)</span><script type="math/tex">\mathbb{E}_q(x)</script></span>代替<span class="arithmatex"><span class="MathJax_Preview">\mathbb{E}_{q(\beta,z,\theta)|\lambda,\phi,\gamma)}(x)</span><script type="math/tex">\mathbb{E}_{q(\beta,z,\theta)|\lambda,\phi,\gamma)}(x)</script></span>，用来表示<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>对于变分分布<span class="arithmatex"><span class="MathJax_Preview">q(\beta,z,\theta|\lambda,\phi,\gamma)</span><script type="math/tex">q(\beta,z,\theta|\lambda,\phi,\gamma)</script></span>的期望。</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+ &amp;D( q(\beta,\theta,z|\lambda,\phi,\gamma)  || p(\theta,\beta,z|w,\alpha,\eta))\\
+ =&amp; \quad \mathbb{E}_q\log q(\beta,\theta,z|\lambda,\phi,\gamma)- \mathbb{E}_q\log  p(\theta,\beta,z|w,\alpha,\eta)\\
+ =&amp; \quad \mathbb{E}_q\log q(\beta,\theta,z|\lambda,\phi,\gamma)- \mathbb{E}_q\log \frac{p(\theta,\beta,z,w|\alpha,\eta)}{p(w|\eta,\alpha)}\\
+=&amp; \quad \mathbb{E}_q\log q(\beta,\theta,z|\lambda,\phi,\gamma)- \mathbb{E}_q\log p(\theta,\beta,z,w|\alpha,\eta)+\mathbb{E}_q \log p(w|\eta,\alpha)\\
+=&amp; \quad \mathbb{E}_q\log q(\beta,\theta,z|\lambda,\phi,\gamma)- \mathbb{E}_q\log p(\theta,\beta,z,w|\alpha,\eta)+ \log p(w|\eta,\alpha)\\
+=&amp;-\bigg (- \mathbb{E}_q\log q(\beta,\theta,z|\lambda,\phi,\gamma)+ \mathbb{E}_q\log p(\theta,\beta,z,w|\alpha,\eta) \bigg )+ \log p(w|\eta,\alpha)\\
+\overset{\Delta}{=} &amp; -\mathcal{L}(\lambda,\phi,\gamma;\alpha,\eta) + \log p(w|\eta,\alpha) 
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+ &D( q(\beta,\theta,z|\lambda,\phi,\gamma)  || p(\theta,\beta,z|w,\alpha,\eta))\\
+ =& \quad \mathbb{E}_q\log q(\beta,\theta,z|\lambda,\phi,\gamma)- \mathbb{E}_q\log  p(\theta,\beta,z|w,\alpha,\eta)\\
+ =& \quad \mathbb{E}_q\log q(\beta,\theta,z|\lambda,\phi,\gamma)- \mathbb{E}_q\log \frac{p(\theta,\beta,z,w|\alpha,\eta)}{p(w|\eta,\alpha)}\\
+=& \quad \mathbb{E}_q\log q(\beta,\theta,z|\lambda,\phi,\gamma)- \mathbb{E}_q\log p(\theta,\beta,z,w|\alpha,\eta)+\mathbb{E}_q \log p(w|\eta,\alpha)\\
+=& \quad \mathbb{E}_q\log q(\beta,\theta,z|\lambda,\phi,\gamma)- \mathbb{E}_q\log p(\theta,\beta,z,w|\alpha,\eta)+ \log p(w|\eta,\alpha)\\
+=&-\bigg (- \mathbb{E}_q\log q(\beta,\theta,z|\lambda,\phi,\gamma)+ \mathbb{E}_q\log p(\theta,\beta,z,w|\alpha,\eta) \bigg )+ \log p(w|\eta,\alpha)\\
+\overset{\Delta}{=} & -\mathcal{L}(\lambda,\phi,\gamma;\alpha,\eta) + \log p(w|\eta,\alpha) 
+\end{align}
+</script>
+</div>
+<p>式(7)-(8)利用KL散度的定义进行展开；式(8)-(10)利用贝叶斯公式并展开；式(11)-(12) <span class="arithmatex"><span class="MathJax_Preview">q</span><script type="math/tex">q</script></span>和<span class="arithmatex"><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>是无关的，所以求期望等于其本身；式(12)-(13)引入<span class="arithmatex"><span class="MathJax_Preview">\mathcal{L}(\cdot)</span><script type="math/tex">\mathcal{L}(\cdot)</script></span>函数，一般称为ELBO(Evidence Lower BOund)。 </p>
+<p>现在就可以得到<span class="arithmatex"><span class="MathJax_Preview">KL(\cdot)</span><script type="math/tex">KL(\cdot)</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\mathcal{L}(\cdot)</span><script type="math/tex">\mathcal{L}(\cdot)</script></span>之间的关系：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+\log p(w|\eta,\alpha)&amp;=\mathcal{L}(\lambda,\phi,\gamma;\alpha,\eta)+D( q(\beta,\theta,z|\lambda,\phi,\gamma)  || p(\theta,\beta,z|w,\alpha,\eta))
+\\
+\mathcal{L}(\lambda,\phi,\gamma;\alpha,\eta) &amp; = \mathbb{E}_q\log p(\theta,\beta,z,w|\alpha,\eta) - \mathbb{E}_q\log q(\beta,\theta,z|\lambda,\phi,\gamma)
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\log p(w|\eta,\alpha)&=\mathcal{L}(\lambda,\phi,\gamma;\alpha,\eta)+D( q(\beta,\theta,z|\lambda,\phi,\gamma)  || p(\theta,\beta,z|w,\alpha,\eta))
+\\
+\mathcal{L}(\lambda,\phi,\gamma;\alpha,\eta) & = \mathbb{E}_q\log p(\theta,\beta,z,w|\alpha,\eta) - \mathbb{E}_q\log q(\beta,\theta,z|\lambda,\phi,\gamma)
+\end{align}
+</script>
+</div>
+<p>式(14)中左侧对数似然部分是关于可观测变量<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>的可以看成常数。因此最小化KL散度等价于最大化ELBO，现在变分推断最终等价的转换为要求ELBO的最大值。</p>
+<h2 id="elbo">极大化ELBO求解变分参数<a class="headerlink" href="#elbo" title="Permanent link">&para;</a></h2>
+<p>首先对ELBO函数进行整理得到：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{aligned}
+\mathcal{L}(\lambda,\phi,\gamma;\alpha,\eta)
+=&amp;
+\mathbb{E}_q[\log p(\beta|\eta)] +\mathbb{E}_q[\log p(z|\theta)]+\mathbb{E}_q[\log p(\theta|\alpha)]+\mathbb{E}_q[\log p(w|z,\beta)]\\
+&amp;-\mathbb{E}_q[\log p(\beta|\lambda)]-\mathbb{E}_q[\log p(z|\phi)]-\mathbb{E}_q[\log p(\theta|\gamma)]
+\end{aligned}
+</div>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathcal{L}(\lambda,\phi,\gamma;\alpha,\eta)
+=&
+\mathbb{E}_q[\log p(\beta|\eta)] +\mathbb{E}_q[\log p(z|\theta)]+\mathbb{E}_q[\log p(\theta|\alpha)]+\mathbb{E}_q[\log p(w|z,\beta)]\\
+&-\mathbb{E}_q[\log p(\beta|\lambda)]-\mathbb{E}_q[\log p(z|\phi)]-\mathbb{E}_q[\log p(\theta|\gamma)]
+\end{aligned}
+</script>
+</div>
+<p>展开后公有7项，现在需要对这7项分别做一个展开。</p>
+<p>对于第一项<span class="arithmatex"><span class="MathJax_Preview">\mathbb{E}_q[\log p(\beta|\eta)]</span><script type="math/tex">\mathbb{E}_q[\log p(\beta|\eta)]</script></span>有：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align} 
+\mathbb{E}_q[logp(\beta|\eta)]  
+&amp; =  \mathbb{E}_q[log\prod_{k=1}^K(\frac{\Gamma(\sum\limits_{i=1}^V\eta_i)}{\prod_{i=1}^V\Gamma(\eta_i)}\prod_{i=1}^V\beta_{ki}^{\eta_i-1})] \\ 
+&amp; = Klog\Gamma(\sum\limits_{i=1}^V\eta_i) - K\sum\limits_{i=1}^Vlog\Gamma(\eta_i)  + \sum\limits_{k=1}^K \mathbb{E}_q[\sum\limits_{i=1}^V(\eta_i-1) log\beta_{ki}] \\
+&amp; = Klog\Gamma(\sum\limits_{i=1}^V\eta_i) - K\sum\limits_{i=1}^Vlog\Gamma(\eta_i)  + 
+\sum\limits_{k=1}^K\sum\limits_{i=1}^V(\eta_i-1) \mathbb{E}_q[ log\beta_{ki}] \\
+&amp; = Klog\Gamma(\sum\limits_{i=1}^V\eta_i) - K\sum\limits_{i=1}^Vlog\Gamma(\eta_i)  + 
+\sum\limits_{k=1}^K\sum\limits_{i=1}^V(\eta_i-1)  (log\Gamma(\lambda_{ki} ) - log\Gamma(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}))^{'} \\
+&amp; = Klog\Gamma(\sum\limits_{i=1}^V\eta_i) - K\sum\limits_{i=1}^Vlog\Gamma(\eta_i)  + 
+\sum\limits_{k=1}^K\sum\limits_{i=1}^V(\eta_i-1)  
+(\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) \\
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align} 
+\mathbb{E}_q[logp(\beta|\eta)]  
+& =  \mathbb{E}_q[log\prod_{k=1}^K(\frac{\Gamma(\sum\limits_{i=1}^V\eta_i)}{\prod_{i=1}^V\Gamma(\eta_i)}\prod_{i=1}^V\beta_{ki}^{\eta_i-1})] \\ 
+& = Klog\Gamma(\sum\limits_{i=1}^V\eta_i) - K\sum\limits_{i=1}^Vlog\Gamma(\eta_i)  + \sum\limits_{k=1}^K \mathbb{E}_q[\sum\limits_{i=1}^V(\eta_i-1) log\beta_{ki}] \\
+& = Klog\Gamma(\sum\limits_{i=1}^V\eta_i) - K\sum\limits_{i=1}^Vlog\Gamma(\eta_i)  + 
+\sum\limits_{k=1}^K\sum\limits_{i=1}^V(\eta_i-1) \mathbb{E}_q[ log\beta_{ki}] \\
+& = Klog\Gamma(\sum\limits_{i=1}^V\eta_i) - K\sum\limits_{i=1}^Vlog\Gamma(\eta_i)  + 
+\sum\limits_{k=1}^K\sum\limits_{i=1}^V(\eta_i-1)  (log\Gamma(\lambda_{ki} ) - log\Gamma(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}))^{'} \\
+& = Klog\Gamma(\sum\limits_{i=1}^V\eta_i) - K\sum\limits_{i=1}^Vlog\Gamma(\eta_i)  + 
+\sum\limits_{k=1}^K\sum\limits_{i=1}^V(\eta_i-1)  
+(\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) \\
+\end{align}
+</script>
+</div>
+<p>式(16)-(17)直接展开；式(17)-(18)利用期望性质<span class="arithmatex"><span class="MathJax_Preview">\mathbb{E}(X+Y)=\mathbb{E}(X)+\mathbb{E}(Y)</span><script type="math/tex">\mathbb{E}(X+Y)=\mathbb{E}(X)+\mathbb{E}(Y)</script></span>；式(19)~(20)利用指数分布族性质。</p>
+<blockquote>
+<p>指数分布族是值分布函数满足如下形式的概率分布：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+p(x|\theta)=h(x) \exp \bigg ( \eta(\theta)\cdot T(x)-A(\theta) \bigg) \notag
+</div>
+<script type="math/tex; mode=display">
+p(x|\theta)=h(x) \exp \bigg ( \eta(\theta)\cdot T(x)-A(\theta) \bigg) \notag
+</script>
+</div>
+<p>分布函数中<span class="arithmatex"><span class="MathJax_Preview">T,\eta</span><script type="math/tex">T,\eta</script></span>和<span class="arithmatex"><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>的都是具有特殊的意义：</p>
+<ul>
+<li>
+<p><span class="arithmatex"><span class="MathJax_Preview">T(x)</span><script type="math/tex">T(x)</script></span>是分布的充分统计量(sufficient statistic)；</p>
+</li>
+<li>
+<p><span class="arithmatex"><span class="MathJax_Preview">\eta</span><script type="math/tex">\eta</script></span>是自然参数；</p>
+</li>
+<li>
+<p><span class="arithmatex"><span class="MathJax_Preview">A(\theta)</span><script type="math/tex">A(\theta)</script></span>被称为对数配分函数(partition function)实际上就是归一化因子的对数形式它使概率分布的积分1
+  $$
+  A(\theta)=\log (\int h(x)\exp (\eta(\theta)\cdot T(x))dx) \notag
+  $$</p>
+</li>
+</ul>
+<p>指数分布族包含了很多常见的分布，如正态分布，Gamma分布，beta分布，狄利克雷函数分布，伯努利分布，泊松分布，Wishart分布，Inverse-Wishart分布等等。指数分布具有很多性质，如：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+\frac{d}{d\eta(\theta)}A(\theta)
+&amp;=\frac{d}{d\eta(\theta)} \log \bigg ( \int h(x)\exp (\eta(\theta)\cdot T(x))dx \bigg ) \\
+&amp;= \frac{ \int T(x) h(x)\exp (\eta(\theta)\cdot T(x))dx}{ \int h(x)\exp (\eta(\theta)\cdot T(x))dx} \\
+&amp;=\frac{ \int T(x) h(x)\exp (\eta(\theta)\cdot T(x))dx}{ \exp (A(\theta))}  \\
+&amp;=\int T(x) h(x)\exp (\eta(\theta)\cdot T(x)-A(\theta))dx  \\
+&amp; = \mathbb{E}_{p(x|\theta)}T(x)
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\frac{d}{d\eta(\theta)}A(\theta)
+&=\frac{d}{d\eta(\theta)} \log \bigg ( \int h(x)\exp (\eta(\theta)\cdot T(x))dx \bigg ) \\
+&= \frac{ \int T(x) h(x)\exp (\eta(\theta)\cdot T(x))dx}{ \int h(x)\exp (\eta(\theta)\cdot T(x))dx} \\
+&=\frac{ \int T(x) h(x)\exp (\eta(\theta)\cdot T(x))dx}{ \exp (A(\theta))}  \\
+&=\int T(x) h(x)\exp (\eta(\theta)\cdot T(x)-A(\theta))dx  \\
+& = \mathbb{E}_{p(x|\theta)}T(x)
+\end{align}
+</script>
+</div>
+<p>以上式中<span class="arithmatex"><span class="MathJax_Preview">\mathbb{E}_q(\log \beta_{ki})</span><script type="math/tex">\mathbb{E}_q(\log \beta_{ki})</script></span>为例：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\mathbb{E}_q[\sum\limits_{i=1}^Vlog\beta_{ki}] = (log\Gamma(\lambda_{ki} ) - log\Gamma(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}))^{'} = \Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) \notag
+</div>
+<script type="math/tex; mode=display">
+\mathbb{E}_q[\sum\limits_{i=1}^Vlog\beta_{ki}] = (log\Gamma(\lambda_{ki} ) - log\Gamma(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}))^{'} = \Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) \notag
+</script>
+</div>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">\Psi(x)=\frac{d}{dx}\log \Gamma(x)=\frac{\Gamma(x)^‘}{\Gamma(x)}</span><script type="math/tex">\Psi(x)=\frac{d}{dx}\log \Gamma(x)=\frac{\Gamma(x)^‘}{\Gamma(x)}</script></span></p>
+</blockquote>
+<p>剩余的六项直接给出结果：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align} 
+\mathbb{E}_q[logp(z|\theta)] 
+&amp;= \sum\limits_{n=1}^N\sum\limits_{k=1}^K\phi_{nk}\Psi(\gamma_{k}) - \Psi(\sum\limits_{k^{'}=1}^K\gamma_{k^{'}})
+\\
+\mathbb{E}_q[logp(\theta|\alpha)]   
+&amp;= log\Gamma(\sum\limits_{k=1}^K\alpha_k) - \sum\limits_{k=1}^Klog\Gamma(\alpha_k)  + \sum\limits_{k=1}^K(\alpha_k-1)(\Psi(\gamma_{k}) - \Psi(\sum\limits_{k^{'}=1}^K\gamma_{k^{'}})) 
+\\
+ \mathbb{E}_q[logp(w|z, \beta)] 
+ &amp; = \sum\limits_{n=1}^N\sum\limits_{k=1}^K\sum\limits_{i=1}^V\phi_{nk}w_n^i(\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) )
+\\
+ \mathbb{E}_q[logq(\beta|\lambda)] 
+ &amp;= \sum\limits_{k=1}^K(log\Gamma(\sum\limits_{i=1}^V\lambda_{ki}) - \sum\limits_{i=1}^Vlog\Gamma(\lambda_{ki})) + \sum\limits_{k=1}^K\sum\limits_{i=1}^V (\lambda_{ki}-1)(\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) )
+ \\
+ \mathbb{E}_q[logq(z|\phi)] &amp; = \sum\limits_{n=1}^N\sum\limits_{k=1}^K\phi_{nk}log\phi_{nk}
+ \\
+\mathbb{E}_q[logq(\theta|\gamma)] &amp; =  log\Gamma(\sum\limits_{k=1}^K\gamma_k) - \sum\limits_{k=1}^Klog\Gamma(\gamma_k)  +  \sum\limits_{k=1}^K(\gamma_k-1)(\Psi(\gamma_{k}) - \Psi(\sum\limits_{k^{'}=1}^K\gamma_{k^{'}}))
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align} 
+\mathbb{E}_q[logp(z|\theta)] 
+&= \sum\limits_{n=1}^N\sum\limits_{k=1}^K\phi_{nk}\Psi(\gamma_{k}) - \Psi(\sum\limits_{k^{'}=1}^K\gamma_{k^{'}})
+\\
+\mathbb{E}_q[logp(\theta|\alpha)]   
+&= log\Gamma(\sum\limits_{k=1}^K\alpha_k) - \sum\limits_{k=1}^Klog\Gamma(\alpha_k)  + \sum\limits_{k=1}^K(\alpha_k-1)(\Psi(\gamma_{k}) - \Psi(\sum\limits_{k^{'}=1}^K\gamma_{k^{'}})) 
+\\
+ \mathbb{E}_q[logp(w|z, \beta)] 
+ & = \sum\limits_{n=1}^N\sum\limits_{k=1}^K\sum\limits_{i=1}^V\phi_{nk}w_n^i(\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) )
+\\
+ \mathbb{E}_q[logq(\beta|\lambda)] 
+ &= \sum\limits_{k=1}^K(log\Gamma(\sum\limits_{i=1}^V\lambda_{ki}) - \sum\limits_{i=1}^Vlog\Gamma(\lambda_{ki})) + \sum\limits_{k=1}^K\sum\limits_{i=1}^V (\lambda_{ki}-1)(\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) )
+ \\
+ \mathbb{E}_q[logq(z|\phi)] & = \sum\limits_{n=1}^N\sum\limits_{k=1}^K\phi_{nk}log\phi_{nk}
+ \\
+\mathbb{E}_q[logq(\theta|\gamma)] & =  log\Gamma(\sum\limits_{k=1}^K\gamma_k) - \sum\limits_{k=1}^Klog\Gamma(\gamma_k)  +  \sum\limits_{k=1}^K(\gamma_k-1)(\Psi(\gamma_{k}) - \Psi(\sum\limits_{k^{'}=1}^K\gamma_{k^{'}}))
+\end{align}
+</script>
+</div>
+<p>现在得到了<span class="arithmatex"><span class="MathJax_Preview">\mathcal{L}(\gamma,\phi,\lambda;\alpha,\eta)</span><script type="math/tex">\mathcal{L}(\gamma,\phi,\lambda;\alpha,\eta)</script></span>之后，目标就是极大化这个下界ELBO关于<span class="arithmatex"><span class="MathJax_Preview">(\gamma,\phi,\lambda)</span><script type="math/tex">(\gamma,\phi,\lambda)</script></span>得到真实后验概率分布的近似分布<span class="arithmatex"><span class="MathJax_Preview">q(\cdot)</span><script type="math/tex">q(\cdot)</script></span> 即EM算法的E步，然后固定变分参数，极大化ELBO关于<span class="arithmatex"><span class="MathJax_Preview">(\alpha,\eta)</span><script type="math/tex">(\alpha,\eta)</script></span>即EM算法的M步。</p>
+<h2 id="eme">EM算法之E步<a class="headerlink" href="#eme" title="Permanent link">&para;</a></h2>
+<p><strong>(1)ELBO对<span class="arithmatex"><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span>求导</strong></p>
+<p>为了简单起见，直接省略不包含<span class="arithmatex"><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span>的项，仅根据包含参数的<span class="arithmatex"><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span>的项构造拉格朗日函数：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+L_{[\phi]}
+=&amp; \sum_{n=1}^N\sum_{k=1}^K \phi_{nk}\bigg (  \Psi(\gamma_k)-\Psi(\sum_{k'=1}^K\gamma_{k'}) \bigg)
++ \sum\limits_{n=1}^N\sum\limits_{k=1}^K\sum\limits_{i=1}^V\phi_{nk}w_n^i \bigg (\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) \bigg )\\
+&amp; -  \sum\limits_{n=1}^N\sum\limits_{k=1}^K\phi_{nk}log\phi_{nk}
++\sum_{n=1}^N \upsilon_n \bigg( \sum_{k=1}^K \phi_{nk}-1 \bigg)
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+L_{[\phi]}
+=& \sum_{n=1}^N\sum_{k=1}^K \phi_{nk}\bigg (  \Psi(\gamma_k)-\Psi(\sum_{k'=1}^K\gamma_{k'}) \bigg)
++ \sum\limits_{n=1}^N\sum\limits_{k=1}^K\sum\limits_{i=1}^V\phi_{nk}w_n^i \bigg (\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) \bigg )\\
+& -  \sum\limits_{n=1}^N\sum\limits_{k=1}^K\phi_{nk}log\phi_{nk}
++\sum_{n=1}^N \upsilon_n \bigg( \sum_{k=1}^K \phi_{nk}-1 \bigg)
+\end{align}
+</script>
+</div>
+<p>求<span class="arithmatex"><span class="MathJax_Preview">L_{[\phi]}</span><script type="math/tex">L_{[\phi]}</script></span>对参数<span class="arithmatex"><span class="MathJax_Preview">\phi</span><script type="math/tex">\phi</script></span>求偏导并令导数等于0，可以得到</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+0
+=\frac{\partial L}{\partial \phi_{nk}}
+=\Psi(\gamma_k)-\Psi(\sum_{k'=1}^K\gamma_{k'}) +\sum\limits_{i=1}^V w_n^i \bigg (\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) \bigg )-\log \phi_{nk}+\upsilon_n
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+0
+=\frac{\partial L}{\partial \phi_{nk}}
+=\Psi(\gamma_k)-\Psi(\sum_{k'=1}^K\gamma_{k'}) +\sum\limits_{i=1}^V w_n^i \bigg (\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) \bigg )-\log \phi_{nk}+\upsilon_n
+\end{align}
+</script>
+</div>
+<p>最终可以得到</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\phi_{nk}\approx \exp \bigg(  \Psi(\gamma_k)-\Psi(\sum_{k'=1}^K\gamma_{k'}) +\sum\limits_{i=1}^V w_n^i \bigg (\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) \bigg )   \bigg)
+</div>
+<script type="math/tex; mode=display">
+\phi_{nk}\approx \exp \bigg(  \Psi(\gamma_k)-\Psi(\sum_{k'=1}^K\gamma_{k'}) +\sum\limits_{i=1}^V w_n^i \bigg (\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) \bigg )   \bigg)
+</script>
+</div>
+<p><strong>(2)ELBO对<span class="arithmatex"><span class="MathJax_Preview">\gamma</span><script type="math/tex">\gamma</script></span>求导</strong></p>
+<p>构造对应包含<span class="arithmatex"><span class="MathJax_Preview">\gamma</span><script type="math/tex">\gamma</script></span>的拉格朗日函数：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+L[\gamma]
+=&amp;\sum\limits_{n=1}^N\sum\limits_{k=1}^K\phi_{nk}\Psi(\gamma_{k}) - \Psi(\sum\limits_{k^{'}=1}^K\gamma_{k^{'}})
++\sum\limits_{k=1}^K(\alpha_k-1)(\Psi(\gamma_{k}) - \Psi(\sum\limits_{k^{'}=1}^K\gamma_{k^{'}})) \\
+&amp;-log\Gamma(\sum\limits_{k=1}^K\gamma_k) + \sum\limits_{k=1}^Klog\Gamma(\gamma_k)  -  \sum\limits_{k=1}^K(\gamma_k-1)(\Psi(\gamma_{k}) - \Psi(\sum\limits_{k^{'}=1}^K\gamma_{k^{'}}))\\
+=&amp;\sum_{k=1}^K \bigg ( \Psi(\gamma_k)-\Psi(\sum_{k'=1}^K \gamma_{k'})  \bigg) \bigg ( \sum_{n=1}^N \phi_{nk}+\alpha_k-\gamma_k \bigg)- \log \Gamma(\sum_{k=1}^K \gamma_k)+\sum_{k=1}^K log \Gamma(\gamma_k)
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+L[\gamma]
+=&\sum\limits_{n=1}^N\sum\limits_{k=1}^K\phi_{nk}\Psi(\gamma_{k}) - \Psi(\sum\limits_{k^{'}=1}^K\gamma_{k^{'}})
++\sum\limits_{k=1}^K(\alpha_k-1)(\Psi(\gamma_{k}) - \Psi(\sum\limits_{k^{'}=1}^K\gamma_{k^{'}})) \\
+&-log\Gamma(\sum\limits_{k=1}^K\gamma_k) + \sum\limits_{k=1}^Klog\Gamma(\gamma_k)  -  \sum\limits_{k=1}^K(\gamma_k-1)(\Psi(\gamma_{k}) - \Psi(\sum\limits_{k^{'}=1}^K\gamma_{k^{'}}))\\
+=&\sum_{k=1}^K \bigg ( \Psi(\gamma_k)-\Psi(\sum_{k'=1}^K \gamma_{k'})  \bigg) \bigg ( \sum_{n=1}^N \phi_{nk}+\alpha_k-\gamma_k \bigg)- \log \Gamma(\sum_{k=1}^K \gamma_k)+\sum_{k=1}^K log \Gamma(\gamma_k)
+\end{align}
+</script>
+</div>
+<p>求<span class="arithmatex"><span class="MathJax_Preview">L_{[\gamma]}</span><script type="math/tex">L_{[\gamma]}</script></span>对参数<span class="arithmatex"><span class="MathJax_Preview">\gamma</span><script type="math/tex">\gamma</script></span>求偏导并令导数等于0，可以得到</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+0
+=\frac{\partial L}{\partial \gamma_{k}}
+=\bigg (\Psi'(\gamma_k)-\Psi'(\sum_{k'=1}^K \gamma_{k'}) \bigg ) \bigg (\sum_{n=1}^N \phi_{nk}+\alpha_k-\gamma_k \bigg)
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+0
+=\frac{\partial L}{\partial \gamma_{k}}
+=\bigg (\Psi'(\gamma_k)-\Psi'(\sum_{k'=1}^K \gamma_{k'}) \bigg ) \bigg (\sum_{n=1}^N \phi_{nk}+\alpha_k-\gamma_k \bigg)
+\end{align}
+</script>
+</div>
+<p>最终可以得到</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\gamma_k = \alpha_k +\sum_{n=1}^N \phi_{nk}
+</div>
+<script type="math/tex; mode=display">
+\gamma_k = \alpha_k +\sum_{n=1}^N \phi_{nk}
+</script>
+</div>
+<p><strong>(3)ELBO对<span class="arithmatex"><span class="MathJax_Preview">\lambda</span><script type="math/tex">\lambda</script></span>求导</strong></p>
+<p>构造对应包含<span class="arithmatex"><span class="MathJax_Preview">\lambda</span><script type="math/tex">\lambda</script></span>的拉格朗日函数：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+L_{[\lambda]}
+=&amp; \sum\limits_{k=1}^K\sum\limits_{i=1}^V(\eta_i-1) (\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}})
++ \sum\limits_{n=1}^N\sum\limits_{k=1}^K\sum\limits_{i=1}^V\phi_{nk}w_n^i \bigg (\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) \bigg )
+\\
+&amp;-\sum\limits_{k=1}^K\bigg (log\Gamma(\sum\limits_{i=1}^V\lambda_{ki}) - \sum\limits_{i=1}^Vlog\Gamma(\lambda_{ki})\bigg ) -\sum\limits_{k=1}^K\sum\limits_{i=1}^V (\lambda_{ki}-1)\bigg (\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) \bigg )
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+L_{[\lambda]}
+=& \sum\limits_{k=1}^K\sum\limits_{i=1}^V(\eta_i-1) (\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}})
++ \sum\limits_{n=1}^N\sum\limits_{k=1}^K\sum\limits_{i=1}^V\phi_{nk}w_n^i \bigg (\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) \bigg )
+\\
+&-\sum\limits_{k=1}^K\bigg (log\Gamma(\sum\limits_{i=1}^V\lambda_{ki}) - \sum\limits_{i=1}^Vlog\Gamma(\lambda_{ki})\bigg ) -\sum\limits_{k=1}^K\sum\limits_{i=1}^V (\lambda_{ki}-1)\bigg (\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) \bigg )
+\end{align}
+</script>
+</div>
+<p>求<span class="arithmatex"><span class="MathJax_Preview">L_{[\lambda]}</span><script type="math/tex">L_{[\lambda]}</script></span>对参数<span class="arithmatex"><span class="MathJax_Preview">\lambda</span><script type="math/tex">\lambda</script></span>求偏导并令导数等于0，可以得到：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+0
+=\frac{\partial L}{\partial \lambda_{ki}}
+=\bigg ( \eta_i+\sum_{n=1}^N \phi_{nk}w_n^i-\lambda_{ki}  \bigg)  \bigg ( \Psi'(\lambda_{ki})-\Psi'(\sum_{i'=1}^V \lambda_{ki'})  \bigg)
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+0
+=\frac{\partial L}{\partial \lambda_{ki}}
+=\bigg ( \eta_i+\sum_{n=1}^N \phi_{nk}w_n^i-\lambda_{ki}  \bigg)  \bigg ( \Psi'(\lambda_{ki})-\Psi'(\sum_{i'=1}^V \lambda_{ki'})  \bigg)
+\end{align}
+</script>
+</div>
+<p>最终得到：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\lambda_{ki}=\eta_i +\sum_{n=1}^N \phi_{nk}w_n^i
+</div>
+<script type="math/tex; mode=display">
+\lambda_{ki}=\eta_i +\sum_{n=1}^N \phi_{nk}w_n^i
+</script>
+</div>
+<p>由于参数<span class="arithmatex"><span class="MathJax_Preview">\lambda</span><script type="math/tex">\lambda</script></span>决定了<span class="arithmatex"><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>分布，对于整个训练预料<span class="arithmatex"><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>是共有的，因此参数<span class="arithmatex"><span class="MathJax_Preview">\lambda</span><script type="math/tex">\lambda</script></span>实际应该按照如下方式更新：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\lambda_{ki}=\eta_i +\sum_{d=1}^M \sum_{n=1}^{N_{d}}\phi_{d_{nk}}w_{dn}^i
+</div>
+<script type="math/tex; mode=display">
+\lambda_{ki}=\eta_i +\sum_{d=1}^M \sum_{n=1}^{N_{d}}\phi_{d_{nk}}w_{dn}^i
+</script>
+</div>
+<p>最终的E步就是用(27)、(28)、(30)来更新三个变分参数。不断迭代更新直到三个变分参数收敛。当变分参数收敛后，下一步就是M步，固定变分参数，更新模型参数<span class="arithmatex"><span class="MathJax_Preview">\eta,\alpha</span><script type="math/tex">\eta,\alpha</script></span>了。</p>
+<h2 id="emm">EM算法之M步<a class="headerlink" href="#emm" title="Permanent link">&para;</a></h2>
+<p>在E步已经得到了当前最佳的变分参数，现在M步就可以固定变分参数，极大化ELBO得到最优的模型参数<span class="arithmatex"><span class="MathJax_Preview">\eta,\alpha</span><script type="math/tex">\eta,\alpha</script></span>。求解最优模型参数<span class="arithmatex"><span class="MathJax_Preview">\alpha,\eta</span><script type="math/tex">\alpha,\eta</script></span>的方法很多，如梯度下降法，牛顿法等都是可以。LDA这里一般使用的是牛顿法，即通过求出ELBO对<span class="arithmatex"><span class="MathJax_Preview">\alpha,\eta</span><script type="math/tex">\alpha,\eta</script></span>的一阶导数和二阶导数表达式，然后迭代求解<span class="arithmatex"><span class="MathJax_Preview">\alpha,\eta</span><script type="math/tex">\alpha,\eta</script></span>在M步的最优解。</p>
+<p>(1)从下界<span class="arithmatex"><span class="MathJax_Preview">L(\gamma,\phi,\lambda;\alpha,\eta)</span><script type="math/tex">L(\gamma,\phi,\lambda;\alpha,\eta)</script></span>中提取仅包含<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的项（基于整个训练语料<span class="arithmatex"><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>篇文档）：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+L_{[\alpha]}
+=&amp; \sum_{d=1}^M \bigg (log\Gamma(\sum\limits_{k=1}^K\alpha_k) - \sum\limits_{k=1}^Klog\Gamma(\alpha_k) \bigg) 
++ \sum\limits_{d=1}^M \sum\limits_{k=1}^K(\alpha_k-1)(\Psi(\gamma_{dk}) - \Psi(\sum\limits_{k^{'}=1}^K\gamma_{dk^{'}}))
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+L_{[\alpha]}
+=& \sum_{d=1}^M \bigg (log\Gamma(\sum\limits_{k=1}^K\alpha_k) - \sum\limits_{k=1}^Klog\Gamma(\alpha_k) \bigg) 
++ \sum\limits_{d=1}^M \sum\limits_{k=1}^K(\alpha_k-1)(\Psi(\gamma_{dk}) - \Psi(\sum\limits_{k^{'}=1}^K\gamma_{dk^{'}}))
+\end{align}
+</script>
+</div>
+<p>对<span class="arithmatex"><span class="MathJax_Preview">L_{[\alpha]}</span><script type="math/tex">L_{[\alpha]}</script></span>求偏导有：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+\nabla_{\alpha_k}L 
+=\frac{\partial L}{\partial \alpha_k} &amp;= M(\Psi(\sum\limits_{k^{'}=1}^K\alpha_{k^{'}}) - \Psi(\alpha_{k}) ) + \sum\limits_{d=1}^M(\Psi(\gamma_{dk}) - \Psi(\sum\limits_{k^{'}=1}^K\gamma_{dk^{'}}))
+\\
+\nabla_{\alpha_k \alpha_j}L 
+=\frac{\partial L}{\partial \alpha_k \alpha_j}  &amp;= M(\Psi^{'}(\sum\limits_{k^{'}=1}^K\alpha_{k^{'}})- \delta(k,j)\Psi^{'}(\alpha_{k}) )
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\nabla_{\alpha_k}L 
+=\frac{\partial L}{\partial \alpha_k} &= M(\Psi(\sum\limits_{k^{'}=1}^K\alpha_{k^{'}}) - \Psi(\alpha_{k}) ) + \sum\limits_{d=1}^M(\Psi(\gamma_{dk}) - \Psi(\sum\limits_{k^{'}=1}^K\gamma_{dk^{'}}))
+\\
+\nabla_{\alpha_k \alpha_j}L 
+=\frac{\partial L}{\partial \alpha_k \alpha_j}  &= M(\Psi^{'}(\sum\limits_{k^{'}=1}^K\alpha_{k^{'}})- \delta(k,j)\Psi^{'}(\alpha_{k}) )
+\end{align}
+</script>
+</div>
+<p>其中当且仅当<span class="arithmatex"><span class="MathJax_Preview">k=j</span><script type="math/tex">k=j</script></span>时，<span class="arithmatex"><span class="MathJax_Preview">\delta(k,j)=1</span><script type="math/tex">\delta(k,j)=1</script></span>否则<span class="arithmatex"><span class="MathJax_Preview">\delta(k,j)=0</span><script type="math/tex">\delta(k,j)=0</script></span>。</p>
+<p>(2)从下界<span class="arithmatex"><span class="MathJax_Preview">L(\gamma,\phi,\lambda;\alpha,\eta)</span><script type="math/tex">L(\gamma,\phi,\lambda;\alpha,\eta)</script></span>中提取仅包含<span class="arithmatex"><span class="MathJax_Preview">\eta</span><script type="math/tex">\eta</script></span>的项：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+L_{[\eta]}
+&amp; = Klog\Gamma(\sum\limits_{i=1}^V\eta_i) - K\sum\limits_{i=1}^Vlog\Gamma(\eta_i)  + 
+\sum\limits_{k=1}^K\sum\limits_{i=1}^V(\eta_i-1)  
+(\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) \\
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+L_{[\eta]}
+& = Klog\Gamma(\sum\limits_{i=1}^V\eta_i) - K\sum\limits_{i=1}^Vlog\Gamma(\eta_i)  + 
+\sum\limits_{k=1}^K\sum\limits_{i=1}^V(\eta_i-1)  
+(\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}) \\
+\end{align}
+</script>
+</div>
+<p>对<span class="arithmatex"><span class="MathJax_Preview">L_{[\eta]}</span><script type="math/tex">L_{[\eta]}</script></span>求偏导有：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align}
+\nabla_{\eta_j}L=\frac{\partial L}{\partial \eta_j}
+&amp;= K(\Psi(\sum\limits_{i^{'}=1}^V\eta_{i^{'}}) - \Psi(\eta_{i}) ) + \sum\limits_{k=1}^K(\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}))
+\\
+\nabla_{\eta_j \eta_i}L=\frac{\partial L}{\partial \eta_j \eta_i}
+&amp;=  K(\Psi^{'}(\sum\limits_{i^{'}=1}^V\eta_{i^{'}}) -  \delta(i,j)\Psi^{'}(\eta_{i}) )
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align}
+\nabla_{\eta_j}L=\frac{\partial L}{\partial \eta_j}
+&= K(\Psi(\sum\limits_{i^{'}=1}^V\eta_{i^{'}}) - \Psi(\eta_{i}) ) + \sum\limits_{k=1}^K(\Psi(\lambda_{ki}) - \Psi(\sum\limits_{i^{'}=1}^V\lambda_{ki^{'}}))
+\\
+\nabla_{\eta_j \eta_i}L=\frac{\partial L}{\partial \eta_j \eta_i}
+&=  K(\Psi^{'}(\sum\limits_{i^{'}=1}^V\eta_{i^{'}}) -  \delta(i,j)\Psi^{'}(\eta_{i}) )
+\end{align}
+</script>
+</div>
+<p>其中，当且仅当<span class="arithmatex"><span class="MathJax_Preview">k=j</span><script type="math/tex">k=j</script></span>时，<span class="arithmatex"><span class="MathJax_Preview">\delta(k,j)=1</span><script type="math/tex">\delta(k,j)=1</script></span>否则<span class="arithmatex"><span class="MathJax_Preview">\delta(k,j)=0</span><script type="math/tex">\delta(k,j)=0</script></span>。</p>
+<p>最终牛顿迭代法的更新公式为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{align} 
+\alpha_{k+1} = \alpha_k + \frac{\nabla_{\alpha_k}L}{\nabla_{\alpha_k\alpha_j}L} 
+\\
+\eta_{i+1} = \eta_i+ \frac{\nabla_{\eta_i}L}{\nabla_{\eta_i\eta_j}L} 
+\end{align}
+</div>
+<script type="math/tex; mode=display">
+\begin{align} 
+\alpha_{k+1} = \alpha_k + \frac{\nabla_{\alpha_k}L}{\nabla_{\alpha_k\alpha_j}L} 
+\\
+\eta_{i+1} = \eta_i+ \frac{\nabla_{\eta_i}L}{\nabla_{\eta_i\eta_j}L} 
+\end{align}
+</script>
+</div>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="页脚">
+      
+        
+        <a href="../08_%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B%E4%B9%8BLDA%28%E4%BA%8C%29/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 主题模型之LDA(二)" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              主题模型之LDA(二)
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../10_%E8%AF%8D%E5%90%91%E9%87%8F%E4%B9%8Bword2vec%28%E4%B8%80%29/" class="md-footer__link md-footer__link--next" aria-label="下一页: 词向量之word2vec(一)" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              词向量之word2vec(一)
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs"], "search": "../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.6e54b5cd.min.js"></script>
+      
+        <script src="../../javascript/config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+    
+  </body>
+</html>
